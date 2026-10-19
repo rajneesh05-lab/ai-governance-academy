@@ -1,5 +1,11 @@
 # V3 Setup
 
+## Take the course without Supabase
+
+The course is available immediately in **Local learning mode** when `config.js` is unconfigured. Enter a name and email to start learning; no password is needed. The email is not verified, and the name/email are only a local profile label—not secure authentication. Progress is stored in that browser on that device and separated by the entered email. Other learners using that same browser should sign out and enter their own email. There is no cross-device sync, central learner roster, or admin dashboard in this mode. Clearing browser storage removes local progress.
+
+Connect Supabase only when you want verified magic-link sign-in, synchronized progress, or centralized team reporting.
+
 ## 1. Create the backend
 1. Create a Supabase project.
 2. Open **SQL Editor**, paste `supabase/schema.sql`, and run it.
