@@ -1,5 +1,5 @@
 window.AIGA_CONFIG = {
-  supabaseUrl: 'https://YOUR_PROJECT.supabase.co',
-  supabaseAnonKey: 'YOUR_PUBLISHABLE_OR_ANON_KEY',
+  supabaseUrl: 'https://qwqulyqeafpaiesstiyo.supabase.co',
+  supabaseAnonKey: 'sb_publishable_h2rv4_JikEPQezW7wJq3wA_xiA0AEze',
   siteName: 'AI Governance Academy'
 };

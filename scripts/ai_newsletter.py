@@ -6,12 +6,14 @@ from __future__ import annotations
 import argparse
 import email.utils
 import html
+import json
 import os
 import re
 import smtplib
 import ssl
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
@@ -307,7 +309,16 @@ def build_email(period: str, items: list[NewsItem], today: date) -> EmailMessage
     return message
 
 
-def send_email(message: EmailMessage, recipients: list[str]) -> None:
+def unsubscribe_link(token: str) -> str:
+    base_url = os.environ.get("NEWSLETTER_SIGNUP_URL") or (
+        "https://rajneesh05-lab.github.io/ai-governance-academy/newsletter.html"
+    )
+    separator = "&" if "?" in base_url else "?"
+    query = urllib.parse.urlencode({"token": token})
+    return f"{base_url}{separator}{query}"
+
+
+def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> None:
     host = os.environ["NEWS_SMTP_HOST"]
     port = int(os.environ.get("NEWS_SMTP_PORT", "587"))
     username = os.environ["NEWS_SMTP_USERNAME"]
@@ -323,12 +334,17 @@ def send_email(message: EmailMessage, recipients: list[str]) -> None:
         if port != 465:
             connection.starttls(context=context)
         connection.login(username, password)
-        for recipient in recipients:
+        for recipient, token in subscribers:
             outgoing = EmailMessage()
             outgoing["Subject"] = message["Subject"]
             outgoing["From"] = sender
             outgoing["To"] = recipient
-            outgoing.set_content(message.get_content())
+            outgoing.set_content(
+                message.get_content()
+                + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
+                + unsubscribe_link(token)
+                + "\n"
+            )
             connection.send_message(outgoing)
             print("Sent digest to one configured recipient.")
 
@@ -338,19 +354,27 @@ def main() -> int:
     parser.add_argument("--period", choices=("weekly", "monthly"), required=True)
     parser.add_argument("--today", type=date.fromisoformat, default=date.today(), help=argparse.SUPPRESS)
     args = parser.parse_args()
-    recipients = [
-        value.strip()
-        for value in re.split(r"[,;\n]", os.environ.get("NEWSLETTER_RECIPIENTS", ""))
-        if value.strip()
-    ]
-    if not recipients:
-        raise RuntimeError("Set NEWSLETTER_RECIPIENTS to one or more email addresses.")
-    for recipient in recipients:
+    try:
+        raw_subscribers = json.loads(os.environ.get("NEWSLETTER_SUBSCRIBERS", "[]"))
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("NEWSLETTER_SUBSCRIBERS must contain a valid JSON array.") from exc
+    if not isinstance(raw_subscribers, list) or not raw_subscribers:
+        raise RuntimeError("There are no active newsletter subscribers.")
+    subscribers: list[tuple[str, str]] = []
+    for entry in raw_subscribers:
+        if not isinstance(entry, dict):
+            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
+        recipient, token = entry.get("email"), entry.get("token")
+        if not isinstance(recipient, str) or not isinstance(token, str):
+            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
         if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", recipient):
-            raise RuntimeError("NEWSLETTER_RECIPIENTS contains an invalid email address.")
+            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid email address.")
+        if not re.fullmatch(r"[0-9a-fA-F-]{36}", token):
+            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid unsubscribe token.")
+        subscribers.append((recipient, token))
     items = collect_news(args.period, args.today)
     message = build_email(args.period, items, args.today)
-    send_email(message, recipients)
+    send_email(message, subscribers)
     return 0
 
 

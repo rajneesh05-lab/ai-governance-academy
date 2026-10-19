@@ -8,6 +8,7 @@ from scripts.ai_newsletter import (
     collect_news,
     parse_feed,
     previous_month,
+    unsubscribe_link,
 )
 
 
@@ -74,6 +75,17 @@ class NewsletterTests(unittest.TestCase):
         message = build_email("monthly", [], date(2026, 10, 1))
         self.assertIn("Monthly Roundup: September 2026", message["Subject"])
         self.assertIn("not an exhaustive account", message.get_content())
+
+    def test_unsubscribe_link_contains_token_without_recipient_address(self):
+        from urllib.parse import parse_qs, urlparse
+
+        link = unsubscribe_link("12345678-1234-1234-1234-123456789abc")
+        parsed = urlparse(link)
+        self.assertEqual(parsed.path, "/ai-governance-academy/newsletter.html")
+        self.assertEqual(
+            parse_qs(parsed.query),
+            {"token": ["12345678-1234-1234-1234-123456789abc"]},
+        )
 
 
 if __name__ == "__main__":

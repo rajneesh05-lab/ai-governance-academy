@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Subscribe to the AI in Practice newsletter for weekly AI and automation updates.">
+  <title>AI in Practice Newsletter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="shell nav">
+      <a class="brand newsletter-brand" href="index.html"><b>AI</b>AI Governance Academy</a>
+      <a class="link" href="index.html">Academy home</a>
+    </div>
+  </header>
+  <main class="shell narrow">
+    <section class="card newsletter-card">
+      <div class="eyebrow">AI in Practice</div>
+      <h1>Get the newsletter</h1>
+      <p class="muted">A concise, source-linked update on AI, agentic systems, and automation, delivered weekly with a monthly roundup.</p>
+      <form id="newsletter-form">
+        <label for="newsletter-email">Email address</label>
+        <input id="newsletter-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com">
+        <label class="newsletter-consent">
+          <input id="newsletter-consent" type="checkbox" required>
+          I agree to receive the AI in Practice newsletter. I can unsubscribe at any time using the link in an email.
+        </label>
+        <label class="newsletter-trap" aria-hidden="true">Leave this field empty<input name="website" tabindex="-1" autocomplete="off"></label>
+        <button id="newsletter-submit" class="btn wide" type="submit">Subscribe</button>
+        <p id="newsletter-status" class="muted" role="status" aria-live="polite"></p>
+      </form>
+      <button id="newsletter-unsubscribe" class="btn wide" type="button" hidden>Unsubscribe</button>
+      <p class="muted newsletter-privacy">Your address is used only to deliver this newsletter. Subscribers cannot see one another's addresses.</p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="newsletter.js"></script>
+</body>
+</html>
