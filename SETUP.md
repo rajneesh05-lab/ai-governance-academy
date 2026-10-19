@@ -53,4 +53,6 @@ To enable sending, add these values under repository **Settings → Secrets and 
 
 The workflow sends a separate message to each recipient, so subscribers do not see one another's addresses. It reports feed failures in the workflow log and stops if all configured feeds fail. No recipients or email credentials are stored in the public site or source code. Review `NEWSLETTER-SAMPLE.md` for a representative message; suggestions about impact and workplace use are labeled as editorial prompts, not as claims from the linked sources.
 
+Until the required recipient and SMTP secrets exist, scheduled and manual runs perform the tests, show a setup warning, and skip sending.
+
 By default, the workflow uses official feeds from UiPath, Microsoft AI, OpenAI, and Google AI. Feed availability and RSS retention vary, so the monthly summary is limited to items available from those feeds in the selected date range and is not an exhaustive survey of the AI industry. Update `FEEDS` in `scripts/ai_newsletter.py` to add or remove sources.
