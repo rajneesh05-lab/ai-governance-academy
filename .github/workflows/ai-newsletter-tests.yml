@@ -1,0 +1,22 @@
+name: AI newsletter tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/ai-newsletter*.yml"
+      - "scripts/**"
+      - "tests/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -p "test_ai_newsletter.py" -v

@@ -1,0 +1,83 @@
+name: AI and automation newsletter
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"
+    - cron: "15 13 1 * *"
+  workflow_dispatch:
+    inputs:
+      period:
+        description: Digest period
+        required: true
+        default: weekly
+        type: choice
+        options:
+          - weekly
+          - monthly
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-newsletter
+  cancel-in-progress: false
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Determine digest period
+        id: period
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_PERIOD: ${{ inputs.period }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "value=$INPUT_PERIOD" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "15 13 1 * *" ]; then
+            echo "value=monthly" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=weekly" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run newsletter checks
+        run: python -m unittest discover -s tests -p "test_ai_newsletter.py" -v
+
+      - name: Check email delivery configuration
+        id: email-config
+        env:
+          NEWSLETTER_RECIPIENTS: ${{ secrets.NEWSLETTER_RECIPIENTS }}
+          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
+          NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
+          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
+          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+        run: |
+          if [ -z "$NEWSLETTER_RECIPIENTS" ] || [ -z "$NEWS_SMTP_HOST" ] || \
+             [ -z "$NEWS_SMTP_PORT" ] || [ -z "$NEWS_SMTP_USERNAME" ] || \
+             [ -z "$NEWS_SMTP_PASSWORD" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Newsletter not sent: configure the recipient and SMTP secrets described in SETUP.md."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Send digest
+        if: steps.email-config.outputs.configured == 'true'
+        env:
+          DIGEST_PERIOD: ${{ steps.period.outputs.value }}
+          NEWSLETTER_RECIPIENTS: ${{ secrets.NEWSLETTER_RECIPIENTS }}
+          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
+          NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
+          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
+          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+        run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD"
