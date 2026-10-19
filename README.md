@@ -3,6 +3,7 @@
 A GitHub Pages-compatible enterprise AI governance learning application with a Supabase backend.
 
 ## V3 additions
+- Local learning mode is available without Supabase: learners can take the course now; progress stays in the current browser and is separated by the entered email (not email-verified)
 - Passwordless sign-in with a verified email magic link; learners use their name and email, never a password
 - Progress synchronized across browsers and devices
 - Central learner roster and login/activity insights
@@ -11,7 +12,7 @@ A GitHub Pages-compatible enterprise AI governance learning application with a S
 - Row Level Security and role-based admin access
 - All V2 capabilities: 15 modules, 150 questions, audio narration, visual maps, scoring, completion pace, and forecast
 
-See `SETUP.md` for deployment instructions.
+See `SETUP.md` for deployment instructions. Supabase setup is only required for verified sign-in, cross-device progress, and central administrator reporting; it is not required to take modules in local mode.
 
 ## AI and automation email digest
 - Optional weekly briefing on official-source AI, agentic AI, and RPA news
