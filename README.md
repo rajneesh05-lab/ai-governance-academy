@@ -17,6 +17,7 @@ See `SETUP.md` for deployment instructions. Supabase setup is only required for 
 ## AI and automation email digest
 - Optional weekly briefing on official-source AI, agentic AI, and RPA news
 - Monthly roundup of the prior month's items from the configured RSS feeds
+- Public subscriber signup page: [newsletter.html](newsletter.html)
 - Each item includes what's new, possible daily-work impact, a cautious work-use idea, a primary source link, and recognized abbreviation expansions
 - Preview: `NEWSLETTER-SAMPLE.md`
 - The email workflow requires recipient and SMTP credentials configured as GitHub Actions secrets; it is independent of Supabase.
