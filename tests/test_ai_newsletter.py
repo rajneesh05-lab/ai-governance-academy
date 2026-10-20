@@ -144,6 +144,58 @@ class NewsletterTests(unittest.TestCase):
         ):
             send_email(message, [("reader@example.com", "12345678-1234-1234-1234-123456789abc")])
 
+    def test_smtp_test_preview_is_marked_and_has_no_unsubscribe_link(self):
+        message = build_email("weekly", [], date(2026, 10, 19))
+        connection = MagicMock()
+        connection.__enter__.return_value = connection
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "NEWS_SMTP_HOST": "smtp.example.com",
+                    "NEWS_SMTP_PORT": "587",
+                    "NEWS_SMTP_USERNAME": "sender@example.com",
+                    "NEWS_SMTP_PASSWORD": "test-password",
+                },
+                clear=True,
+            ),
+            patch("scripts.ai_newsletter.smtplib.SMTP", return_value=connection),
+        ):
+            send_email(message, [("reader@example.com", "")], preview=True)
+
+        outgoing = connection.send_message.call_args.args[0]
+        self.assertEqual(outgoing["To"], "reader@example.com")
+        self.assertTrue(outgoing["Subject"].startswith("[TEST PREVIEW]"))
+        self.assertNotIn("unsubscribe", outgoing.get_content().lower())
+
+    def test_test_recipients_bypass_subscriber_list(self):
+        from scripts.ai_newsletter import main
+
+        message = build_email("weekly", [], date(2026, 10, 19))
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch(
+                "sys.argv",
+                [
+                    "ai_newsletter.py",
+                    "--period",
+                    "weekly",
+                    "--test-recipient",
+                    "first@example.com,second@example.com",
+                ],
+            ),
+            patch("scripts.ai_newsletter.collect_news", return_value=[]),
+            patch("scripts.ai_newsletter.build_email", return_value=message),
+            patch("scripts.ai_newsletter.send_email") as send,
+        ):
+            self.assertEqual(main(), 0)
+
+        self.assertEqual(
+            send.call_args.args[1],
+            [("first@example.com", ""), ("second@example.com", "")],
+        )
+        self.assertTrue(send.call_args.kwargs["preview"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,11 @@ on:
         options:
           - weekly
           - monthly
+      test_recipients:
+        description: Comma-separated addresses for a test preview only
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -24,6 +29,7 @@ concurrency:
 
 jobs:
   send-digest:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.test_recipients == '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -96,3 +102,31 @@ jobs:
           NEWSLETTER_SIGNUP_URL: ${{ vars.NEWSLETTER_SIGNUP_URL }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD"
+
+  send-test-preview:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_recipients != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run newsletter checks
+        run: python -m unittest discover -s tests -p "test_ai_newsletter.py" -v
+
+      - name: Send test preview to requested recipients only
+        env:
+          DIGEST_PERIOD: ${{ inputs.period }}
+          TEST_RECIPIENTS: ${{ inputs.test_recipients }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          NEWSLETTER_SIGNUP_URL: ${{ vars.NEWSLETTER_SIGNUP_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
+          NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
+          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
+          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+        run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD" --test-recipient "$TEST_RECIPIENTS"

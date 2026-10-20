@@ -65,6 +65,8 @@ Resend's `onboarding@resend.dev` sender is used by default for the initial test 
 
 The workflow reads active subscribers from Supabase and sends a separate message to each, so subscribers do not see one another's addresses. It reports feed failures in the workflow log and stops if all configured feeds fail. No recipient addresses or email credentials are stored in the public site or source code. Review `NEWSLETTER-SAMPLE.md` for a representative message; suggestions about impact and workplace use are labeled as editorial prompts, not as claims from the linked sources.
 
+For an explicitly targeted test, manually run the workflow and enter comma-separated addresses in **Test recipients**. This sends a `[TEST PREVIEW]` only to those addresses, skips the subscriber list, and omits unsubscribe links. Leave the field empty for the normal scheduled/manual subscriber delivery.
+
 Until the required Supabase and email-provider secrets exist, scheduled and manual runs perform the tests, show a setup warning, and skip sending. If there are no active subscribers, the workflow also skips delivery.
 
 By default, the workflow uses official feeds from UiPath, Microsoft AI, OpenAI, and Google AI. Feed availability and RSS retention vary, so the monthly summary is limited to items available from those feeds in the selected date range and is not an exhaustive survey of the AI industry. Update `FEEDS` in `scripts/ai_newsletter.py` to add or remove sources.
