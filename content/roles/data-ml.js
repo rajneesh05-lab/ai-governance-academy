@@ -151,13 +151,14 @@ ACADEMY.tracks["data-ml"] = [
     ]
   },
   {
-    id: "dml-govern", stage: "govern", minutes: 30,
+    id: "dml-govern", stage: "govern", minutes: 40, updated: "2026-10-20",
     title: "Model risk management and responsible AI",
     summary: "Document, validate and control models so they are fair, explainable, compliant and defensible.",
     outcomes: [
       "Produce model cards and datasheets that satisfy reviewers",
       "Run fairness and explainability analysis proportionate to risk",
-      "Support independent validation and the model inventory"
+      "Support independent validation and the model inventory",
+      "Evaluate and monitor AI agents and multi-agent systems, and bring them into the model inventory"
     ],
     sections: [
       { h: "Model documentation", body: "Documentation lets others judge whether a model is fit for purpose.", points: [
@@ -183,6 +184,20 @@ ACADEMY.tracks["data-ml"] = [
         "Change control: material changes trigger re-validation.",
         "Ongoing monitoring reports to the model owner and risk function.",
         "Retirement: decommission models properly and archive evidence."
+      ] },
+      { h: "Evaluating and monitoring agents", body: "An agent is a model plus prompts, tools and a loop, so evaluate the whole system, not just the model.", points: [
+        "Task success: did the agent complete the goal correctly, end to end, on a representative evaluation set?",
+        "Trajectory quality: did it choose the right tools with the right arguments, in a sensible number of steps, without unsafe actions along the way?",
+        "Safety tests: prompt injection through documents and tool results, attempts to exceed permissions, and refusal of disallowed tasks.",
+        "For multi-agent systems, test each agent alone and the full system together; errors compound across handoffs.",
+        "Run agent evaluations in CI on every change to model, prompt, tool or data source, and compare against the last release.",
+        "In production, monitor success, escalation and override rates, steps and cost per task, and drift in the kinds of tasks agents receive. Feed these into the control tower dashboards."
+      ] },
+      { h: "Agents in model risk management", body: "Bring agents into the same lifecycle as models, with the extra facts that come from their ability to act.", points: [
+        "Register each agent in the model or AI inventory, linked to the models it uses and the agent registry entry.",
+        "Extend the model card into an agent card: tools and permissions, autonomy level, human approval points, evaluation results and known failure modes.",
+        "Validation for higher-risk agents covers the system's behaviour, not just model accuracy.",
+        "A change to a tool, permission or underlying model is a material change that triggers re-evaluation."
       ] }
     ],
     scenario: { title: "The screening model and the postcode", situation: "A tenant-screening model did not use ethnicity, but approval rates differed sharply between neighbourhoods. Postcode was acting as a proxy for protected characteristics.", approach: [
@@ -191,13 +206,15 @@ ACADEMY.tracks["data-ml"] = [
       "This use case affects access to housing, so it is high risk: it needs documented fairness analysis, explanations for declined applicants and human review."
     ] },
     exercise: "Write a model card for a model you own or know. Include at least one metric by segment and one known limitation.",
-    watchouts: ["'We don't use protected attributes' is not evidence of fairness.", "Explanations that are technically correct but meaningless to users do not meet transparency duties."],
+    watchouts: ["'We don't use protected attributes' is not evidence of fairness.", "Explanations that are technically correct but meaningless to users do not meet transparency duties.", "Testing each agent alone does not show how errors compound when agents work together."],
     quiz: [
       { q: "What belongs in a model card?", o: ["Only accuracy", "Intended use, data, metrics by segment, limitations and ethical considerations", "The source code", "Marketing claims"], a: 1, why: "Model cards help reviewers judge fitness for purpose and limits." },
       { q: "A model excludes gender but uses job title and shopping history. Could it still be biased by gender?", o: ["No, gender is excluded", "Yes, through proxy features correlated with gender", "Only if the developer intended it", "Only for small datasets"], a: 1, why: "Correlated features can act as proxies, so outcomes must be measured." },
       { q: "When is a local explanation most needed?", o: ["For internal dashboards", "When a decision adversely affects a specific person", "Never", "Only during training"], a: 1, why: "People affected by decisions often have a right to meaningful reasons." },
       { q: "What is the purpose of independent model validation?", o: ["To speed up deployment", "To provide an objective check that a higher-risk model is sound and fit for use", "To replace monitoring", "To write documentation"], a: 1, why: "Independent challenge catches errors the builders miss." },
-      { q: "What should happen after a material change to a high-risk model?", o: ["Nothing until the annual review", "Re-validation and updated documentation before use", "Only a code review", "Notify customers"], a: 1, why: "Change control ensures the validated model is the one in production." }
+      { q: "What should happen after a material change to a high-risk model?", o: ["Nothing until the annual review", "Re-validation and updated documentation before use", "Only a code review", "Notify customers"], a: 1, why: "Change control ensures the validated model is the one in production." },
+      { q: "What does trajectory evaluation of an agent check?", o: ["Only the final answer's wording", "Whether the agent used the right tools, with the right arguments, in sensible steps and without unsafe actions", "The model's training loss", "How fast the GPU runs"], a: 1, why: "Agents can reach a right answer by an unsafe path, so the steps matter too." },
+      { q: "A team adds a new tool to a live agent. What should happen?", o: ["Nothing, the model is unchanged", "Treat it as a material change: re-run evaluations and update the agent card and inventory", "Only update the README", "Wait for the annual review"], a: 1, why: "New tools change what the agent can do, so they change its risk." }
     ]
   }
 ];

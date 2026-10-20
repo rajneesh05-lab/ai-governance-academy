@@ -152,13 +152,14 @@ ACADEMY.tracks.operations = [
     ]
   },
   {
-    id: "ops-govern", stage: "govern", minutes: 25,
+    id: "ops-govern", stage: "govern", minutes: 35, updated: "2026-10-20",
     title: "Running AI safely day to day",
     summary: "Operational controls for AI: monitoring, incident response, vendor management, business continuity and audit readiness.",
     outcomes: [
       "Set up operational monitoring and KPIs for AI services",
       "Handle AI incidents and continuity planning",
-      "Manage AI vendors and keep audit evidence"
+      "Manage AI vendors and keep audit evidence",
+      "Run a mixed workforce of people, bots and AI agents with clear handoffs, controls and a way to stop any agent"
     ],
     sections: [
       { h: "Operational monitoring", body: "Monitor AI services like any critical service, plus quality.", points: [
@@ -184,6 +185,26 @@ ACADEMY.tracks.operations = [
         "Sampling results and quality reports.",
         "Change records for thresholds, rules and models.",
         "Training records for staff using the system."
+      ] },
+      { h: "Orchestrating people, bots and agents", body: "Operations is where agents do real work at volume. Treat the process, not the tool, as the unit you manage. BOAT (Business Orchestration and Automation Technologies, Gartner's term for platforms combining RPA, integration, low-code, process automation and AI agents) describes the platforms built for this.", points: [
+        "Map each process step to who does it: a person, a rules-based bot, a system integration or an AI agent, and why.",
+        "Design the handoffs: what an agent passes to a human, with what context, and how the human returns it.",
+        "One end-to-end case record across people, bots and agents, so you can answer 'what happened to this case?' in one place.",
+        "Measure the process end to end: cycle time, SLA, cost per case and quality, not just what each agent did."
+      ] },
+      { h: "Day-to-day control of AI agents", body: "Your control tower view for operations: every agent you run should be visible, supervised and stoppable.", points: [
+        "Agent roster: each agent's owner, the process it serves, its permissions, its risk tier and the human team that backs it up.",
+        "Human-in-the-loop queues: approvals and exceptions routed to named teams with SLAs, so escalations do not pile up unseen.",
+        "Agent KPIs: task success rate, escalation rate, human override rate, error and retry rate, run cost per case, and loops or runaway runs.",
+        "Budgets and rate limits per agent, with alerts at 80% of budget, so one misbehaving agent cannot run up costs or flood a system.",
+        "Pause and kill switch: who can stop an agent, how fast, and the manual process that takes over. Test it like a fire drill.",
+        "Change control: new prompts, tools, models or permissions for an agent go through the same change process as any production change."
+      ] },
+      { h: "When agents hand work to other agents", body: "Multi-agent processes can fail in ways single tools do not.", points: [
+        "Cascading errors: one agent's wrong output becomes another agent's trusted input. Put validation checks between agents on key data.",
+        "Loops: two agents can keep passing work back and forth. Set limits on steps, time and cost per case.",
+        "Unclear ownership: every agent in the chain needs an owner, and the end-to-end process needs one accountable owner.",
+        "Tracing: you should be able to follow one case across every agent and person that touched it."
       ] }
     ],
     scenario: { title: "The vendor's silent update", situation: "Overnight, a document-processing vendor upgraded its extraction model. Accuracy on your purchase orders fell from 97% to 89%, and the drop was noticed only when a supplier complained about a wrong payment.", approach: [
@@ -192,13 +213,16 @@ ACADEMY.tracks.operations = [
       "An alert on reviewer override rate is a cheap early-warning signal."
     ] },
     exercise: "Define five KPIs for one AI service in your operation, with thresholds and the owner who acts on each.",
-    watchouts: ["When everyone forgets the manual process, fallback is impossible.", "Vendor AI features can change behaviour without code changes on your side."],
+    watchouts: ["When everyone forgets the manual process, fallback is impossible.", "Vendor AI features can change behaviour without code changes on your side.", "An escalation queue with no owner or SLA is where agent errors hide."],
     quiz: [
       { q: "Which is a useful early-warning signal of AI quality problems?", o: ["Reviewer override rate rising", "Office temperature", "Number of vendor emails", "Login count"], a: 1, why: "Rising overrides indicate reviewers disagree more with the AI." },
       { q: "Why keep manual processing skills alive?", o: ["Tradition", "So fallback is possible during AI outages or failures", "To slow automation", "For audits only"], a: 1, why: "Continuity depends on a working manual fallback." },
       { q: "Which contract term is AI-specific and important?", o: ["Office hours", "Advance notice of model changes and limits on training with your data", "Invoice format", "Logo usage"], a: 1, why: "Model changes and data use directly affect quality and compliance." },
       { q: "What evidence supports audit of an AI-assisted process?", o: ["Only the final output", "Decision logs, confidence, overrides, sampling and change records", "Staff opinions", "Vendor marketing"], a: 1, why: "Auditors need to see decisions and controls." },
-      { q: "How should AI services fit into incident management?", o: ["Separately and informally", "Included with severity levels, fallback triggers and owners", "Only the vendor handles them", "Not at all"], a: 1, why: "AI services are operational services and need the same rigour." }
+      { q: "How should AI services fit into incident management?", o: ["Separately and informally", "Included with severity levels, fallback triggers and owners", "Only the vendor handles them", "Not at all"], a: 1, why: "AI services are operational services and need the same rigour." },
+      { q: "In an orchestrated process with people, bots and AI agents, what should you measure first?", o: ["Each agent's number of actions", "End-to-end process outcomes: cycle time, SLA, cost and quality per case", "How many models are used", "Vendor marketing claims"], a: 1, why: "The process is the unit that delivers value; agent activity metrics are secondary." },
+      { q: "Two agents keep passing the same case back and forth and costs spike. Which control prevents this?", o: ["A friendlier prompt", "Limits on steps, time and cost per case, with alerts", "Adding a third agent", "Monthly reporting"], a: 1, why: "Step, time and budget limits stop loops and runaway runs." },
+      { q: "Why test an agent's kill switch and manual fallback regularly?", o: ["Auditors like drills", "So an agent can be stopped quickly and work continues safely when it misbehaves", "To slow down automation", "It is not needed if the vendor is reliable"], a: 1, why: "An untested kill switch or forgotten manual process fails when you need it." }
     ]
   }
 ];
@@ -233,6 +257,17 @@ ACADEMY.templates.operations = [
       { h: "Service", fields: ["Availability", "Throughput and backlog", "SLA attainment"] },
       { h: "Quality", fields: ["Sampled accuracy", "Override rate", "Complaints and escalations"] },
       { h: "Efficiency and risk", fields: ["Automation rate", "Cost per transaction", "Incidents", "Open actions"] }
+    ]
+  },
+  {
+    id: "ops-agent-runbook", title: "AI agent operating runbook",
+    purpose: "Run an AI agent in an operational process with clear ownership, KPIs, escalation and a tested way to stop it.",
+    when: "Before an agent goes live in an operational process, and at each review.",
+    sections: [
+      { h: "Agent and process", fields: ["Agent name and owner", "Process and steps it performs", "Human team that backs it up", "Other agents or bots it hands work to"] },
+      { h: "Permissions and limits", fields: ["Systems and actions allowed", "Actions needing human approval and thresholds", "Budget, rate and step limits"] },
+      { h: "KPIs and alerts", fields: ["Task success and escalation rate", "Override and error rate", "Cost per case", "Alert thresholds and who acts"] },
+      { h: "Stop and fallback", fields: ["Who can pause or stop the agent", "How to stop it (steps)", "Manual fallback process", "Date last tested"] }
     ]
   }
 ];

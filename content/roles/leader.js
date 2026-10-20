@@ -149,13 +149,14 @@ ACADEMY.tracks.leader = [
     ]
   },
   {
-    id: "ldr-govern", stage: "govern", minutes: 30,
+    id: "ldr-govern", stage: "govern", minutes: 40, updated: "2026-10-20",
     title: "Accountability, risk appetite and oversight",
     summary: "Set the governance structure, risk appetite and board oversight that let AI scale safely.",
     outcomes: [
       "Define accountability for AI across the three lines",
       "Set an AI risk appetite and policy principles",
-      "Ask the oversight questions boards and regulators expect"
+      "Ask the oversight questions boards and regulators expect",
+      "Set up an agent control tower and the enterprise controls every AI agent must meet"
     ],
     sections: [
       { h: "Accountability structure", body: "Someone must own every AI system and its outcomes.", points: [
@@ -183,6 +184,35 @@ ACADEMY.tracks.leader = [
         "Clear, quick triage so teams know their tier in days, not months.",
         "Reusable evidence and templates.",
         "Measure governance cycle time and fix bottlenecks."
+      ] },
+      { h: "From AI tools to a fleet of AI agents", body: "AI agents do not just answer questions; they take actions in your systems. Once several teams build or buy agents, you are managing a digital workforce, and it needs the same basics as a human one: a register, an owner, permissions, supervision and a way to stop it.", points: [
+        "Agent sprawl is the new shadow AI: agents built in low-code tools, switched on in vendor software (CRM, ITSM, HR, ERP suites) and written by engineering teams, each with its own access.",
+        "Multi-agent systems split work across agents, for example an orchestrator agent that hands tasks to research, drafting and booking agents. Errors and permissions can cascade from one agent to the next.",
+        "Agents act through tools and APIs using credentials. Whoever controls those credentials controls what the agent can do.",
+        "Decide early which processes may have agents acting alone, which need a human approval step, and which are off-limits. This is your risk appetite applied to autonomy."
+      ] },
+      { h: "BOAT: orchestrating people, bots, systems and agents", body: "BOAT stands for Business Orchestration and Automation Technologies, a market category Gartner introduced in 2025. It reflects RPA, integration platforms (iPaaS), low-code app builders, process automation and AI agents converging into platforms that run an end-to-end process across all of them.", points: [
+        "The idea: instead of a separate bot tool, integration tool and agent tool, one orchestration layer decides which step is done by a person, a rules-based bot, a system API or an AI agent, and keeps the end-to-end record.",
+        "Why it matters to you: it is where process ownership, SLAs, exception queues and audit trails for automated work can be managed in one place, rather than per tool.",
+        "Questions to ask a BOAT or automation vendor: Can it orchestrate agents from other vendors? Does it give every agent an identity and an owner? Can we see and stop any run? Does it keep a complete audit trail and cost per process?",
+        "Avoid buying the category name. Start from two or three processes you want to orchestrate end to end and test vendors against them."
+      ] },
+      { h: "The agent control tower", body: "An agent control tower is a single management layer, a mix of platform, process and team, that gives you visibility and control over every AI agent in the organisation, whichever vendor or team built it. Several vendors now sell products under names like 'AI control tower' or 'agent command center'; the capability matters more than the label.", points: [
+        "See: a live register of every agent, its owner, purpose, risk tier, the systems it can touch and whether it is active.",
+        "Control: policies applied centrally, such as allowed tools, data limits, approval steps and spending caps, rather than reinvented by each team.",
+        "Watch: dashboards of activity, success rates, escalations to humans, incidents and cost per agent and per process.",
+        "Stop: the ability to pause or switch off one agent, an agent type or all agents quickly, and to fall back to a manual process.",
+        "Own it: give the control tower a named owner (often the CIO or COO organisation, with risk as second line) and connect it to the AI council's decisions."
+      ] },
+      { h: "Enterprise controls every agent should meet", body: "Make these the minimum standard before an agent goes live. Scale the strength of each control to the agent's risk tier.", points: [
+        "Registry and inventory: no agent runs in production unless it is registered with an accountable owner.",
+        "Identity and permissions: each agent has its own identity (never a shared or personal account) and only the access its task needs.",
+        "Guardrails: limits on what it may say and do, checked in code, such as allowed actions, data it may not share, and topics it must refuse.",
+        "Human-in-the-loop: people approve irreversible, high-value or customer-affecting actions, with clear thresholds.",
+        "Observability: every run is traced, so you can see what the agent was asked, what it decided and which tools it used.",
+        "Cost controls: budgets and rate limits per agent, with alerts before they are exceeded.",
+        "Kill switch: tested ability to stop an agent at once, with a manual fallback.",
+        "Audit trail: tamper-resistant logs kept long enough to answer regulators, auditors and customers."
       ] }
     ],
     scenario: { title: "Shadow AI discovered", situation: "An internal audit finds 40 AI tools in use across the company, only six of them approved, including one processing customer data under a personal credit card.", approach: [
@@ -191,13 +221,16 @@ ACADEMY.tracks.leader = [
       "Structural: a fast approval route, an expanded approved catalogue, a clear policy and an inventory process."
     ] },
     exercise: "Draft three statements of AI risk appetite for your area: one for internal productivity, one for customer-facing AI, and one for decisions about people.",
-    watchouts: ["Governance that only says no drives AI underground.", "Vendor AI features switched on by default are part of your inventory too."],
+    watchouts: ["Governance that only says no drives AI underground.", "Vendor AI features switched on by default are part of your inventory too.", "An agent that can act with a shared or personal account cannot be properly controlled or audited."],
     quiz: [
       { q: "In the three lines model, who is accountable for an AI use case's risks day to day?", o: ["Internal audit", "The first-line business owner", "The vendor", "The board directly"], a: 1, why: "The first line owns and manages the risks of its activities." },
       { q: "What should an AI risk appetite define?", o: ["The brand colours", "Where AI may act alone, where humans decide, and where AI must not be used", "The IT budget", "Office locations"], a: 1, why: "Risk appetite sets boundaries for innovation." },
       { q: "Which question is a board most likely to expect you to answer?", o: ["Which model has the most parameters?", "Do we have a complete AI inventory and know which systems are high risk?", "Which programming language we use", "How many prompts staff send"], a: 1, why: "Inventory and risk visibility are the basis of oversight." },
       { q: "How should leadership respond to widespread shadow AI?", o: ["Ban all AI", "Contain risks, then provide fast approval and better approved tools", "Ignore it", "Discipline everyone"], a: 1, why: "Shadow AI shows unmet demand; safe alternatives reduce risk." },
-      { q: "What makes governance proportionate?", o: ["The same process for every use", "Lighter controls for low risk and stronger controls for high risk", "No controls", "Only legal review"], a: 1, why: "Proportionality speeds low-risk work and protects high-risk areas." }
+      { q: "What makes governance proportionate?", o: ["The same process for every use", "Lighter controls for low risk and stronger controls for high risk", "No controls", "Only legal review"], a: 1, why: "Proportionality speeds low-risk work and protects high-risk areas." },
+      { q: "What is the main purpose of an agent control tower?", o: ["To make agents run faster", "To give one place to see, control, monitor and stop every AI agent, whoever built it", "To replace the AI council", "To train new models"], a: 1, why: "A control tower provides central visibility and control across agents from all teams and vendors." },
+      { q: "In Gartner's terminology, what does BOAT refer to?", o: ["A type of large language model", "Business Orchestration and Automation Technologies: platforms that orchestrate people, bots, systems and AI agents across end-to-end processes", "A board oversight framework", "A cloud hosting option"], a: 1, why: "BOAT is the converging category of RPA, integration, low-code, process automation and agent orchestration." },
+      { q: "Which should be a minimum requirement before any AI agent goes live?", o: ["It uses the newest model", "It is registered with an owner, has its own scoped identity, is logged and can be switched off", "It has a friendly name", "It was built by the central AI team"], a: 1, why: "Registry, identity, observability and a kill switch are baseline enterprise controls for agents." }
     ]
   }
 ];
@@ -232,6 +265,18 @@ ACADEMY.templates.leader = [
       { h: "Portfolio", fields: ["Number of AI systems by risk tier", "Major initiatives and status", "Value delivered against plan"] },
       { h: "Risk", fields: ["High-risk systems and control status", "Incidents and lessons", "Regulatory developments and readiness"] },
       { h: "Capability", fields: ["Training completion", "Governance cycle time", "Decisions requested from the board"] }
+    ]
+  },
+  {
+    id: "ldr-agent-control-tower", title: "Agent control tower charter",
+    purpose: "Set up central oversight of AI agents across the organisation: scope, ownership, minimum controls and reporting.",
+    when: "When more than a handful of agents are planned or in use, or before buying an agent or orchestration platform.",
+    sections: [
+      { h: "Scope", fields: ["Which agents are in scope (built, bought, embedded in vendor software)", "Processes where agents may act alone, need approval, or are not allowed"] },
+      { h: "Ownership", fields: ["Control tower owner", "Role of risk, security and audit", "How agent owners are named and what they are accountable for"] },
+      { h: "Minimum controls by risk tier", fields: ["Registry and owner", "Identity and permissions", "Guardrails", "Human approval thresholds", "Observability and audit logs", "Budgets and rate limits", "Kill switch and fallback tested"] },
+      { h: "Platform", fields: ["Orchestration / BOAT platform and agent platforms in use", "Can it manage agents from other vendors?", "Gaps and roadmap"] },
+      { h: "Reporting", fields: ["Agents by risk tier and status", "Incidents, escalations and stops", "Cost and value per agent", "Decisions needed from the AI council"] }
     ]
   }
 ];
