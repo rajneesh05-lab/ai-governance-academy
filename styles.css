@@ -1054,3 +1054,18 @@ th {
     display: none;
   }
 }
+
+.cert-email {
+  margin-top: 14px;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inline-form input {
+  flex: 1 1 220px;
+  margin: 0;
+}

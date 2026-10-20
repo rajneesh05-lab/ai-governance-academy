@@ -4,13 +4,13 @@
 
 The course is available immediately in **Local learning mode** when `config.js` is unconfigured. Enter a name and email to start learning; no password is needed. The email is not verified, and the name/email are only a local profile label—not secure authentication. Progress is stored in that browser on that device and separated by the entered email. Other learners using that same browser should sign out and enter their own email. There is no cross-device sync, central learner roster, or admin dashboard in this mode. Clearing browser storage removes local progress.
 
-Connect Supabase only when you want verified magic-link sign-in, synchronized progress, or centralized team reporting.
+Connect Supabase when you want progress saved to a central learner record, completion certificates by email, or centralized team reporting.
 
 ## 1. Create the backend
 1. Create a Supabase project.
 2. Open **SQL Editor**, paste `supabase/schema.sql`, and run it.
 3. In **Authentication > URL Configuration**, set the Site URL to your GitHub Pages URL and add it as a redirect URL.
-4. In **Authentication > Providers > Email**, enable email sign-in and require email confirmation. Learners authenticate by opening the emailed magic link; no password is created or entered.
+4. In **Authentication > Sign In / Providers**, turn on **Allow anonymous sign-ins**. Learners enter their name, email and role and go straight in; no email link or password. The email is **not verified**: it is stored on the learner record and used for the completion certificate. The learner record lives in that browser, so a learner who signs out, clears browser data or switches device starts a new record. If anonymous sign-ins are off, the site falls back to Local learning mode.
 
 ## 2. Configure the website
 1. Open **Project Settings > API**.
@@ -21,15 +21,18 @@ Connect Supabase only when you want verified magic-link sign-in, synchronized pr
 ## Upgrading an existing V3 database
 Run `supabase/role-tracks-upgrade.sql` once in the SQL Editor. It adds each learner's role to the admin dashboard and creates the `certificates` table used by completion emails. Progress recorded against the old 15 modules does not carry over to the new role-based modules.
 
+To switch from emailed sign-in links to the simple name, email and role sign-in, run `supabase/simple-signin-upgrade.sql` once and turn on **Allow anonymous sign-ins** (step 4 above).
+
 ## 3. Create the administrator
-1. Enter your name and email on the website and open the sign-in link sent to that email. The link verifies inbox ownership and creates the account on first sign-in.
-2. Run this in the Supabase SQL Editor, replacing the email:
+1. Enter your name, email and role on the website. This creates your learner record in this browser.
+2. Anyone can type any email, so find your own record first and promote it by id. In the Supabase SQL Editor, run this with your email and pick the row you just created (newest first):
 
 ```sql
-update public.profiles set role='admin' where email='you@example.com';
+select id, full_name, created_at from public.profiles where email='you@example.com' order by created_at desc;
+update public.profiles set role='admin' where id='PASTE-THE-ID';
 ```
 
-3. Sign out and sign back in through a fresh email link. The **Admin** button will appear.
+3. Reload the page. The **Admin** button will appear. Because sign-in is tied to the browser, use the same browser for admin work and do not sign out.
 
 ## 4. What the admin dashboard provides
 - Registered learners
@@ -38,6 +41,7 @@ update public.profiles set role='admin' where email='you@example.com';
 - Team average score
 - Learner-level completion, scores, time, and last activity
 - CSV report export
+- Certificate status per learner, with **Resend** to send a certificate again to a corrected email address (it goes out on the next run of the completion job, within 30 minutes)
 
 ## Security notes
 - Row Level Security limits learners to their own data.
