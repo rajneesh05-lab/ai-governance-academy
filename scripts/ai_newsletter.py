@@ -319,6 +319,50 @@ def unsubscribe_link(token: str) -> str:
 
 
 def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> None:
+    api_key = os.environ.get("RESEND_API_KEY")
+    if api_key:
+        sender = os.environ.get(
+            "NEWSLETTER_FROM", "AI in Practice <onboarding@resend.dev>"
+        )
+        for recipient, token in subscribers:
+            payload = {
+                "from": sender,
+                "to": [recipient],
+                "subject": message["Subject"],
+                "text": (
+                    message.get_content()
+                    + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
+                    + unsubscribe_link(token)
+                    + "\n"
+                ),
+            }
+            request = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=30) as response:
+                    if response.status not in (200, 201, 202):
+                        raise RuntimeError(
+                            f"Email API returned unexpected HTTP {response.status}."
+                        )
+            except urllib.error.HTTPError as exc:
+                raise RuntimeError(
+                    f"Email API rejected a message (HTTP {exc.code}); check the API key, "
+                    "sender verification, and provider restrictions."
+                ) from exc
+            except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                raise RuntimeError(
+                    f"Email API request failed ({type(exc).__name__}): {exc}"
+                ) from exc
+            print("Accepted one newsletter message for delivery.")
+        return
+
     host = os.environ["NEWS_SMTP_HOST"]
     port = int(os.environ.get("NEWS_SMTP_PORT", "587"))
     username = os.environ["NEWS_SMTP_USERNAME"]

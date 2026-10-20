@@ -50,20 +50,21 @@ Run `supabase/newsletter.sql` in your Supabase SQL Editor to create the private 
 
 `https://rajneesh05-lab.github.io/ai-governance-academy/newsletter.html`
 
-Subscribers enter their address there and explicitly consent to the weekly and monthly emails. The page writes only to the subscriber table; it cannot read the list. Each newsletter includes a personalized unsubscribe link. To enable delivery, add these values under repository **Settings → Secrets and variables → Actions → New repository secret**:
+Subscribers enter their address there and explicitly consent to the weekly and monthly emails. The page writes only to the subscriber table; it cannot read the list. Each newsletter includes a personalized unsubscribe link.
+
+For reliable GitHub Actions delivery, use the Resend HTTPS API rather than Gmail SMTP. Create a Resend account, verify the email address for the initial test, and create an API key with permission to send email. In repository **Settings → Secrets and variables → Actions → New repository secret**, set:
 
 | Secret | Value |
 | --- | --- |
 | `SUPABASE_URL` | Your Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service-role key; store only as a GitHub Actions secret, never in `config.js` or browser code |
-| `NEWS_SMTP_HOST` | Hostname from your email provider's SMTP setup |
-| `NEWS_SMTP_PORT` | Usually `587` (STARTTLS) or `465` (SSL) |
-| `NEWS_SMTP_USERNAME` | SMTP account/user name |
-| `NEWS_SMTP_PASSWORD` | SMTP app password or provider token; do not use a personal account password |
-| `NEWSLETTER_FROM` | Optional sender address; defaults to the SMTP username |
+| `RESEND_API_KEY` | Resend API key; store only as a GitHub Actions secret |
+| `NEWSLETTER_FROM` | Optional verified sender, such as `AI in Practice <newsletter@your-domain.example>` |
 
-The workflow reads active subscribers from Supabase and sends a separate message to each, so subscribers do not see one another's addresses. Optionally define the Actions variable `NEWSLETTER_SIGNUP_URL` if your deployed signup page uses a different URL. It reports feed failures in the workflow log and stops if all configured feeds fail. No recipient addresses or email credentials are stored in the public site or source code. Review `NEWSLETTER-SAMPLE.md` for a representative message; suggestions about impact and workplace use are labeled as editorial prompts, not as claims from the linked sources.
+Resend's `onboarding@resend.dev` sender is used by default for the initial test and may only deliver to the email address registered with that Resend account. To send to other subscribers, verify a domain you control in Resend and set `NEWSLETTER_FROM` to an address on that domain. Optionally define the Actions variable `NEWSLETTER_SIGNUP_URL` if your deployed signup page uses a different URL.
 
-Until the required Supabase and SMTP secrets exist, scheduled and manual runs perform the tests, show a setup warning, and skip sending. If there are no active subscribers, the workflow also skips delivery.
+The workflow reads active subscribers from Supabase and sends a separate message to each, so subscribers do not see one another's addresses. It reports feed failures in the workflow log and stops if all configured feeds fail. No recipient addresses or email credentials are stored in the public site or source code. Review `NEWSLETTER-SAMPLE.md` for a representative message; suggestions about impact and workplace use are labeled as editorial prompts, not as claims from the linked sources.
+
+Until the required Supabase and email-provider secrets exist, scheduled and manual runs perform the tests, show a setup warning, and skip sending. If there are no active subscribers, the workflow also skips delivery.
 
 By default, the workflow uses official feeds from UiPath, Microsoft AI, OpenAI, and Google AI. Feed availability and RSS retention vary, so the monthly summary is limited to items available from those feeds in the selected date range and is not an exhaustive survey of the AI industry. Update `FEEDS` in `scripts/ai_newsletter.py` to add or remove sources.
