@@ -318,7 +318,62 @@ def unsubscribe_link(token: str) -> str:
     return f"{base_url}{separator}{query}"
 
 
-def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> None:
+def send_email(
+    message: EmailMessage,
+    subscribers: list[tuple[str, str]],
+    *,
+    preview: bool = False,
+) -> None:
+    api_key = os.environ.get("RESEND_API_KEY")
+    if api_key:
+        sender = os.environ.get(
+            "NEWSLETTER_FROM", "AI in Practice <onboarding@resend.dev>"
+        )
+        for recipient, token in subscribers:
+            payload = {
+                "from": sender,
+                "to": [recipient],
+                "subject": (
+                    f"[TEST PREVIEW] {message['Subject']}"
+                    if preview else message["Subject"]
+                ),
+                "text": message.get_content() if preview else (
+                    message.get_content()
+                    + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
+                    + unsubscribe_link(token)
+                    + "\n"
+                ),
+            }
+            request = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=30) as response:
+                    if response.status not in (200, 201, 202):
+                        raise RuntimeError(
+                            f"Email API returned unexpected HTTP {response.status}."
+                        )
+            except urllib.error.HTTPError as exc:
+                raise RuntimeError(
+                    f"Email API rejected a message (HTTP {exc.code}); check the API key, "
+                    "sender verification, and provider restrictions."
+                ) from exc
+            except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                raise RuntimeError(
+                    f"Email API request failed ({type(exc).__name__}): {exc}"
+                ) from exc
+            print(
+                "Accepted one newsletter preview for delivery."
+                if preview else "Accepted one newsletter message for delivery."
+            )
+        return
+
     host = os.environ["NEWS_SMTP_HOST"]
     port = int(os.environ.get("NEWS_SMTP_PORT", "587"))
     username = os.environ["NEWS_SMTP_USERNAME"]
@@ -341,17 +396,25 @@ def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> Non
             for recipient, token in subscribers:
                 stage = "sending message"
                 outgoing = EmailMessage()
-                outgoing["Subject"] = message["Subject"]
+                outgoing["Subject"] = (
+                    f"[TEST PREVIEW] {message['Subject']}"
+                    if preview else message["Subject"]
+                )
                 outgoing["From"] = sender
                 outgoing["To"] = recipient
                 outgoing.set_content(
-                    message.get_content()
-                    + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
-                    + unsubscribe_link(token)
-                    + "\n"
+                    message.get_content() if preview else (
+                        message.get_content()
+                        + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
+                        + unsubscribe_link(token)
+                        + "\n"
+                    )
                 )
                 connection.send_message(outgoing)
-                print("Sent digest to one configured recipient.")
+                print(
+                    "Sent test preview to one requested recipient."
+                    if preview else "Sent digest to one configured recipient."
+                )
     except (OSError, smtplib.SMTPException) as exc:
         raise RuntimeError(
             f"SMTP failed while {stage} ({type(exc).__name__}): {exc}"
@@ -361,29 +424,52 @@ def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> Non
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--period", choices=("weekly", "monthly"), required=True)
+    parser.add_argument(
+        "--test-recipient",
+        action="append",
+        default=[],
+        help="Send a test preview only to these comma-separated addresses.",
+    )
     parser.add_argument("--today", type=date.fromisoformat, default=date.today(), help=argparse.SUPPRESS)
     args = parser.parse_args()
-    try:
-        raw_subscribers = json.loads(os.environ.get("NEWSLETTER_SUBSCRIBERS", "[]"))
-    except json.JSONDecodeError as exc:
-        raise RuntimeError("NEWSLETTER_SUBSCRIBERS must contain a valid JSON array.") from exc
-    if not isinstance(raw_subscribers, list) or not raw_subscribers:
-        raise RuntimeError("There are no active newsletter subscribers.")
-    subscribers: list[tuple[str, str]] = []
-    for entry in raw_subscribers:
-        if not isinstance(entry, dict):
-            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
-        recipient, token = entry.get("email"), entry.get("token")
-        if not isinstance(recipient, str) or not isinstance(token, str):
-            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
-        if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", recipient):
-            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid email address.")
-        if not re.fullmatch(r"[0-9a-fA-F-]{36}", token):
-            raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid unsubscribe token.")
-        subscribers.append((recipient, token))
+    preview = bool(args.test_recipient)
+    if preview:
+        recipients = [
+            address.strip()
+            for value in args.test_recipient
+            for address in value.split(",")
+            if address.strip()
+        ]
+        if not recipients:
+            raise RuntimeError("At least one test recipient address is required.")
+        if any(
+            not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", address)
+            for address in recipients
+        ):
+            raise RuntimeError("A test recipient is not a valid email address.")
+        subscribers = [(recipient, "") for recipient in recipients]
+    else:
+        try:
+            raw_subscribers = json.loads(os.environ.get("NEWSLETTER_SUBSCRIBERS", "[]"))
+        except json.JSONDecodeError as exc:
+            raise RuntimeError("NEWSLETTER_SUBSCRIBERS must contain a valid JSON array.") from exc
+        if not isinstance(raw_subscribers, list) or not raw_subscribers:
+            raise RuntimeError("There are no active newsletter subscribers.")
+        subscribers = []
+        for entry in raw_subscribers:
+            if not isinstance(entry, dict):
+                raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
+            recipient, token = entry.get("email"), entry.get("token")
+            if not isinstance(recipient, str) or not isinstance(token, str):
+                raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid entry.")
+            if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", recipient):
+                raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid email address.")
+            if not re.fullmatch(r"[0-9a-fA-F-]{36}", token):
+                raise RuntimeError("NEWSLETTER_SUBSCRIBERS contains an invalid unsubscribe token.")
+            subscribers.append((recipient, token))
     items = collect_news(args.period, args.today)
     message = build_email(args.period, items, args.today)
-    send_email(message, subscribers)
+    send_email(message, subscribers, preview=preview)
     return 0
 
 

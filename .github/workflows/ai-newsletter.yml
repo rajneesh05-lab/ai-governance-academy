@@ -14,6 +14,11 @@ on:
         options:
           - weekly
           - monthly
+      test_recipients:
+        description: Comma-separated addresses for a test preview only
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -24,6 +29,7 @@ concurrency:
 
 jobs:
   send-digest:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.test_recipients == '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -57,17 +63,12 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
-          NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
-          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
-          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || \
-             [ -z "$NEWS_SMTP_HOST" ] || \
-             [ -z "$NEWS_SMTP_PORT" ] || [ -z "$NEWS_SMTP_USERNAME" ] || \
-             [ -z "$NEWS_SMTP_PASSWORD" ]; then
+             [ -z "$RESEND_API_KEY" ]; then
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Newsletter not sent: configure the Supabase and SMTP secrets described in SETUP.md."
+            echo "::warning::Newsletter not sent: configure the Supabase and email-provider secrets described in SETUP.md."
           else
             subscribers=$(curl --fail --silent --show-error --get \
               "$SUPABASE_URL/rest/v1/newsletter_subscribers" \
@@ -97,10 +98,35 @@ jobs:
         if: steps.email-config.outputs.configured == 'true'
         env:
           DIGEST_PERIOD: ${{ steps.period.outputs.value }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          NEWSLETTER_SIGNUP_URL: ${{ vars.NEWSLETTER_SIGNUP_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD"
+
+  send-test-preview:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_recipients != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run newsletter checks
+        run: python -m unittest discover -s tests -p "test_ai_newsletter.py" -v
+
+      - name: Send test preview to requested recipients only
+        env:
+          DIGEST_PERIOD: ${{ inputs.period }}
+          TEST_RECIPIENTS: ${{ inputs.test_recipients }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          NEWSLETTER_SIGNUP_URL: ${{ vars.NEWSLETTER_SIGNUP_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
           NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
           NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
           NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
-          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
-          NEWSLETTER_SIGNUP_URL: ${{ vars.NEWSLETTER_SIGNUP_URL }}
-        run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD"
+        run: python scripts/ai_newsletter.py --period "$DIGEST_PERIOD" --test-recipient "$TEST_RECIPIENTS"
