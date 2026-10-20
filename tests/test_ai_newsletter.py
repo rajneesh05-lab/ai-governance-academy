@@ -122,7 +122,7 @@ class NewsletterTests(unittest.TestCase):
         self.assertEqual(request.full_url, "https://api.resend.com/emails")
         self.assertEqual(payload["to"], ["reader@example.com"])
         self.assertEqual(payload["from"], "AI in Practice <onboarding@resend.dev>")
-        self.assertIn("unsubscribe?token=", payload["text"])
+        self.assertIn("https://example.com/newsletter.html?token=", payload["text"])
         self.assertEqual(request.get_header("Authorization"), "Bearer test-key")
 
     def test_resend_api_reports_provider_rejection(self):
