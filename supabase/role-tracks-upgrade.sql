@@ -1,0 +1,5 @@
+-- Upgrade for an existing V3 database: adds each learner's role to the admin summary.
+-- Learners' roles are stored in their auth user metadata (work_role); no table changes are needed.
+drop function if exists public.admin_learning_summary();
+create function public.admin_learning_summary() returns table(user_id uuid,full_name text,email text,work_role text,completed_count integer,average_score numeric,scores jsonb,study_minutes integer,last_activity timestamptz) language sql stable security definer set search_path=public as $$ select p.id,p.full_name,p.email,u.raw_user_meta_data->>'work_role',jsonb_array_length(coalesce(lp.completed_modules,'[]'::jsonb)),(select avg(value::numeric) from jsonb_each_text(coalesce(lp.scores,'{}'::jsonb))),coalesce(lp.scores,'{}'::jsonb),coalesce(lp.study_minutes,0),lp.last_activity from public.profiles p left join auth.users u on u.id=p.id left join public.learner_progress lp on lp.user_id=p.id where public.is_admin() order by lp.last_activity desc nulls last; $$;
+revoke all on function public.admin_learning_summary() from public; grant execute on function public.admin_learning_summary() to authenticated;

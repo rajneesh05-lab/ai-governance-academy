@@ -18,6 +18,9 @@ Connect Supabase only when you want verified magic-link sign-in, synchronized pr
 3. Update `config.js`. Never use the service-role key in browser code.
 4. Commit and deploy all files to GitHub Pages.
 
+## Upgrading an existing V3 database
+Run `supabase/role-tracks-upgrade.sql` once in the SQL Editor so the admin dashboard shows each learner's role. Progress recorded against the old 15 modules does not carry over to the new role-based modules.
+
 ## 3. Create the administrator
 1. Enter your name and email on the website and open the sign-in link sent to that email. The link verifies inbox ownership and creates the account on first sign-in.
 2. Run this in the Supabase SQL Editor, replacing the email:

@@ -711,3 +711,240 @@ th {
     padding: 11px 10px;
   }
 }
+
+/* Role-based learning */
+.nav-user {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.subnav {
+  display: flex;
+  gap: 4px;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow-x: auto;
+}
+
+.tab {
+  flex: none;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--ink-soft);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab.on {
+  border-bottom-color: var(--gold);
+  color: var(--ink);
+}
+
+.mt-lg {
+  margin-top: 34px;
+}
+
+.small {
+  font-size: 14px;
+}
+
+.grid.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.module.done {
+  border-color: #a7c9b2;
+}
+
+.tick {
+  color: var(--green);
+}
+
+.journey .step {
+  font-size: 14px;
+}
+
+.journey .step.on {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  font-weight: 750;
+}
+
+.outcomes,
+.lesson ul,
+.scenario ol,
+.risk ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  line-height: 1.65;
+}
+
+.outcomes li,
+.lesson li,
+.scenario li,
+.risk li {
+  margin: 6px 0;
+}
+
+.lesson {
+  margin: 0;
+}
+
+.lesson h2 {
+  margin: 2px 0 8px;
+  font-size: 21px;
+}
+
+.scenario {
+  border-left: 4px solid var(--gold);
+}
+
+.choice.wrong {
+  border-color: #e3b2a8;
+  background: #fbecea;
+}
+
+.why {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--ivory);
+  font-size: 15px;
+}
+
+.notice.preview {
+  margin-bottom: 18px;
+}
+
+.notice .link {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.form .link {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.role-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.role-card.mine {
+  border-color: var(--gold);
+}
+
+.role-card .num {
+  color: var(--gold-deep);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.narrow-wide {
+  max-width: 900px;
+}
+
+.field {
+  display: block;
+  margin: 14px 0 0;
+}
+
+.field span {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.field textarea,
+.glossary-tools input {
+  display: block;
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #d7d1c5;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  resize: vertical;
+}
+
+.field textarea:focus,
+.glossary-tools input:focus {
+  border-color: var(--gold);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(189, 140, 47, .16);
+}
+
+.glossary-tools .tabs {
+  margin: 12px 0 0;
+}
+
+.glist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.term h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.term p {
+  margin-bottom: 0;
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.you {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--green-soft);
+  font-size: 15px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .grid.two-col,
+  .glist {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .journey .arrow {
+    display: none;
+  }
+}
