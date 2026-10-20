@@ -49,13 +49,14 @@ ACADEMY.tracks.leader = [
     ]
   },
   {
-    id: "ldr-identify", stage: "identify", minutes: 30,
+    id: "ldr-identify", stage: "identify", minutes: 40, updated: "2026-10-20",
     title: "Where AI creates value: strategy and portfolio",
     summary: "Set an AI ambition, choose where to play, and run a portfolio of use cases that balances value, feasibility and risk.",
     outcomes: [
       "Distinguish productivity, process transformation and new-value plays",
       "Prioritise a portfolio of AI use cases with clear value cases",
-      "Ask the questions that expose weak AI business cases"
+      "Ask the questions that expose weak AI business cases",
+      "Track AI value from business case to realised benefit, and manage vendor lock-in and sovereignty"
     ],
     sections: [
       { h: "Three kinds of AI value", body: "Be clear about which kind of value you are pursuing, because each needs a different approach and timeline.", points: [
@@ -82,6 +83,21 @@ ACADEMY.tracks.leader = [
         "Platforms: shared, approved AI tools and patterns so teams do not reinvent.",
         "Skills: role-based training (like this academy) and communities of practice.",
         "Governance: a clear, proportionate process that speeds up good projects."
+      ] },
+      { h: "Measuring AI ROI and value realisation", body: "Most AI business cases forecast value; few organisations check whether it arrived. Value realisation means tracking benefits from approval to delivery, and acting on what you find.", points: [
+        "Agree the baseline before launch: today's cycle time, cost per case, error rate or revenue, measured the same way you will measure after.",
+        "Separate activity (licences, prompts, active users) from outcomes (hours released, cost removed, revenue gained, quality improved).",
+        "Time saved is only value when it is redeployed or removed: name what people will do with the released time, or which costs fall.",
+        "Count the full cost: licences, usage (tokens and compute), integration, change, support, governance and the people running it.",
+        "Review realised value against the business case at 3, 6 and 12 months, and stop, fix or scale each initiative on the evidence.",
+        "Give each initiative a benefits owner in the business, not in IT or the AI team."
+      ] },
+      { h: "Vendor lock-in and AI sovereignty", body: "AI models, prices and providers change quickly. Strategic choices today can limit your options for years.", points: [
+        "Lock-in comes from proprietary platforms, agents and prompts tuned to one model, data held in a vendor's format, and contracts with long commitments.",
+        "Keep options open: abstract models behind a gateway or interface, keep your data and evaluation sets portable, and test a second model for key use cases.",
+        "AI sovereignty is control over where AI runs, where data is stored and processed, and which legal jurisdiction applies. It matters most for public sector, regulated and critical-infrastructure work.",
+        "Sovereignty options include regional cloud hosting, sovereign cloud offerings, and self-hosted open-weight models, each with cost and capability trade-offs.",
+        "Ask: if this vendor doubled prices, changed terms or withdrew the model, how long would it take us to switch?"
       ] }
     ],
     scenario: { title: "The 10% productivity promise", situation: "A business case claims a copilot licence for 5,000 staff will save 10% of time, worth tens of millions. Six months after rollout, active use is 35% and no costs have fallen.", approach: [
@@ -90,23 +106,26 @@ ACADEMY.tracks.leader = [
       "License in waves based on adoption and measured outcomes."
     ] },
     exercise: "List your organisation's or unit's top five strategic priorities. For each, name one AI use case and classify it as productivity, transformation or new value.",
-    watchouts: ["Copying competitors' AI announcements is not a strategy.", "Spreading budget across 100 pilots usually produces 100 pilots."],
+    watchouts: ["Copying competitors' AI announcements is not a strategy.", "Spreading budget across 100 pilots usually produces 100 pilots.", "A business case that is never checked after approval teaches nothing."],
     quiz: [
       { q: "Which kind of AI value usually needs the most process and change investment?", o: ["Personal productivity", "Process transformation", "Buying licences", "Hackathons"], a: 1, why: "Transformation redesigns workflows, which requires change management." },
       { q: "When does 'time saved' become real business value?", o: ["Immediately", "When it is redeployed to valuable work, removes cost or increases revenue", "When reported in a survey", "Never"], a: 1, why: "Value requires a change in output, cost or revenue." },
       { q: "What is a sound way to fund AI initiatives?", o: ["Large upfront budgets for every idea", "Stage-gated funding that grows with evidence", "Fund only vendor proposals", "Equal funding for all teams"], a: 1, why: "Staged funding limits waste and backs proven ideas." },
       { q: "Which cost is most often missing from AI business cases?", o: ["Office space", "Ongoing running, monitoring and change costs", "Pens and paper", "Travel"], a: 1, why: "Run costs and change effort are frequently underestimated." },
-      { q: "What builds lasting AI advantage beyond individual projects?", o: ["More press releases", "Data foundations, shared platforms, skills and proportionate governance", "Hiring one AI expert", "Buying the largest model"], a: 1, why: "Capabilities compound across projects." }
+      { q: "What builds lasting AI advantage beyond individual projects?", o: ["More press releases", "Data foundations, shared platforms, skills and proportionate governance", "Hiring one AI expert", "Buying the largest model"], a: 1, why: "Capabilities compound across projects." },
+      { q: "A copilot rollout saves staff 30 minutes a day, but no costs fall and no new work is done. What is the realised value?", o: ["The full value of the time saved", "Little or none until the released time is redeployed or costs are removed", "It cannot be measured", "Double the forecast"], a: 1, why: "Time saved becomes value only when it is used for something else or removes cost." },
+      { q: "Which step most reduces AI vendor lock-in?", o: ["Signing a five-year exclusive contract", "Abstracting models behind an interface and keeping data and evaluation sets portable", "Using only one model for everything", "Building agents only in one vendor's proprietary tool"], a: 1, why: "Portability of data, evaluations and model access keeps switching costs low." }
     ]
   },
   {
-    id: "ldr-implement", stage: "implement", minutes: 25,
+    id: "ldr-implement", stage: "implement", minutes: 35, updated: "2026-10-20",
     title: "Leading AI adoption and change",
     summary: "Drive real adoption: operating model, workforce impact, communication, incentives and measuring what matters.",
     outcomes: [
       "Choose an AI operating model (central, federated or hub-and-spoke)",
       "Lead the people side: roles, skills, concerns and incentives",
-      "Track adoption and outcomes, not activity"
+      "Track adoption and outcomes, not activity",
+      "Set up an AI centre of excellence, a champions network and a reskilling plan"
     ],
     sections: [
       { h: "Operating model", body: "Decide how AI expertise, platforms and governance are organised.", points: [
@@ -131,6 +150,20 @@ ACADEMY.tracks.leader = [
         "Outcomes: cycle time, quality, customer satisfaction, cost per transaction, revenue.",
         "Risk: incidents, policy breaches, shadow AI levels.",
         "Review quarterly; reallocate investment to what works."
+      ] },
+      { h: "AI centre of excellence and champions", body: "In a hub-and-spoke model, the hub is often called an AI centre of excellence (CoE). Champions carry it into every team.", points: [
+        "The CoE owns shared platforms and patterns, standards, the use case pipeline, reusable components, training and the link to governance.",
+        "Keep it small and enabling: its success is measured by what business teams deliver, not by what it builds itself.",
+        "AI champions are respected people in each team, given time (for example 10% of their week), training and early access, who help colleagues and feed back what works.",
+        "Run a community of practice: show-and-tell sessions, a shared prompt and use case library, and a channel for questions.",
+        "Review the CoE's remit as maturity grows; many shift from building to enabling and assuring."
+      ] },
+      { h: "Reskilling the workforce", body: "AI changes tasks before it changes roles. Plan skills ahead of the change.", points: [
+        "Map which tasks in each role AI will take over, assist or leave unchanged, and what new skills the role needs (reviewing AI output, judgement, exception handling).",
+        "Provide role-based training, like this academy, plus hands-on practice with the approved tools.",
+        "Create pathways for people whose roles shrink, into roles that grow, such as AI operations, quality review or customer roles.",
+        "Track skills and training completion as part of AI adoption reporting.",
+        "The EU AI Act requires organisations that provide or deploy AI to take measures to ensure staff have sufficient AI literacy."
       ] }
     ],
     scenario: { title: "Silent resistance", situation: "A customer service AI assistant was rolled out to 800 agents. Usage dropped after week two. Interviews revealed agents feared the data would be used to cut headcount, and the assistant slowed them down on complex calls.", approach: [
@@ -145,17 +178,20 @@ ACADEMY.tracks.leader = [
       { q: "Which is an outcome metric rather than activity?", o: ["Licences assigned", "Reduction in case cycle time", "Number of prompts", "Training sessions held"], a: 1, why: "Outcome metrics show business change." },
       { q: "How should leaders handle staff concerns about AI and jobs?", o: ["Avoid the topic", "Be clear about intentions, invest in reskilling and involve staff", "Promise nothing will change", "Let managers decide individually"], a: 1, why: "Honesty and support build trust and adoption." },
       { q: "Usage of a new AI tool drops after launch. What should you do first?", o: ["Mandate usage", "Find out why from users and fix workflow or trust issues", "Buy a different tool", "Cancel the project"], a: 1, why: "Understanding the cause leads to an effective fix." },
-      { q: "Where may formal consultation be required before AI changes roles?", o: ["Never", "With works councils, unions or employee representatives under local law", "Only with shareholders", "Only with vendors"], a: 1, why: "Many jurisdictions require consultation on significant workplace changes." }
+      { q: "Where may formal consultation be required before AI changes roles?", o: ["Never", "With works councils, unions or employee representatives under local law", "Only with shareholders", "Only with vendors"], a: 1, why: "Many jurisdictions require consultation on significant workplace changes." },
+      { q: "What is the main job of an AI centre of excellence in a hub-and-spoke model?", o: ["To build every AI solution itself", "To provide shared platforms, standards, training and support so business teams can deliver", "To approve every prompt", "To replace the risk function"], a: 1, why: "A CoE enables the spokes; it should not become a bottleneck." },
+      { q: "What makes an AI champions network work?", o: ["Champions with no extra time", "Respected people in each team, given time, training and a community", "Only senior executives as champions", "A one-off launch email"], a: 1, why: "Champions need time and support to help their colleagues." }
     ]
   },
   {
-    id: "ldr-govern", stage: "govern", minutes: 30,
+    id: "ldr-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
     title: "Accountability, risk appetite and oversight",
     summary: "Set the governance structure, risk appetite and board oversight that let AI scale safely.",
     outcomes: [
       "Define accountability for AI across the three lines",
       "Set an AI risk appetite and policy principles",
-      "Ask the oversight questions boards and regulators expect"
+      "Ask the oversight questions boards and regulators expect",
+      "Set up an agent control tower and the enterprise controls every AI agent must meet"
     ],
     sections: [
       { h: "Accountability structure", body: "Someone must own every AI system and its outcomes.", points: [
@@ -183,6 +219,42 @@ ACADEMY.tracks.leader = [
         "Clear, quick triage so teams know their tier in days, not months.",
         "Reusable evidence and templates.",
         "Measure governance cycle time and fix bottlenecks."
+      ] },
+      { h: "From AI tools to a fleet of AI agents", body: "AI agents do not just answer questions; they take actions in your systems. Once several teams build or buy agents, you are managing a digital workforce, and it needs the same basics as a human one: a register, an owner, permissions, supervision and a way to stop it.", points: [
+        "Agent sprawl is the new shadow AI: agents built in low-code tools, switched on in vendor software (CRM, ITSM, HR, ERP suites) and written by engineering teams, each with its own access.",
+        "Multi-agent systems split work across agents, for example an orchestrator agent that hands tasks to research, drafting and booking agents. Errors and permissions can cascade from one agent to the next.",
+        "Agents act through tools and APIs using credentials. Whoever controls those credentials controls what the agent can do.",
+        "Decide early which processes may have agents acting alone, which need a human approval step, and which are off-limits. This is your risk appetite applied to autonomy."
+      ] },
+      { h: "BOAT: orchestrating people, bots, systems and agents", body: "BOAT stands for Business Orchestration and Automation Technologies, a market category Gartner introduced in 2025. It reflects RPA, integration platforms (iPaaS), low-code app builders, process automation and AI agents converging into platforms that run an end-to-end process across all of them.", points: [
+        "The idea: instead of a separate bot tool, integration tool and agent tool, one orchestration layer decides which step is done by a person, a rules-based bot, a system API or an AI agent, and keeps the end-to-end record.",
+        "Why it matters to you: it is where process ownership, SLAs, exception queues and audit trails for automated work can be managed in one place, rather than per tool.",
+        "Questions to ask a BOAT or automation vendor: Can it orchestrate agents from other vendors? Does it give every agent an identity and an owner? Can we see and stop any run? Does it keep a complete audit trail and cost per process?",
+        "Avoid buying the category name. Start from two or three processes you want to orchestrate end to end and test vendors against them."
+      ] },
+      { h: "The agent control tower", body: "An agent control tower is a single management layer, a mix of platform, process and team, that gives you visibility and control over every AI agent in the organisation, whichever vendor or team built it. Several vendors now sell products under names like 'AI control tower' or 'agent command center'; the capability matters more than the label.", points: [
+        "See: a live register of every agent, its owner, purpose, risk tier, the systems it can touch and whether it is active.",
+        "Control: policies applied centrally, such as allowed tools, data limits, approval steps and spending caps, rather than reinvented by each team.",
+        "Watch: dashboards of activity, success rates, escalations to humans, incidents and cost per agent and per process.",
+        "Stop: the ability to pause or switch off one agent, an agent type or all agents quickly, and to fall back to a manual process.",
+        "Own it: give the control tower a named owner (often the CIO or COO organisation, with risk as second line) and connect it to the AI council's decisions."
+      ] },
+      { h: "Enterprise controls every agent should meet", body: "Make these the minimum standard before an agent goes live. Scale the strength of each control to the agent's risk tier.", points: [
+        "Registry and inventory: no agent runs in production unless it is registered with an accountable owner.",
+        "Identity and permissions: each agent has its own identity (never a shared or personal account) and only the access its task needs.",
+        "Guardrails: limits on what it may say and do, checked in code, such as allowed actions, data it may not share, and topics it must refuse.",
+        "Human-in-the-loop: people approve irreversible, high-value or customer-affecting actions, with clear thresholds.",
+        "Observability: every run is traced, so you can see what the agent was asked, what it decided and which tools it used.",
+        "Cost controls: budgets and rate limits per agent, with alerts before they are exceeded.",
+        "Kill switch: tested ability to stop an agent at once, with a manual fallback.",
+        "Audit trail: tamper-resistant logs kept long enough to answer regulators, auditors and customers."
+      ] },
+      { h: "Sustainability: the energy and carbon cost of AI", body: "Training and running large models uses significant electricity and water. Customers, investors and sustainability reporting rules increasingly ask about it.", points: [
+        "Most of your footprint comes from usage (inference) at scale, not training, unless you train large models yourself.",
+        "Choose the smallest model that does the job well; large or reasoning models can use many times more compute per request.",
+        "Ask vendors for energy, carbon and water data for the services you use, and for the regions they run in.",
+        "Include AI in your sustainability reporting scope where material.",
+        "Avoid AI for tasks a simple rule or search does equally well."
       ] }
     ],
     scenario: { title: "Shadow AI discovered", situation: "An internal audit finds 40 AI tools in use across the company, only six of them approved, including one processing customer data under a personal credit card.", approach: [
@@ -191,13 +263,17 @@ ACADEMY.tracks.leader = [
       "Structural: a fast approval route, an expanded approved catalogue, a clear policy and an inventory process."
     ] },
     exercise: "Draft three statements of AI risk appetite for your area: one for internal productivity, one for customer-facing AI, and one for decisions about people.",
-    watchouts: ["Governance that only says no drives AI underground.", "Vendor AI features switched on by default are part of your inventory too."],
+    watchouts: ["Governance that only says no drives AI underground.", "Vendor AI features switched on by default are part of your inventory too.", "An agent that can act with a shared or personal account cannot be properly controlled or audited."],
     quiz: [
       { q: "In the three lines model, who is accountable for an AI use case's risks day to day?", o: ["Internal audit", "The first-line business owner", "The vendor", "The board directly"], a: 1, why: "The first line owns and manages the risks of its activities." },
       { q: "What should an AI risk appetite define?", o: ["The brand colours", "Where AI may act alone, where humans decide, and where AI must not be used", "The IT budget", "Office locations"], a: 1, why: "Risk appetite sets boundaries for innovation." },
       { q: "Which question is a board most likely to expect you to answer?", o: ["Which model has the most parameters?", "Do we have a complete AI inventory and know which systems are high risk?", "Which programming language we use", "How many prompts staff send"], a: 1, why: "Inventory and risk visibility are the basis of oversight." },
       { q: "How should leadership respond to widespread shadow AI?", o: ["Ban all AI", "Contain risks, then provide fast approval and better approved tools", "Ignore it", "Discipline everyone"], a: 1, why: "Shadow AI shows unmet demand; safe alternatives reduce risk." },
-      { q: "What makes governance proportionate?", o: ["The same process for every use", "Lighter controls for low risk and stronger controls for high risk", "No controls", "Only legal review"], a: 1, why: "Proportionality speeds low-risk work and protects high-risk areas." }
+      { q: "What makes governance proportionate?", o: ["The same process for every use", "Lighter controls for low risk and stronger controls for high risk", "No controls", "Only legal review"], a: 1, why: "Proportionality speeds low-risk work and protects high-risk areas." },
+      { q: "What is the main purpose of an agent control tower?", o: ["To make agents run faster", "To give one place to see, control, monitor and stop every AI agent, whoever built it", "To replace the AI council", "To train new models"], a: 1, why: "A control tower provides central visibility and control across agents from all teams and vendors." },
+      { q: "In Gartner's terminology, what does BOAT refer to?", o: ["A type of large language model", "Business Orchestration and Automation Technologies: platforms that orchestrate people, bots, systems and AI agents across end-to-end processes", "A board oversight framework", "A cloud hosting option"], a: 1, why: "BOAT is the converging category of RPA, integration, low-code, process automation and agent orchestration." },
+      { q: "Which should be a minimum requirement before any AI agent goes live?", o: ["It uses the newest model", "It is registered with an owner, has its own scoped identity, is logged and can be switched off", "It has a friendly name", "It was built by the central AI team"], a: 1, why: "Registry, identity, observability and a kill switch are baseline enterprise controls for agents." },
+      { q: "What usually drives most of an organisation's AI energy footprint?", o: ["Training its own frontier models", "Running AI at scale (inference), especially with larger models than needed", "Staff reading AI news", "Printing AI outputs"], a: 1, why: "For most organisations, usage dominates; right-sizing models reduces it." }
     ]
   }
 ];
@@ -232,6 +308,29 @@ ACADEMY.templates.leader = [
       { h: "Portfolio", fields: ["Number of AI systems by risk tier", "Major initiatives and status", "Value delivered against plan"] },
       { h: "Risk", fields: ["High-risk systems and control status", "Incidents and lessons", "Regulatory developments and readiness"] },
       { h: "Capability", fields: ["Training completion", "Governance cycle time", "Decisions requested from the board"] }
+    ]
+  },
+  {
+    id: "ldr-agent-control-tower", title: "Agent control tower charter",
+    purpose: "Set up central oversight of AI agents across the organisation: scope, ownership, minimum controls and reporting.",
+    when: "When more than a handful of agents are planned or in use, or before buying an agent or orchestration platform.",
+    sections: [
+      { h: "Scope", fields: ["Which agents are in scope (built, bought, embedded in vendor software)", "Processes where agents may act alone, need approval, or are not allowed"] },
+      { h: "Ownership", fields: ["Control tower owner", "Role of risk, security and audit", "How agent owners are named and what they are accountable for"] },
+      { h: "Minimum controls by risk tier", fields: ["Registry and owner", "Identity and permissions", "Guardrails", "Human approval thresholds", "Observability and audit logs", "Budgets and rate limits", "Kill switch and fallback tested"] },
+      { h: "Platform", fields: ["Orchestration / BOAT platform and agent platforms in use", "Can it manage agents from other vendors?", "Gaps and roadmap"] },
+      { h: "Reporting", fields: ["Agents by risk tier and status", "Incidents, escalations and stops", "Cost and value per agent", "Decisions needed from the AI council"] }
+    ]
+  },
+  {
+    id: "ldr-value-tracker", title: "AI value realisation tracker",
+    purpose: "Track whether an AI initiative delivers the value its business case promised.",
+    when: "At approval, then at 3, 6 and 12 months after launch.",
+    sections: [
+      { h: "Baseline", fields: ["Initiative and benefits owner", "Metric(s) and baseline value", "How and where it is measured"] },
+      { h: "Forecast", fields: ["Benefit forecast in the business case", "Full cost forecast (licences, usage, change, support, governance)"] },
+      { h: "Realised", fields: ["Adoption at review", "Measured outcome at review", "Released time and how it was used", "Actual costs"] },
+      { h: "Decision", fields: ["Scale, fix or stop", "Actions and owner", "Next review date"] }
     ]
   }
 ];

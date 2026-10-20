@@ -152,13 +152,14 @@ ACADEMY.tracks.product = [
     ]
   },
   {
-    id: "pm-govern", stage: "govern", minutes: 30,
+    id: "pm-govern", stage: "govern", minutes: 40, updated: "2026-10-20",
     title: "Responsible AI product decisions",
     summary: "Own the product side of AI governance: risk tiering, transparency, user controls, regulatory duties and the launch review.",
     outcomes: [
       "Classify a feature's risk tier and know the governance steps that follow",
       "Design transparency and user control into the product",
-      "Prepare for the AI launch review with the right evidence"
+      "Prepare for the AI launch review with the right evidence",
+      "Design content provenance and accessibility into AI features"
     ],
     sections: [
       { h: "The PM's governance responsibilities", body: "The PM is usually the business owner of an AI feature, which means accountability for its use and impact.", points: [
@@ -185,6 +186,20 @@ ACADEMY.tracks.product = [
         "Privacy and security sign-offs, data flow and vendor terms.",
         "Human oversight design, monitoring plan, incident and rollback plan.",
         "Customer communications and documentation."
+      ] },
+      { h: "Content provenance: watermarking and content credentials", body: "As AI-generated media becomes indistinguishable from real media, products need ways to show where content came from.", points: [
+        "Watermarking embeds a signal in AI-generated images, audio, video or text that detection tools can find. Some survive editing, many do not; none is perfect.",
+        "Content credentials (the C2PA standard) attach signed metadata to media recording how it was made and edited, including AI involvement.",
+        "If your product generates media, consider adding watermarks and content credentials, and preserving credentials on upload rather than stripping them.",
+        "The EU AI Act requires providers of generative AI to mark synthetic content in a machine-readable way, and deployers to disclose deepfakes.",
+        "Labels shown to users matter as much as hidden signals: make AI-generated content obvious where it could mislead."
+      ] },
+      { h: "Accessible AI features", body: "AI can make products far more accessible, and can also create new barriers.", points: [
+        "Opportunities: captions and transcripts, image descriptions, simpler-language rewrites, voice interfaces and summarisation.",
+        "Check AI-generated alt text and captions for accuracy; wrong descriptions are worse than none for people relying on them.",
+        "Chat and voice interfaces must work with screen readers and keyboards, and offer a non-AI route for people who need it.",
+        "Include disabled users in research and testing, and evaluate quality for their use cases and speech patterns.",
+        "Accessibility law (for example the European Accessibility Act) applies to AI features as to any other."
       ] }
     ],
     scenario: { title: "The candidate ranking feature", situation: "Your HR software team wants to add 'AI candidate ranking' to help recruiters shortlist. Early tests show recruiters love it.", approach: [
@@ -199,7 +214,9 @@ ACADEMY.tracks.product = [
       { q: "Which feature is most likely high risk under the EU AI Act?", o: ["Autocomplete in a text editor", "AI ranking of job applicants", "Image background removal", "Spelling correction"], a: 1, why: "AI used in recruitment decisions is listed as high risk." },
       { q: "What is a common transparency duty for chatbots?", o: ["Showing the model's code", "Telling users they are interacting with AI", "Publishing training data", "Using a human voice"], a: 1, why: "Users should know when they are dealing with an AI system." },
       { q: "What best demonstrates readiness at an AI launch review?", o: ["A confident demo", "Evidence: evaluations by segment, sign-offs, oversight and monitoring plans", "Positive beta quotes", "A launch date"], a: 1, why: "Governance decisions are made on evidence." },
-      { q: "What is a good product control for AI features in B2B software?", o: ["No settings, to keep it simple", "Admin controls to enable or disable AI features and data sharing", "Always-on AI with no opt-out", "Hidden AI usage"], a: 1, why: "Admin controls let customers meet their own policies." }
+      { q: "What is a good product control for AI features in B2B software?", o: ["No settings, to keep it simple", "Admin controls to enable or disable AI features and data sharing", "Always-on AI with no opt-out", "Hidden AI usage"], a: 1, why: "Admin controls let customers meet their own policies." },
+      { q: "What are content credentials (C2PA)?", o: ["A login method", "Signed metadata attached to media recording how it was created and edited, including AI use", "A model licence", "A type of watermark that cannot be removed"], a: 1, why: "C2PA content credentials record provenance in tamper-evident metadata." },
+      { q: "Your product adds AI-generated image descriptions for screen reader users. What matters most?", o: ["That they are long", "That they are accurate, tested with the people who rely on them", "That they use creative language", "That they are optional for sighted users only"], a: 1, why: "Inaccurate descriptions mislead the very people they are meant to help." }
     ]
   }
 ];

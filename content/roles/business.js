@@ -147,7 +147,7 @@ ACADEMY.tracks.business = [
     ]
   },
   {
-    id: "biz-govern", stage: "govern", minutes: 20,
+    id: "biz-govern", stage: "govern", minutes: 25, updated: "2026-10-20",
     title: "Using AI responsibly with company data",
     summary: "Your responsibilities: data protection, fairness, transparency, IP and reporting problems.",
     outcomes: [
@@ -177,6 +177,12 @@ ACADEMY.tracks.business = [
         "Report data mistakes, harmful outputs or suspicious behaviour quickly.",
         "Raise concerns about AI uses you think are unfair or unsafe.",
         "Share lessons with your team."
+      ] },
+      { h: "Spotting and labelling AI-generated media", body: "Fake images, voices and videos are now cheap to make. Be careful with what you share and clear about what you create.", points: [
+        "Label AI-generated images, audio and video you publish, following your company's policy.",
+        "Keep content credentials (C2PA metadata) intact where your tools support them.",
+        "Be sceptical of urgent requests by voice or video, such as a 'CEO' asking for a payment. Verify through a known channel.",
+        "Watermark detectors and 'AI detectors' for text are unreliable; never accuse someone based on them alone."
       ] }
     ],
     scenario: { title: "The marketing image", situation: "A marketing team used an image generator to create a campaign visual 'in the style of' a famous living illustrator. The illustrator's agent complained publicly.", approach: [
@@ -191,7 +197,8 @@ ACADEMY.tracks.business = [
       { q: "Which could act as a proxy for a protected characteristic?", o: ["Job title only", "Postcode or gaps in employment history", "Favourite colour", "Email font"], a: 1, why: "Proxies can lead to indirect discrimination." },
       { q: "When should you disclose AI involvement?", o: ["Never", "Where policy, law or the audience expects it", "Only if asked twice", "Only internally"], a: 1, why: "Transparency builds trust and may be legally required." },
       { q: "You notice an AI tool produced an offensive output in a customer email draft you did not send. What should you do?", o: ["Delete it and move on", "Report it so the issue can be fixed", "Send it anyway", "Post it on social media"], a: 1, why: "Reporting helps prevent the problem reaching customers." },
-      { q: "What is a risk of generating images 'in the style of' a living artist for a campaign?", o: ["None", "Legal and reputational risk", "Images will be too small", "Higher printing costs"], a: 1, why: "It may infringe rights or cause reputational harm." }
+      { q: "What is a risk of generating images 'in the style of' a living artist for a campaign?", o: ["None", "Legal and reputational risk", "Images will be too small", "Higher printing costs"], a: 1, why: "It may infringe rights or cause reputational harm." },
+      { q: "You receive a video call from your 'CFO' urgently asking for a payment to a new supplier. What should you do?", o: ["Pay quickly, it looks like them", "Verify through a known, separate channel before acting", "Ask an AI detector", "Forward it to the supplier"], a: 1, why: "Deepfake voice and video fraud is real; verify independently." }
     ]
   }
 ];

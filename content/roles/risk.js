@@ -51,13 +51,14 @@ ACADEMY.tracks.risk = [
     ]
   },
   {
-    id: "rsk-identify", stage: "identify", minutes: 35,
+    id: "rsk-identify", stage: "identify", minutes: 45, updated: "2026-10-20",
     title: "Assessing AI use cases",
     summary: "Triage and assess proposed AI use cases for risk: classification, impact assessment and the questions that matter.",
     outcomes: [
       "Triage use cases into risk tiers quickly and consistently",
       "Run an AI impact assessment covering people, data, security and compliance",
-      "Identify when a use case is prohibited or high risk under law or policy"
+      "Identify when a use case is prohibited or high risk under law or policy",
+      "Assess copyright and IP risk, and the main AI rules beyond the EU AI Act"
     ],
     sections: [
       { h: "Fast, consistent triage", body: "Most use cases are low risk. A short triage keeps reviewers' time for those that matter.", points: [
@@ -88,6 +89,22 @@ ACADEMY.tracks.risk = [
         "Who can override the AI, and do they actually do so?",
         "How was performance tested, on what data, and for which groups?",
         "What would we tell a regulator or journalist about this use?"
+      ] },
+      { h: "Copyright and IP", body: "AI raises IP questions on the way in (training data and inputs) and on the way out (who owns outputs, and whether they infringe).", points: [
+        "Inputs: check you have the right to put third-party content (licensed reports, client documents, code) into an AI tool under its licence or contract.",
+        "Outputs: in many jurisdictions, including the US, purely AI-generated content without meaningful human authorship may not be protected by copyright. Human selection, arrangement and editing matter.",
+        "Infringement: outputs can reproduce protected text, images, code or styles. Higher-risk uses are external publication, marketing and products.",
+        "Code: AI-generated code can match open-source code with licence obligations; use tools with duplicate detection and licence scanning.",
+        "Vendor terms: check who owns outputs, whether the vendor offers IP indemnity, and its conditions (often you must use their filters and not modify outputs).",
+        "Training: if you train or fine-tune models, record the source and licence of all data. Litigation and rules on training data are still evolving."
+      ] },
+      { h: "Beyond the EU AI Act", body: "Organisations usually face several overlapping regimes. Map which apply to each use case.", points: [
+        "GDPR Article 22: people have rights around decisions based solely on automated processing that have legal or similarly significant effects, including human intervention and the ability to contest.",
+        "NIST AI 600-1, the Generative AI Profile of the NIST AI RMF: a voluntary US guide to generative AI risks such as confabulation, information integrity and IP, with suggested actions.",
+        "Colorado AI Act: a US state law requiring developers and deployers of high-risk AI used in consequential decisions to take reasonable care against algorithmic discrimination. Its start date has been revised, so check the current position.",
+        "DORA (EU Digital Operational Resilience Act): applies to EU financial entities from January 2025. AI services are ICT services, so vendor risk, resilience testing and incident reporting rules apply.",
+        "Sector rules still apply: financial model risk guidance, medical device rules, employment and consumer protection law, and other jurisdictions' AI rules and guidance.",
+        "Keep these in the obligations register so each system maps to every regime that applies."
       ] }
     ],
     scenario: { title: "Emotion analysis in call centres", situation: "Operations proposes using AI to analyse agents' voices for stress and emotion during calls, to support wellbeing and performance management.", approach: [
@@ -96,13 +113,15 @@ ACADEMY.tracks.risk = [
       "Alternative: analyse call topics and handle times (not emotions) for workload balancing, with employee consultation."
     ] },
     exercise: "Triage three AI use cases from your organisation using the six triage questions. Record the tier and the reason.",
-    watchouts: ["A vendor's 'compliant' claim does not transfer your obligations as a deployer.", "Assessments that take months push teams to shadow AI."],
+    watchouts: ["A vendor's 'compliant' claim does not transfer your obligations as a deployer.", "Assessments that take months push teams to shadow AI.", "Assuming the vendor's IP indemnity covers you, without reading its conditions."],
     quiz: [
       { q: "Which use case is prohibited under the EU AI Act?", o: ["A chatbot answering product questions", "Emotion recognition of employees at work for performance management", "Invoice data extraction", "Spam filtering"], a: 1, why: "Workplace emotion recognition is prohibited except for medical or safety reasons." },
       { q: "Which area is listed as high risk under the EU AI Act?", o: ["Video game AI", "AI used to evaluate creditworthiness of individuals", "Spell checkers", "Email sorting"], a: 1, why: "Access to essential services, including credit, is a high-risk area." },
       { q: "What is the purpose of triage before assessment?", o: ["To slow projects", "To focus reviewer time on higher-risk use cases quickly and consistently", "To approve everything", "To replace assessment"], a: 1, why: "Proportionality depends on fast, consistent triage." },
       { q: "A company uses a vendor's AI hiring tool. Under the EU AI Act, it is most likely the:", o: ["Provider", "Deployer", "Importer", "Notified body"], a: 1, why: "An organisation using an AI system under its authority is a deployer, with its own obligations." },
-      { q: "Which question best surfaces harm to individuals?", o: ["Which model is used?", "What happens to a person if the AI is wrong, and how would they find out?", "How fast is it?", "How much does it cost?"], a: 1, why: "It focuses on impact, detectability and redress." }
+      { q: "Which question best surfaces harm to individuals?", o: ["Which model is used?", "What happens to a person if the AI is wrong, and how would they find out?", "How fast is it?", "How much does it cost?"], a: 1, why: "It focuses on impact, detectability and redress." },
+      { q: "Marketing wants to publish AI-generated images in a campaign. What is the key IP check?", o: ["None, AI images are always free to use", "Whether outputs could infringe others' rights, who owns them under the vendor terms, and whether indemnity applies", "Only the image resolution", "Whether the images are colourful"], a: 1, why: "External publication is the highest-risk use for IP; vendor terms and infringement both matter." },
+      { q: "What does GDPR Article 22 address?", o: ["Cookie banners", "Decisions based solely on automated processing with legal or similarly significant effects on people", "Data centre locations only", "AI training costs"], a: 1, why: "Article 22 gives people rights around solely automated significant decisions." }
     ]
   },
   {
@@ -157,13 +176,15 @@ ACADEMY.tracks.risk = [
     ]
   },
   {
-    id: "rsk-govern", stage: "govern", minutes: 30,
+    id: "rsk-govern", stage: "govern", minutes: 50, updated: "2026-10-20",
     title: "Assurance, monitoring and audit of AI",
     summary: "Provide ongoing assurance over AI: inventory, monitoring, testing, regulatory readiness and audit.",
     outcomes: [
       "Maintain a reliable AI inventory, including vendor AI",
       "Plan second-line monitoring and third-line audit of AI",
-      "Track regulatory obligations and prepare for supervisory scrutiny"
+      "Track regulatory obligations and prepare for supervisory scrutiny",
+      "Assure AI agents and multi-agent systems with an agent inventory and a standard set of enterprise agent controls",
+      "Meet ongoing EU AI Act duties and use AI threat intelligence such as MITRE ATLAS"
     ],
     sections: [
       { h: "The AI inventory", body: "You cannot govern what you cannot see.", points: [
@@ -189,6 +210,43 @@ ACADEMY.tracks.risk = [
         "Follow phased deadlines (for example under the EU AI Act) and guidance from regulators.",
         "Prepare to explain to supervisors: inventory, risk classification, controls, incidents and training.",
         "Report serious incidents where law requires."
+      ] },
+      { h: "Agents change the risk picture", body: "An AI agent can take actions, not just produce content, so the question shifts from 'is the answer right?' to 'what could it do, and who would notice?'", points: [
+        "Tier agents by autonomy and impact: suggests only, acts with human approval, or acts alone; internal only or affecting customers, money, people or systems of record.",
+        "Excessive agency, prompt injection through content the agent reads, and cascading errors between agents are the key new risks.",
+        "Accountability: every agent needs a named business owner, even when it is embedded in vendor software.",
+        "Under the EU AI Act, risk follows the use: an agent used for hiring or credit decisions can be high risk whatever the technology."
+      ] },
+      { h: "The agent inventory", body: "Extend the AI inventory to agents, with the extra fields you need to judge what they can do.", points: [
+        "Owner, purpose, process, vendor or internal, risk tier and status (pilot, live, paused, retired).",
+        "Identity the agent runs as, and the systems, data and actions it can access.",
+        "Which actions need human approval, and the thresholds.",
+        "Other agents it calls or is called by, and tools it connects to (for example through MCP).",
+        "Where its logs are kept, its budget, and the date its kill switch was last tested.",
+        "Discover hidden agents through identity and access logs (non-human accounts and API keys), vendor release notes and low-code platform admin views."
+      ] },
+      { h: "Enterprise agent control framework", body: "Use a standard set of controls, scaled to the agent's tier, and test them like any other key control. An agent control tower is the platform and team that applies them centrally.", points: [
+        "Registry: no production agent without registration and an owner. Test: compare the registry with non-human identities and platform listings.",
+        "Identity and permissions: unique identity per agent, least privilege, no shared or personal credentials, access reviewed regularly.",
+        "Guardrails: allowed actions, data restrictions and content limits enforced in code, with red-team evidence.",
+        "Human-in-the-loop: approval for defined high-impact actions, with evidence that approvals are real and not rubber-stamped.",
+        "Observability: full traces of runs, tool calls and decisions, monitored with alerts.",
+        "Cost controls: budgets and rate limits per agent.",
+        "Kill switch: ability to stop an agent immediately, tested on a schedule, with a fallback.",
+        "Audit trail: complete, tamper-resistant logs, retained to meet legal and regulatory needs."
+      ] },
+      { h: "EU AI Act duties after launch", body: "Some EU AI Act obligations are one-off, many are ongoing. Know which apply to your role as provider or deployer.", points: [
+        "AI literacy (applies since February 2025): providers and deployers must take measures so staff and others operating AI on their behalf have sufficient AI literacy for their context. Keep training records.",
+        "Conformity assessment: providers of high-risk AI must show the system meets the Act's requirements (risk management, data governance, documentation, logging, transparency, human oversight, accuracy and robustness) before placing it on the market, then apply CE marking and register it.",
+        "Post-market monitoring: providers of high-risk AI must collect and analyse performance data throughout the system's life, and report serious incidents to authorities.",
+        "Deployers of high-risk AI must use it as instructed, assign competent human oversight, monitor it, keep logs, inform affected workers and, in some cases (for example public bodies), carry out a fundamental rights impact assessment.",
+        "Application dates are phased and the EU has proposed changes to the timetable for high-risk duties, so track the current dates in your obligations register."
+      ] },
+      { h: "AI threat intelligence: MITRE ATLAS", body: "MITRE ATLAS is a public knowledge base of tactics and techniques used to attack AI systems, modelled on MITRE ATT&CK.", points: [
+        "It covers attacks such as data poisoning, model evasion, model extraction and theft, prompt injection and attacks through the AI supply chain.",
+        "Use it with security teams to check that threat models and red-team plans cover known attack techniques.",
+        "Map high-risk AI systems to relevant techniques, and record which controls mitigate each one.",
+        "Pair it with the OWASP Top 10 for LLM Applications for application-level risks."
       ] }
     ],
     scenario: { title: "The AI feature nobody registered", situation: "A CRM vendor enabled AI-generated customer emails and lead scoring by default in a routine update. Sales teams started using them. Months later, a complaint revealed lead scores influenced which customers got discounts.", approach: [
@@ -197,13 +255,18 @@ ACADEMY.tracks.risk = [
       "Assess the lead scoring for fairness and transparency, and register it in the inventory."
     ] },
     exercise: "Draft five key risk indicators for AI in your organisation, with thresholds and reporting lines.",
-    watchouts: ["An inventory that only lists projects the AI team built misses most AI.", "Audit without technical testing gives false comfort for complex systems."],
+    watchouts: ["An inventory that only lists projects the AI team built misses most AI.", "Audit without technical testing gives false comfort for complex systems.", "An agent embedded in vendor software is still your agent if it acts on your data and customers."],
     quiz: [
       { q: "What is a common source of unregistered AI?", o: ["Board papers", "AI features enabled in existing vendor software", "Office furniture", "Printers"], a: 1, why: "Vendors add AI features through updates, often enabled by default." },
       { q: "Which is a useful key risk indicator for AI?", o: ["Number of AI news articles", "Human override rate or AI-related complaints", "Office attendance", "Laptop age"], a: 1, why: "These indicate quality and harm trends." },
       { q: "What does a system-level AI audit typically include?", o: ["Only interviews", "Testing evaluations, access controls, logs, overrides and evidence", "Reading marketing materials", "Counting users"], a: 1, why: "Effective audit tests controls with evidence." },
       { q: "What is an obligations register?", o: ["A list of vendors", "A mapping of legal and regulatory obligations to systems and controls", "A staff rota", "An incident log"], a: 1, why: "It shows how each obligation is met." },
-      { q: "How often should the AI inventory be reconciled?", o: ["Never", "Regularly, at least quarterly", "Only at audit time", "Every five years"], a: 1, why: "AI use changes quickly; regular reconciliation keeps it accurate." }
+      { q: "How often should the AI inventory be reconciled?", o: ["Never", "Regularly, at least quarterly", "Only at audit time", "Every five years"], a: 1, why: "AI use changes quickly; regular reconciliation keeps it accurate." },
+      { q: "Which factor most raises an AI agent's risk tier?", o: ["The length of its prompt", "Its ability to act alone on customers, money, people or systems of record", "The programming language used", "Its brand name"], a: 1, why: "Autonomy combined with impact drives agent risk." },
+      { q: "How can you find agents missing from the inventory?", o: ["Ask the vendor's sales team", "Reconcile it with non-human identities, API keys, low-code platform listings and vendor release notes", "Wait for incidents", "Count AI news articles"], a: 1, why: "Agents need credentials to act, so identity and platform data reveal hidden agents." },
+      { q: "What is good evidence that an agent's kill switch control is effective?", o: ["The vendor says it has one", "A recorded test showing the agent was stopped quickly and the fallback worked", "A policy statement", "An architecture diagram only"], a: 1, why: "Controls need tested evidence, not just design." },
+      { q: "Under the EU AI Act, what does the AI literacy duty require?", o: ["Every employee to become a data scientist", "Providers and deployers to take measures so people operating AI have sufficient AI literacy for their context", "Only the IT team to be trained", "Nothing until 2030"], a: 1, why: "Article 4 requires proportionate AI literacy measures, which training records help evidence." },
+      { q: "What is MITRE ATLAS?", o: ["A cloud region", "A knowledge base of tactics and techniques used to attack AI systems", "An AI model", "An EU regulation"], a: 1, why: "ATLAS catalogues adversarial techniques against AI, like ATT&CK does for IT." }
     ]
   }
 ];
@@ -239,6 +302,18 @@ ACADEMY.templates.risk = [
       { h: "Model and data", fields: ["Models used and providers", "Is customer data used for training?", "Data location and retention", "Sub-processors"] },
       { h: "Quality and safety", fields: ["Evaluation evidence", "Bias testing", "Security testing and red-teaming", "Known limitations"] },
       { h: "Governance", fields: ["Notification of model changes", "Incident notification", "Audit rights", "Regulatory compliance claims and evidence", "Exit and data return"] }
+    ]
+  },
+  {
+    id: "rsk-agent-controls", title: "AI agent control checklist",
+    purpose: "Assess whether an AI agent meets enterprise agent controls before go-live and at periodic review.",
+    when: "Before an agent goes live, after material changes, and in thematic reviews of agents.",
+    sections: [
+      { h: "Agent profile", fields: ["Agent and owner", "Process and purpose", "Autonomy level (suggests / acts with approval / acts alone)", "Risk tier"] },
+      { h: "Access", fields: ["Identity it runs as (unique, not shared)", "Systems, data and actions allowed", "Last access review date"] },
+      { h: "Controls", fields: ["Registered in inventory", "Guardrails enforced in code and red-teamed", "Human approval thresholds", "Tracing and alerting", "Budget and rate limits", "Kill switch tested (date)", "Audit log location and retention"] },
+      { h: "Multi-agent", fields: ["Agents it calls or is called by", "Checks between agents on key data", "Step and loop limits"] },
+      { h: "Conclusion", fields: ["Control gaps and owners", "Residual risk and acceptor", "Next review date"] }
     ]
   }
 ];
