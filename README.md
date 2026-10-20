@@ -1,16 +1,28 @@
-# AI Governance Academy V3
+# AI Governance Academy
 
-A GitHub Pages-compatible enterprise AI governance learning application with a Supabase backend.
+A GitHub Pages-compatible, role-based AI learning application with an optional Supabase backend.
 
-## V3 additions
-- Local learning mode is available without Supabase: learners can take the course now; progress stays in the current browser and is separated by the entered email (not email-verified)
-- Passwordless sign-in with a verified email magic link; learners use their name and email, never a password
-- Progress synchronized across browsers and devices
-- Central learner roster and login/activity insights
-- Admin dashboard with learner-level progress, scores, study time, and last activity
-- CSV reporting
+## What learners get
+Each learner picks their role at sign-in and sees a learning path, templates and glossary built for it. The role can be changed at any time, and other roles' paths can be previewed.
+
+- **8 roles:** Developer, Data & ML Engineer, Product Manager, Project / Delivery Manager, Business Leader, Operations Leader, Risk, Compliance & Legal, and Business Function Professional (HR, finance, sales, marketing, service).
+- **Foundations (shared, 3 modules):** AI in plain English, choosing the right kind of AI, and responsible use and governance essentials.
+- **Role track (4 modules per role):** using AI in your work, identifying the right solution, implementing it, and control and governance.
+- **Every module:** learning outcomes, lessons, a worked scenario, a "try it this week" exercise, watch-outs, audio narration, and a 5-question quiz with explanations (70% to pass).
+- **Templates:** 3 to 4 per role plus shared ones (use case intake, incident report). They can be filled in on the page and downloaded as Markdown.
+- **Progress and certificates:** a My progress page with status, best score and attempts per module; a printable certificate when the path is complete; and, for signed-in learners, an email with module scores and a PDF certificate sent to their login email.
+- **Answers explained:** after each quiz learners see the correct answer and an explanation for every question.
+- **Glossary:** 78 terms with plain-English definitions, key terms flagged per role, and notes on what a term means in a given job.
+
+## Platform
+- Passwordless sign-in with a verified email magic link when Supabase is configured; the learner's role is stored on their account
+- Local learning mode (no sign-in) as a fallback, with progress kept in the current browser
+- Progress synchronized across browsers and devices for signed-in learners
+- Admin dashboard with learner role, progress, scores, study time and last activity, plus CSV export
 - Row Level Security and role-based admin access
-- All V2 capabilities: 15 modules, 150 questions, audio narration, visual maps, scoring, completion pace, and forecast
+
+## Editing content
+All course content lives in `content/`: `core.js` (roles, stages, Foundations, shared templates), `roles/<role>.js` (each role's track and templates), `glossary.js` and `changelog.js`. Pull requests run `node scripts/validate_content.js`. See [docs/CONTENT-UPDATES.md](docs/CONTENT-UPDATES.md) for the update process and the rules that protect learner progress.
 
 See `SETUP.md` for deployment instructions. Supabase setup is only required for verified sign-in, cross-device progress, and central administrator reporting; it is not required to take modules in local mode.
 

@@ -1,0 +1,58 @@
+name: Completion certificates
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: completion-emails
+  cancel-in-progress: false
+
+jobs:
+  send-certificates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check email delivery configuration
+        id: config
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
+          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
+          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || [ -z "$NEWS_SMTP_HOST" ] || \
+             [ -z "$NEWS_SMTP_USERNAME" ] || [ -z "$NEWS_SMTP_PASSWORD" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Certificates not sent: configure the Supabase and SMTP secrets described in SETUP.md."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Send completion certificates
+        if: steps.config.outputs.configured == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
+          NEWS_SMTP_PORT: ${{ secrets.NEWS_SMTP_PORT }}
+          NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
+          NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          ACADEMY_URL: ${{ vars.ACADEMY_URL }}
+        run: python scripts/completion_emails.py
