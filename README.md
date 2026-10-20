@@ -10,6 +10,8 @@ Each learner picks their role at sign-in and sees a learning path, templates and
 - **Role track (4 modules per role):** using AI in your work, identifying the right solution, implementing it, and control and governance.
 - **Every module:** learning outcomes, lessons, a worked scenario, a "try it this week" exercise, watch-outs, audio narration, and a 5-question quiz with explanations (70% to pass).
 - **Templates:** 3 to 4 per role plus shared ones (use case intake, incident report). They can be filled in on the page and downloaded as Markdown.
+- **Progress and certificates:** a My progress page with status, best score and attempts per module; a printable certificate when the path is complete; and, for signed-in learners, an email with module scores and a PDF certificate sent to their login email.
+- **Answers explained:** after each quiz learners see the correct answer and an explanation for every question.
 - **Glossary:** 78 terms with plain-English definitions, key terms flagged per role, and notes on what a term means in a given job.
 
 ## Platform
@@ -20,7 +22,7 @@ Each learner picks their role at sign-in and sees a learning path, templates and
 - Row Level Security and role-based admin access
 
 ## Editing content
-All course content lives in `content/`: `core.js` (roles, stages, Foundations, shared templates), `roles/<role>.js` (each role's track and templates) and `glossary.js`. Adding a role means adding it to `roles` in `core.js`, creating its file in `content/roles/`, and loading that file in `index.html`.
+All course content lives in `content/`: `core.js` (roles, stages, Foundations, shared templates), `roles/<role>.js` (each role's track and templates), `glossary.js` and `changelog.js`. Pull requests run `node scripts/validate_content.js`. See [docs/CONTENT-UPDATES.md](docs/CONTENT-UPDATES.md) for the update process and the rules that protect learner progress.
 
 See `SETUP.md` for deployment instructions. Supabase setup is only required for verified sign-in, cross-device progress, and central administrator reporting; it is not required to take modules in local mode.
 
