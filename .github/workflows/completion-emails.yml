@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
+    inputs:
+      test_recipient:
+        description: Send a sample certificate email to this address instead of processing learners
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -61,4 +66,10 @@ jobs:
           NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           ACADEMY_URL: ${{ vars.ACADEMY_URL }}
-        run: python scripts/completion_emails.py
+          TEST_RECIPIENT: ${{ inputs.test_recipient }}
+        run: |
+          if [ -n "$TEST_RECIPIENT" ]; then
+            python scripts/completion_emails.py --test-to "$TEST_RECIPIENT"
+          else
+            python scripts/completion_emails.py
+          fi

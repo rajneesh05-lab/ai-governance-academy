@@ -269,20 +269,25 @@ class Supabase:
                      {"emailed_at": datetime.now(timezone.utc).isoformat()}, prefer="return=minimal")
 
 
+def sample_completion(paths: dict, email: str) -> Completion:
+    role = paths["roles"][0]
+    return find_completion({"user_id": "00000000-0000-0000-0000-000000000000", "full_name": "Sample Learner",
+                            "email": email, "work_role": role["id"],
+                            "completed_modules": [m["id"] for m in role["modules"]],
+                            "scores": {m["id"]: 80 + i * 3 for i, m in enumerate(role["modules"])}},
+                           paths, datetime.now(timezone.utc))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--preview", metavar="DIR", help="write a sample email and certificate to DIR without sending")
+    parser.add_argument("--test-to", metavar="EMAIL", help="send a sample certificate email to EMAIL to check delivery")
     args = parser.parse_args()
     paths = load_paths()
     academy_url = os.environ.get("ACADEMY_URL") or "https://rajneesh05-lab.github.io/ai-governance-academy/"
 
     if args.preview:
-        role = paths["roles"][0]
-        sample = find_completion({"user_id": "00000000-0000-0000-0000-000000000000", "full_name": "Sample Learner",
-                                  "email": "learner@example.com", "work_role": role["id"],
-                                  "completed_modules": [m["id"] for m in role["modules"]],
-                                  "scores": {m["id"]: 80 + i * 3 for i, m in enumerate(role["modules"])}},
-                                 paths, datetime.now(timezone.utc))
+        sample = sample_completion(paths, "learner@example.com")
         out = pathlib.Path(args.preview)
         out.mkdir(parents=True, exist_ok=True)
         message = build_email(sample, "academy@example.com", academy_url)
@@ -291,11 +296,25 @@ def main() -> int:
         print(f"Wrote preview files to {out}")
         return 0
 
-    db = Supabase(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"])
     resend_key = os.environ.get("RESEND_API_KEY")
     sender = os.environ.get("NEWSLETTER_FROM") or ("" if resend_key else os.environ["NEWS_SMTP_USERNAME"])
     if not sender:
         raise RuntimeError("Set NEWSLETTER_FROM to a sender address verified with Resend.")
+
+    if args.test_to:
+        if "@" not in args.test_to:
+            raise ValueError("--test-to needs an email address.")
+        message = build_email(sample_completion(paths, args.test_to.strip()), sender, academy_url)
+        message.replace_header("Subject", "[Test] " + message["Subject"])
+        if resend_key:
+            send_with_resend(message, resend_key)
+        else:
+            with smtp_connection() as connection:
+                connection.send_message(message)
+        print("Sent a test certificate email.")
+        return 0
+
+    db = Supabase(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"])
     try:
         candidates = db.candidates()
     except SupabaseError as exc:
