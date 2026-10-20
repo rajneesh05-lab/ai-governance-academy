@@ -75,7 +75,10 @@ By default, the workflow uses official feeds from UiPath, Microsoft AI, OpenAI, 
 
 When a signed-in learner passes every module in their role path, the **Completion certificates** workflow (`.github/workflows/completion-emails.yml`) emails them their best score per module and a PDF certificate at the address they signed in with. It runs every 30 minutes and can be run manually from **Actions → Completion certificates → Run workflow**. Each learner gets one email per completed role path.
 
-It reuses the newsletter's secrets: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `NEWS_SMTP_HOST`, `NEWS_SMTP_PORT`, `NEWS_SMTP_USERNAME`, `NEWS_SMTP_PASSWORD` and optionally `NEWSLETTER_FROM`. Optionally set the repository variable `ACADEMY_URL` to the site address used in the email. Until the secrets are set, the workflow skips sending with a warning. Requires the `certificates` table from `supabase/schema.sql` (new installs) or `supabase/role-tracks-upgrade.sql` (existing installs).
+It needs `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, plus one way to send email:
+
+- **Resend (recommended):** `RESEND_API_KEY` and `NEWSLETTER_FROM` (an address on a domain verified in Resend, for example `Academy <academy@yourdomain.com>`). Used whenever `RESEND_API_KEY` is set.
+- **SMTP:** the newsletter's `NEWS_SMTP_HOST`, `NEWS_SMTP_PORT`, `NEWS_SMTP_USERNAME`, `NEWS_SMTP_PASSWORD` and optionally `NEWSLETTER_FROM`. Gmail and Outlook need an app password, not your normal password. Optionally set the repository variable `ACADEMY_URL` to the site address used in the email. Until the secrets are set, the workflow skips sending with a warning. Requires the `certificates` table from `supabase/schema.sql` (new installs) or `supabase/role-tracks-upgrade.sql` (existing installs).
 
 Learners in local mode (not signed in) can view and print their certificate in the app, but are not emailed because their address is not verified.
 

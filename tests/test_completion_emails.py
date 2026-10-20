@@ -1,7 +1,10 @@
+import base64
+import json
 import unittest
+from unittest.mock import patch
 from datetime import datetime, timezone
 
-from scripts.completion_emails import build_email, certificate_id, certificate_pdf, find_completion, load_paths
+from scripts.completion_emails import build_email, send_with_resend, certificate_id, certificate_pdf, find_completion, load_paths
 
 PATHS = {
     "roles": [{"id": "product", "name": "Product Manager",
@@ -50,6 +53,18 @@ class CompletionEmailTests(unittest.TestCase):
         attachments = list(message.iter_attachments())
         self.assertEqual(len(attachments), 1)
         self.assertEqual(attachments[0].get_content_type(), "application/pdf")
+
+    def test_resend_payload_includes_both_bodies_and_the_pdf(self):
+        message = build_email(find_completion(learner(), PATHS, ISSUED), "Academy <a@example.com>", "https://example.com/")
+        with patch("scripts.completion_emails.urllib.request.urlopen") as urlopen:
+            send_with_resend(message, "re_test")
+        request = urlopen.call_args.args[0]
+        payload = json.loads(request.data)
+        self.assertEqual(request.full_url, "https://api.resend.com/emails")
+        self.assertEqual(payload["to"], ["dana@example.com"])
+        self.assertIn("Average: 90%", payload["text"])
+        self.assertIn("<table", payload["html"])
+        self.assertTrue(base64.b64decode(payload["attachments"][0]["content"]).startswith(b"%PDF"))
 
     def test_real_content_paths_load(self):
         paths = load_paths()
