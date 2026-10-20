@@ -83,7 +83,12 @@ jobs:
               echo "configured=false" >> "$GITHUB_OUTPUT"
               echo "::warning::Newsletter not sent: there are no active subscribers."
             else
-              echo "NEWSLETTER_SUBSCRIBERS=$(echo "$subscribers" | jq -c '[.[] | {email, token: .unsubscribe_token}]')" >> "$GITHUB_ENV"
+              newsletter_subscribers=$(echo "$subscribers" | jq -c '[.[] | {email, token: .unsubscribe_token}]')
+              while IFS= read -r value; do
+                [ -z "$value" ] || echo "::add-mask::$value"
+              done < <(echo "$subscribers" | jq -r '.[] | .email, .unsubscribe_token')
+              echo "::add-mask::$newsletter_subscribers"
+              printf 'NEWSLETTER_SUBSCRIBERS=%s\n' "$newsletter_subscribers" >> "$GITHUB_ENV"
               echo "configured=true" >> "$GITHUB_OUTPUT"
             fi
           fi
