@@ -326,27 +326,36 @@ def send_email(message: EmailMessage, subscribers: list[tuple[str, str]]) -> Non
     sender = os.environ.get("NEWSLETTER_FROM", username)
     context = ssl.create_default_context()
     message["From"] = sender
-    if port == 465:
-        connection = smtplib.SMTP_SSL(host, port, context=context, timeout=30)
-    else:
-        connection = smtplib.SMTP(host, port, timeout=30)
-    with connection:
-        if port != 465:
-            connection.starttls(context=context)
-        connection.login(username, password)
-        for recipient, token in subscribers:
-            outgoing = EmailMessage()
-            outgoing["Subject"] = message["Subject"]
-            outgoing["From"] = sender
-            outgoing["To"] = recipient
-            outgoing.set_content(
-                message.get_content()
-                + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
-                + unsubscribe_link(token)
-                + "\n"
-            )
-            connection.send_message(outgoing)
-            print("Sent digest to one configured recipient.")
+    stage = "connecting"
+    try:
+        if port == 465:
+            connection = smtplib.SMTP_SSL(host, port, context=context, timeout=30)
+        else:
+            connection = smtplib.SMTP(host, port, timeout=30)
+        with connection:
+            if port != 465:
+                stage = "starting TLS"
+                connection.starttls(context=context)
+            stage = "authenticating"
+            connection.login(username, password)
+            for recipient, token in subscribers:
+                stage = "sending message"
+                outgoing = EmailMessage()
+                outgoing["Subject"] = message["Subject"]
+                outgoing["From"] = sender
+                outgoing["To"] = recipient
+                outgoing.set_content(
+                    message.get_content()
+                    + "\n\nTo stop receiving this newsletter, unsubscribe here:\n"
+                    + unsubscribe_link(token)
+                    + "\n"
+                )
+                connection.send_message(outgoing)
+                print("Sent digest to one configured recipient.")
+    except (OSError, smtplib.SMTPException) as exc:
+        raise RuntimeError(
+            f"SMTP failed while {stage} ({type(exc).__name__}): {exc}"
+        ) from exc
 
 
 def main() -> int:
