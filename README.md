@@ -20,7 +20,7 @@ See `SETUP.md` for deployment instructions. Supabase setup is only required for 
 - Public subscriber signup page: [newsletter.html](newsletter.html)
 - Each item includes what's new, possible daily-work impact, a cautious work-use idea, a primary source link, and recognized abbreviation expansions
 - Preview: `NEWSLETTER-SAMPLE.md`
-- The email workflow requires recipient and SMTP credentials configured as GitHub Actions secrets; it is independent of Supabase.
+- The email workflow requires a Supabase subscriber table and an email-provider API key configured as GitHub Actions secrets; it is independent of learner accounts.
 
 ## Architecture
 Static HTML/CSS/JavaScript on GitHub Pages, Supabase Auth, PostgreSQL, and Row Level Security. No service-role key is used in the browser.

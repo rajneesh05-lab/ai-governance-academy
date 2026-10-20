@@ -1,6 +1,9 @@
+import json
+import os
+import urllib.error
 import unittest
 from datetime import date, datetime, timezone
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from scripts.ai_newsletter import (
     NewsItem,
@@ -8,6 +11,7 @@ from scripts.ai_newsletter import (
     collect_news,
     parse_feed,
     previous_month,
+    send_email,
     unsubscribe_link,
 )
 
@@ -86,6 +90,59 @@ class NewsletterTests(unittest.TestCase):
             parse_qs(parsed.query),
             {"token": ["12345678-1234-1234-1234-123456789abc"]},
         )
+
+    def test_resend_api_sends_individual_message_without_smtp(self):
+        response = MagicMock()
+        response.status = 200
+        response_context = MagicMock()
+        response_context.__enter__.return_value = response
+        item = NewsItem(
+            "Example",
+            "AI release",
+            "A new AI release.",
+            "https://example.com/ai-release",
+            datetime(2026, 10, 19, tzinfo=timezone.utc),
+        )
+        message = build_email("weekly", [item], date(2026, 10, 19))
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "RESEND_API_KEY": "test-key",
+                    "NEWSLETTER_SIGNUP_URL": "https://example.com/newsletter.html",
+                },
+                clear=True,
+            ),
+            patch("scripts.ai_newsletter.urllib.request.urlopen", return_value=response_context) as send,
+        ):
+            send_email(message, [("reader@example.com", "12345678-1234-1234-1234-123456789abc")])
+
+        request = send.call_args.args[0]
+        payload = json.loads(request.data)
+        self.assertEqual(request.full_url, "https://api.resend.com/emails")
+        self.assertEqual(payload["to"], ["reader@example.com"])
+        self.assertEqual(payload["from"], "AI in Practice <onboarding@resend.dev>")
+        self.assertIn("unsubscribe?token=", payload["text"])
+        self.assertEqual(request.get_header("Authorization"), "Bearer test-key")
+
+    def test_resend_api_reports_provider_rejection(self):
+        item = NewsItem(
+            "Example",
+            "AI release",
+            "A new AI release.",
+            "https://example.com/ai-release",
+            datetime(2026, 10, 19, tzinfo=timezone.utc),
+        )
+        message = build_email("weekly", [item], date(2026, 10, 19))
+        error = urllib.error.HTTPError(
+            "https://api.resend.com/emails", 403, "Forbidden", None, None
+        )
+        with (
+            patch.dict(os.environ, {"RESEND_API_KEY": "test-key"}, clear=True),
+            patch("scripts.ai_newsletter.urllib.request.urlopen", side_effect=error),
+            self.assertRaisesRegex(RuntimeError, "HTTP 403"),
+        ):
+            send_email(message, [("reader@example.com", "12345678-1234-1234-1234-123456789abc")])
 
 
 if __name__ == "__main__":
