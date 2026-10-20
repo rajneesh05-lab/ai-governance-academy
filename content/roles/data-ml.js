@@ -100,13 +100,14 @@ ACADEMY.tracks["data-ml"] = [
     ]
   },
   {
-    id: "dml-implement", stage: "implement", minutes: 35,
+    id: "dml-implement", stage: "implement", minutes: 50, updated: "2026-10-20",
     title: "Evaluation, MLOps and LLMOps",
     summary: "Build the evaluation, deployment and monitoring pipeline that turns a model into a dependable production service.",
     outcomes: [
       "Design an offline and online evaluation strategy, including fairness slices",
       "Use experiment tracking, a model registry and versioned data",
-      "Set up monitoring for drift, quality and cost"
+      "Set up monitoring for drift, quality and cost",
+      "Build data lineage, provenance and contracts, measure RAG quality and make models cheaper with distillation and quantisation"
     ],
     sections: [
       { h: "Evaluation that predicts production", body: "Offline scores only matter if they reflect how the model will be used.", points: [
@@ -133,6 +134,26 @@ ACADEMY.tracks["data-ml"] = [
         "Quality: delayed ground truth, sampled human review, user feedback.",
         "For LLM systems also track refusal rate, hallucination checks, token cost and latency.",
         "Define alert thresholds and an owner who responds."
+      ] },
+      { h: "Data lineage, provenance and data contracts", body: "Trustworthy AI needs to know where data came from, what happened to it and who depends on it.", points: [
+        "Provenance: the origin of each dataset or document, its collection method, licence and legal basis, recorded at ingestion.",
+        "Lineage: how data flows and is transformed from source to features, training sets, embeddings and model outputs. Lineage tools let you trace a bad prediction back to its source data.",
+        "Data contracts: agreed schemas, quality rules and change notice between data producers and consumers, so an upstream change cannot silently break a model.",
+        "Version datasets used for training and evaluation, and link each model version to the exact data versions it used.",
+        "Lineage and provenance are evidence for regulators and auditors, and make deletion requests and licence questions answerable."
+      ] },
+      { h: "RAG quality from the data side", body: "Most RAG failures are retrieval failures. Measure retrieval and generation separately.", points: [
+        "Chunking: split documents along their structure (sections, headings, tables) with overlap where needed, and keep metadata such as source, date and access rights.",
+        "Retrieval: use hybrid search (keyword plus vector) and a reranker, a model that reorders retrieved passages by relevance before they reach the LLM.",
+        "Retrieval metrics: recall and precision of the right passages for a labelled question set.",
+        "Groundedness (or faithfulness): is every claim in the answer supported by the retrieved passages? Answer relevance: does it address the question?",
+        "Keep the index fresh: re-index changed documents and remove deleted or expired ones."
+      ] },
+      { h: "Smaller, cheaper models: distillation and quantisation", body: "Production cost and latency often matter more than the last point of accuracy.", points: [
+        "Distillation: train a smaller 'student' model to imitate a larger 'teacher' model on your task. Check the provider's terms allow using its outputs this way.",
+        "Quantisation: store model weights at lower precision (for example 8-bit or 4-bit instead of 16-bit), cutting memory and cost, usually with a small quality loss.",
+        "Always re-run your evaluation set after distilling or quantising, including segment-level and safety checks.",
+        "Treat a distilled or quantised model as a new model version in the inventory."
       ] }
     ],
     scenario: { title: "The forecast that missed the new store format", situation: "A demand forecasting model performed well for a year, then errors doubled in stores using a new layout. Nobody noticed for two months.", approach: [
@@ -147,11 +168,14 @@ ACADEMY.tracks["data-ml"] = [
       { q: "What is shadow mode deployment?", o: ["Running a model at night", "Running the new model alongside the current process without acting on its outputs", "Hiding the model from auditors", "Deploying without monitoring"], a: 1, why: "Shadow mode gives real-world evidence with no customer impact." },
       { q: "What is concept drift?", o: ["Input data format changes", "The relationship between inputs and the outcome changes", "The model file is corrupted", "Developers change the code"], a: 1, why: "Concept drift means the world changed, so learned patterns no longer hold." },
       { q: "What does a model registry provide?", o: ["Faster training", "Versioned models with stages, metadata and approvals", "Free GPUs", "Automatic labelling"], a: 1, why: "A registry supports controlled promotion and traceability." },
-      { q: "For a forecasting model, how should data be split for evaluation?", o: ["Randomly", "By time, training on the past and testing on later periods", "Alphabetically", "It does not matter"], a: 1, why: "Time-based splits mimic real use and prevent leakage from the future." }
+      { q: "For a forecasting model, how should data be split for evaluation?", o: ["Randomly", "By time, training on the past and testing on later periods", "Alphabetically", "It does not matter"], a: 1, why: "Time-based splits mimic real use and prevent leakage from the future." },
+      { q: "What does data lineage let you do?", o: ["Make data load faster", "Trace how data moved and changed from source to model output, back to its origin", "Delete all old data", "Avoid documentation"], a: 1, why: "Lineage connects outputs to sources, which helps debugging, audit and deletion requests." },
+      { q: "A RAG answer contains a claim not found in any retrieved passage. Which metric captures this?", o: ["Latency", "Groundedness (faithfulness)", "Token count", "Recall of the training set"], a: 1, why: "Groundedness measures whether claims are supported by retrieved context." },
+      { q: "What should you do after quantising a model?", o: ["Ship it, quantisation never changes quality", "Re-run evaluations, including segment and safety checks, and register it as a new version", "Delete the original", "Only test latency"], a: 1, why: "Lower precision can change behaviour, so it must be re-evaluated." }
     ]
   },
   {
-    id: "dml-govern", stage: "govern", minutes: 40, updated: "2026-10-20",
+    id: "dml-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
     title: "Model risk management and responsible AI",
     summary: "Document, validate and control models so they are fair, explainable, compliant and defensible.",
     outcomes: [
@@ -198,6 +222,13 @@ ACADEMY.tracks["data-ml"] = [
         "Extend the model card into an agent card: tools and permissions, autonomy level, human approval points, evaluation results and known failure modes.",
         "Validation for higher-risk agents covers the system's behaviour, not just model accuracy.",
         "A change to a tool, permission or underlying model is a material change that triggers re-evaluation."
+      ] },
+      { h: "Privacy-enhancing techniques", body: "Several techniques let you learn from data while exposing less of it. None is a silver bullet; each needs expert design.", points: [
+        "De-identification: remove or mask direct identifiers. Pseudonymised data is still personal data under GDPR, and re-identification is often easier than it looks.",
+        "Differential privacy: adds carefully calibrated noise to results or training so no individual's data can be inferred, with a measurable privacy budget.",
+        "Federated learning: trains models where the data lives (devices or sites) and shares only model updates, not raw data.",
+        "Synthetic data: useful for testing and sharing, but must be checked for memorised real records and for whether it preserves the patterns that matter.",
+        "Record which techniques were used, and their parameters, in the datasheet and impact assessment."
       ] }
     ],
     scenario: { title: "The screening model and the postcode", situation: "A tenant-screening model did not use ethnicity, but approval rates differed sharply between neighbourhoods. Postcode was acting as a proxy for protected characteristics.", approach: [
@@ -214,7 +245,8 @@ ACADEMY.tracks["data-ml"] = [
       { q: "What is the purpose of independent model validation?", o: ["To speed up deployment", "To provide an objective check that a higher-risk model is sound and fit for use", "To replace monitoring", "To write documentation"], a: 1, why: "Independent challenge catches errors the builders miss." },
       { q: "What should happen after a material change to a high-risk model?", o: ["Nothing until the annual review", "Re-validation and updated documentation before use", "Only a code review", "Notify customers"], a: 1, why: "Change control ensures the validated model is the one in production." },
       { q: "What does trajectory evaluation of an agent check?", o: ["Only the final answer's wording", "Whether the agent used the right tools, with the right arguments, in sensible steps and without unsafe actions", "The model's training loss", "How fast the GPU runs"], a: 1, why: "Agents can reach a right answer by an unsafe path, so the steps matter too." },
-      { q: "A team adds a new tool to a live agent. What should happen?", o: ["Nothing, the model is unchanged", "Treat it as a material change: re-run evaluations and update the agent card and inventory", "Only update the README", "Wait for the annual review"], a: 1, why: "New tools change what the agent can do, so they change its risk." }
+      { q: "A team adds a new tool to a live agent. What should happen?", o: ["Nothing, the model is unchanged", "Treat it as a material change: re-run evaluations and update the agent card and inventory", "Only update the README", "Wait for the annual review"], a: 1, why: "New tools change what the agent can do, so they change its risk." },
+      { q: "What does differential privacy provide?", o: ["Encryption of the database", "A mathematical limit on how much any one person's data can be inferred from results or a trained model", "Removal of names only", "Faster training"], a: 1, why: "It adds calibrated noise with a measurable privacy budget." }
     ]
   }
 ];

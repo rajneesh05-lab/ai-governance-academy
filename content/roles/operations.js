@@ -152,14 +152,15 @@ ACADEMY.tracks.operations = [
     ]
   },
   {
-    id: "ops-govern", stage: "govern", minutes: 35, updated: "2026-10-20",
+    id: "ops-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
     title: "Running AI safely day to day",
     summary: "Operational controls for AI: monitoring, incident response, vendor management, business continuity and audit readiness.",
     outcomes: [
       "Set up operational monitoring and KPIs for AI services",
       "Handle AI incidents and continuity planning",
       "Manage AI vendors and keep audit evidence",
-      "Run a mixed workforce of people, bots and AI agents with clear handoffs, controls and a way to stop any agent"
+      "Run a mixed workforce of people, bots and AI agents with clear handoffs, controls and a way to stop any agent",
+      "Manage AI usage costs with FinOps practices, and run AI services against SLOs including hallucination rate"
     ],
     sections: [
       { h: "Operational monitoring", body: "Monitor AI services like any critical service, plus quality.", points: [
@@ -205,6 +206,21 @@ ACADEMY.tracks.operations = [
         "Loops: two agents can keep passing work back and forth. Set limits on steps, time and cost per case.",
         "Unclear ownership: every agent in the chain needs an owner, and the end-to-end process needs one accountable owner.",
         "Tracing: you should be able to follow one case across every agent and person that touched it."
+      ] },
+      { h: "AI FinOps: managing AI usage costs", body: "AI costs are usage-based and can grow fast and unpredictably. FinOps for AI applies cloud cost-management discipline to models, tokens and agents.", points: [
+        "Visibility: tag every AI call by team, use case and agent (an AI gateway makes this easy) so cost per case and per team is known.",
+        "Unit economics: track cost per transaction, per resolved case or per document, next to the value each delivers.",
+        "Budgets and alerts per team and use case, with an owner who acts when spend jumps.",
+        "Optimise: right-size models, use caching and batch processing, trim prompts and outputs, and stop idle or low-value use.",
+        "Commercials: compare pay-as-you-go with committed spend, watch licence 'shelfware', and review prices as vendors change them.",
+        "Review AI cost monthly alongside quality and value, not in isolation."
+      ] },
+      { h: "Service levels for AI: SLOs and hallucination tracking", body: "Service level objectives (SLOs) set the target for a service; the service level agreement (SLA) is the promise to customers. AI services need quality SLOs alongside the usual ones.", points: [
+        "Classic SLOs: availability, latency (for example 95% of responses within 3 seconds), throughput.",
+        "Quality SLOs: accuracy from sampling, task success rate, escalation and override rates.",
+        "Hallucination rate: the share of sampled answers containing unsupported or false claims, measured on a regular sample with human or automated checks against sources.",
+        "Set error budgets: how much below target you tolerate before pausing changes or switching to fallback.",
+        "Agree what vendors commit to, since most vendor SLAs cover uptime only, not output quality."
       ] }
     ],
     scenario: { title: "The vendor's silent update", situation: "Overnight, a document-processing vendor upgraded its extraction model. Accuracy on your purchase orders fell from 97% to 89%, and the drop was noticed only when a supplier complained about a wrong payment.", approach: [
@@ -222,7 +238,9 @@ ACADEMY.tracks.operations = [
       { q: "How should AI services fit into incident management?", o: ["Separately and informally", "Included with severity levels, fallback triggers and owners", "Only the vendor handles them", "Not at all"], a: 1, why: "AI services are operational services and need the same rigour." },
       { q: "In an orchestrated process with people, bots and AI agents, what should you measure first?", o: ["Each agent's number of actions", "End-to-end process outcomes: cycle time, SLA, cost and quality per case", "How many models are used", "Vendor marketing claims"], a: 1, why: "The process is the unit that delivers value; agent activity metrics are secondary." },
       { q: "Two agents keep passing the same case back and forth and costs spike. Which control prevents this?", o: ["A friendlier prompt", "Limits on steps, time and cost per case, with alerts", "Adding a third agent", "Monthly reporting"], a: 1, why: "Step, time and budget limits stop loops and runaway runs." },
-      { q: "Why test an agent's kill switch and manual fallback regularly?", o: ["Auditors like drills", "So an agent can be stopped quickly and work continues safely when it misbehaves", "To slow down automation", "It is not needed if the vendor is reliable"], a: 1, why: "An untested kill switch or forgotten manual process fails when you need it." }
+      { q: "Why test an agent's kill switch and manual fallback regularly?", o: ["Auditors like drills", "So an agent can be stopped quickly and work continues safely when it misbehaves", "To slow down automation", "It is not needed if the vendor is reliable"], a: 1, why: "An untested kill switch or forgotten manual process fails when you need it." },
+      { q: "What is the first step in AI FinOps?", o: ["Cancelling all AI tools", "Making costs visible by tagging AI usage per team, use case and agent", "Using the largest model", "Annual budgeting only"], a: 1, why: "You cannot manage costs you cannot attribute." },
+      { q: "How do you measure the hallucination rate of an AI service?", o: ["Ask the model if it hallucinated", "Regularly sample answers and check claims against sources, with human or automated review", "Count tokens", "Use the vendor's uptime SLA"], a: 1, why: "Sampling and checking against sources gives a real rate to track." }
     ]
   }
 ];
@@ -268,6 +286,17 @@ ACADEMY.templates.operations = [
       { h: "Permissions and limits", fields: ["Systems and actions allowed", "Actions needing human approval and thresholds", "Budget, rate and step limits"] },
       { h: "KPIs and alerts", fields: ["Task success and escalation rate", "Override and error rate", "Cost per case", "Alert thresholds and who acts"] },
       { h: "Stop and fallback", fields: ["Who can pause or stop the agent", "How to stop it (steps)", "Manual fallback process", "Date last tested"] }
+    ]
+  },
+  {
+    id: "ops-ai-finops-review", title: "AI cost (FinOps) review",
+    purpose: "Review AI spend against value each month and agree optimisation actions.",
+    when: "Monthly for each team or use case with material AI spend.",
+    sections: [
+      { h: "Spend", fields: ["Spend this month and trend", "Spend by use case, team and agent", "Budget and variance"] },
+      { h: "Unit economics", fields: ["Cost per case or transaction", "Value per case", "Quality at that cost"] },
+      { h: "Optimisation", fields: ["Model right-sizing opportunities", "Caching and batching", "Unused licences", "Prompt and output trimming"] },
+      { h: "Actions", fields: ["Actions and owners", "Expected saving", "Next review date"] }
     ]
   }
 ];

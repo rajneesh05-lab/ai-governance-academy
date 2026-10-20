@@ -101,13 +101,14 @@ ACADEMY.tracks.project = [
     ]
   },
   {
-    id: "prj-implement", stage: "implement", minutes: 30,
+    id: "prj-implement", stage: "implement", minutes: 40, updated: "2026-10-20",
     title: "Delivering AI with evaluation gates",
     summary: "Run AI delivery with iteration loops, quality gates, adoption work and clear handover to operations.",
     outcomes: [
       "Build evaluation gates into the delivery cadence",
       "Track AI-specific delivery metrics and risks",
-      "Hand over to operations with monitoring, support and ownership in place"
+      "Hand over to operations with monitoring, support and ownership in place",
+      "Plan AI running costs and SLOs into delivery and handover"
     ],
     sections: [
       { h: "Iteration loops", body: "AI quality improves through repeated cycles of change and evaluation.", points: [
@@ -133,6 +134,18 @@ ACADEMY.tracks.project = [
         "Budget for running costs (tokens, licences, compute) and maintenance.",
         "Change process for prompt, model and data updates.",
         "Documentation: system card, runbook and user guides."
+      ] },
+      { h: "AI costs in delivery", body: "AI projects carry usage-based running costs that grow with adoption. Plan them like any other budget line.", points: [
+        "Estimate running costs early: volumes x tokens x price, plus licences, hosting and monitoring, at pilot and at full scale.",
+        "Include evaluation runs and testing in the budget; they consume tokens too.",
+        "Set a cost budget and alert for the pilot, and report spend at each stage gate.",
+        "Record cost per case in the business case review so leaders can compare value with cost."
+      ] },
+      { h: "SLOs at handover", body: "Define how the AI service will be judged before handing it to the run team.", points: [
+        "Agree service level objectives for availability, latency and quality (accuracy, task success, hallucination rate) with the business owner.",
+        "Confirm monitoring, sampling and alerts are in place for each SLO.",
+        "Document the error budget and what happens when it is used up (pause changes, fall back, escalate).",
+        "Hand over the cost budget, FinOps owner and monthly review with the service."
       ] }
     ],
     scenario: { title: "Go-live without an owner", situation: "An invoice-matching AI went live on time. Three months later, accuracy had dropped after a supplier changed invoice formats, and no team owned fixing it because the project had closed.", approach: [
@@ -147,7 +160,9 @@ ACADEMY.tracks.project = [
       { q: "What evidence is typically needed at a release gate?", o: ["Team velocity", "Launch approval, monitoring and rollback ready, users trained", "Office booked for launch party", "Vendor logo"], a: 1, why: "Release requires proven readiness to operate safely." },
       { q: "Why is adoption part of AI delivery?", o: ["It is not", "Because value only comes when people change how they work", "For marketing", "To satisfy auditors"], a: 1, why: "Benefits depend on use, so adoption must be planned and measured." },
       { q: "What must be in place before an AI project closes?", o: ["A celebration", "A service owner, monitoring, support and running budget", "A new project", "Removal of documentation"], a: 1, why: "Without ownership, AI systems degrade unnoticed." },
-      { q: "Evaluation scores plateau below the threshold. What should the PM do?", o: ["Lower the threshold quietly", "Escalate for a decision on scope, approach or timeline", "Keep iterating indefinitely", "Launch anyway"], a: 1, why: "Transparent escalation keeps decisions with the accountable owner." }
+      { q: "Evaluation scores plateau below the threshold. What should the PM do?", o: ["Lower the threshold quietly", "Escalate for a decision on scope, approach or timeline", "Keep iterating indefinitely", "Launch anyway"], a: 1, why: "Transparent escalation keeps decisions with the accountable owner." },
+      { q: "When should AI running costs be estimated in a project?", o: ["After go-live", "Early, at pilot and full-scale volumes, and reported at each stage gate", "Only if finance asks", "Never, they are negligible"], a: 1, why: "Usage costs grow with adoption and must be planned." },
+      { q: "What should be agreed before handing an AI service to the run team?", o: ["Only the go-live date", "SLOs for availability, latency and quality, with monitoring and an error budget", "The model's parameter count", "A press release"], a: 1, why: "Clear SLOs let the run team know when the service is failing." }
     ]
   },
   {
