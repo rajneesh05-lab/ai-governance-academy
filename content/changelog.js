@@ -3,6 +3,15 @@
 ACADEMY.changelog = [
   {
     date: "2026-10-20",
+    title: "Simpler sign-in",
+    items: [
+      "No more emailed sign-in link. Enter your name, email and role and you go straight in. Your certificate is emailed to the address you enter, so check it is correct.",
+      "Your progress is tied to the browser you use. Stay signed in on that browser to keep your progress.",
+      "When you finish your path you can confirm or change the email your certificate goes to. If it was already sent to a wrong address, your administrator can resend it."
+    ]
+  },
+  {
+    date: "2026-10-20",
     title: "New topics across every role",
     items: [
       "Leaders: AI ROI and value realisation, vendor lock-in and sovereignty, AI centre of excellence and champions, reskilling, and AI's energy footprint, plus an AI value realisation tracker template.",

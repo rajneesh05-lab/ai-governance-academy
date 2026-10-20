@@ -15,7 +15,7 @@ Each learner picks their role at sign-in and sees a learning path, templates and
 - **Glossary:** 78 terms with plain-English definitions, key terms flagged per role, and notes on what a term means in a given job.
 
 ## Platform
-- Passwordless sign-in with a verified email magic link when Supabase is configured; the learner's role is stored on their account
+- Simple sign-in: learners enter name, email and role and go straight in (Supabase anonymous sign-in; the email is not verified and is used for the certificate)
 - Local learning mode (no sign-in) as a fallback, with progress kept in the current browser
 - Progress synchronized across browsers and devices for signed-in learners
 - Admin dashboard with learner role, progress, scores, study time and last activity, plus CSV export
