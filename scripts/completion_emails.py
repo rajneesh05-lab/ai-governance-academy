@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import html
 import json
@@ -201,7 +202,36 @@ def smtp_connection() -> smtplib.SMTP:
     return connection
 
 
+def send_with_resend(message: EmailMessage, api_key: str) -> None:
+    """Send through the Resend HTTP API, for hosts where SMTP is blocked or unavailable."""
+    attachment = next(message.iter_attachments())
+    payload = {
+        "from": message["From"],
+        "to": [message["To"]],
+        "subject": message["Subject"],
+        "text": message.get_body(preferencelist=("plain",)).get_content(),
+        "html": message.get_body(preferencelist=("html",)).get_content(),
+        "attachments": [{"filename": attachment.get_filename(),
+                         "content": base64.b64encode(attachment.get_content()).decode()}],
+    }
+    request = urllib.request.Request("https://api.resend.com/emails", data=json.dumps(payload).encode(), method="POST",
+                                     headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json",
+                                              "User-Agent": "AI-Governance-Academy-Certificates/1.0"})
+    try:
+        with urllib.request.urlopen(request, timeout=30):
+            pass
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode(errors="replace")[:300]
+        raise RuntimeError(f"Resend rejected the email (HTTP {exc.code}): {detail}") from exc
+
+
 # --- Supabase --------------------------------------------------------------
+
+class SupabaseError(RuntimeError):
+    def __init__(self, message: str, status: int) -> None:
+        super().__init__(message)
+        self.status = status
+
 
 class Supabase:
     def __init__(self, url: str, key: str) -> None:
@@ -218,7 +248,7 @@ class Supabase:
             with urllib.request.urlopen(request, timeout=30) as response:
                 text = response.read().decode()
         except urllib.error.HTTPError as exc:
-            raise RuntimeError(f"Supabase {method} {path.split('?')[0]} failed with HTTP {exc.code}") from exc
+            raise SupabaseError(f"Supabase {method} {path.split('?')[0]} failed with HTTP {exc.code}", exc.code) from exc
         return json.loads(text) if text else None
 
     def candidates(self) -> list[dict]:
@@ -262,9 +292,19 @@ def main() -> int:
         return 0
 
     db = Supabase(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"])
-    sender = os.environ.get("NEWSLETTER_FROM") or os.environ["NEWS_SMTP_USERNAME"]
+    resend_key = os.environ.get("RESEND_API_KEY")
+    sender = os.environ.get("NEWSLETTER_FROM") or ("" if resend_key else os.environ["NEWS_SMTP_USERNAME"])
+    if not sender:
+        raise RuntimeError("Set NEWSLETTER_FROM to a sender address verified with Resend.")
+    try:
+        candidates = db.candidates()
+    except SupabaseError as exc:
+        if exc.status != 404:
+            raise
+        print("::warning::Certificates are not set up in Supabase yet. Run supabase/role-tracks-upgrade.sql once.")
+        return 0
     pending = []
-    for learner in db.candidates():
+    for learner in candidates:
         completion = find_completion(learner, paths, datetime.now(timezone.utc))
         if not completion:
             continue
@@ -276,6 +316,13 @@ def main() -> int:
         pending.append(completion)
     if not pending:
         print("No new completions to email.")
+        return 0
+    if resend_key:
+        for completion in pending:
+            db.issue(completion)
+            send_with_resend(build_email(completion, sender, academy_url), resend_key)
+            db.mark_emailed(completion)
+            print("Sent one completion certificate.")
         return 0
     with smtp_connection() as connection:
         for completion in pending:

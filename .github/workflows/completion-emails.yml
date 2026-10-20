@@ -35,11 +35,16 @@ jobs:
           NEWS_SMTP_HOST: ${{ secrets.NEWS_SMTP_HOST }}
           NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
           NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
         run: |
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || [ -z "$NEWS_SMTP_HOST" ] || \
-             [ -z "$NEWS_SMTP_USERNAME" ] || [ -z "$NEWS_SMTP_PASSWORD" ]; then
+          smtp_ready=false; resend_ready=false
+          if [ -n "$NEWS_SMTP_HOST" ] && [ -n "$NEWS_SMTP_USERNAME" ] && [ -n "$NEWS_SMTP_PASSWORD" ]; then smtp_ready=true; fi
+          if [ -n "$RESEND_API_KEY" ] && [ -n "$NEWSLETTER_FROM" ]; then resend_ready=true; fi
+          echo "Supabase URL set: $([ -n "$SUPABASE_URL" ] && echo yes || echo no); service key set: $([ -n "$SUPABASE_SERVICE_ROLE_KEY" ] && echo yes || echo no); SMTP ready: $smtp_ready; Resend ready: $resend_ready"
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || { [ "$smtp_ready" = false ] && [ "$resend_ready" = false ]; }; then
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Certificates not sent: configure the Supabase and SMTP secrets described in SETUP.md."
+            echo "::warning::Certificates not sent: configure the Supabase secrets and either Resend or SMTP, as described in SETUP.md."
           else
             echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
@@ -54,5 +59,6 @@ jobs:
           NEWS_SMTP_USERNAME: ${{ secrets.NEWS_SMTP_USERNAME }}
           NEWS_SMTP_PASSWORD: ${{ secrets.NEWS_SMTP_PASSWORD }}
           NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           ACADEMY_URL: ${{ vars.ACADEMY_URL }}
         run: python scripts/completion_emails.py
