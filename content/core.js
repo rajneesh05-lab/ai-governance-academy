@@ -37,7 +37,7 @@ window.ACADEMY = {
 
   foundations: [
     {
-      id: "f1", stage: "foundation", minutes: 20,
+      id: "f1", stage: "foundation",
       title: "AI in plain English",
       summary: "What AI, machine learning, generative AI, LLMs and agents actually are, what they are good at, and where they fail.",
       outcomes: [
@@ -86,7 +86,7 @@ window.ACADEMY = {
       ]
     },
     {
-      id: "f2", stage: "foundation", minutes: 20,
+      id: "f2", stage: "foundation",
       title: "Choosing the right kind of AI",
       summary: "A practical ladder for matching problems to solutions, from no AI at all to agents, and the build, buy or configure decision.",
       outcomes: [
@@ -137,7 +137,7 @@ window.ACADEMY = {
       ]
     },
     {
-      id: "f3", stage: "foundation", minutes: 25,
+      id: "f3", stage: "foundation",
       title: "Responsible use and governance essentials",
       summary: "The rules every employee must follow with AI: data handling, approved tools, human oversight, risk tiers and the main regulations.",
       outcomes: [
@@ -218,4 +218,11 @@ window.ACADEMY = {
       ]
     }
   ]
+};
+
+// Module time is estimated from the content, so it stays right as modules change: reading at 200 words a minute,
+// about 45 seconds per quiz question (including the explanations), and 5 minutes for the exercise, rounded to 5 minutes.
+window.ACADEMY.estimateMinutes = m => {
+  const words = JSON.stringify([m.summary, m.outcomes, m.sections, m.scenario, m.watchouts]).split(/\s+/).length;
+  return Math.max(10, Math.round((words / 200 + m.quiz.length * 0.75 + 5) / 5) * 5);
 };

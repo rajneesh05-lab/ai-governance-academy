@@ -1,6 +1,6 @@
 ACADEMY.tracks.risk = [
   {
-    id: "rsk-use", stage: "use", minutes: 25,
+    id: "rsk-use", stage: "use",
     title: "AI in risk, compliance and legal work",
     summary: "Use AI to accelerate policy analysis, contract review, control testing and regulatory horizon scanning, with professional standards intact.",
     outcomes: [
@@ -51,7 +51,7 @@ ACADEMY.tracks.risk = [
     ]
   },
   {
-    id: "rsk-identify", stage: "identify", minutes: 45, updated: "2026-10-20",
+    id: "rsk-identify", stage: "identify", updated: "2026-10-20",
     title: "Assessing AI use cases",
     summary: "Triage and assess proposed AI use cases for risk: classification, impact assessment and the questions that matter.",
     outcomes: [
@@ -125,7 +125,7 @@ ACADEMY.tracks.risk = [
     ]
   },
   {
-    id: "rsk-implement", stage: "implement", minutes: 30,
+    id: "rsk-implement", stage: "implement",
     title: "Building the AI control framework",
     summary: "Design proportionate AI policies and controls, integrate them into existing frameworks, and make them work in practice.",
     outcomes: [
@@ -176,7 +176,7 @@ ACADEMY.tracks.risk = [
     ]
   },
   {
-    id: "rsk-govern", stage: "govern", minutes: 50, updated: "2026-10-20",
+    id: "rsk-govern", stage: "govern", updated: "2026-10-20",
     title: "Assurance, monitoring and audit of AI",
     summary: "Provide ongoing assurance over AI: inventory, monitoring, testing, regulatory readiness and audit.",
     outcomes: [

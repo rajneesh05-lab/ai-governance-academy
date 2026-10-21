@@ -1,6 +1,6 @@
 ACADEMY.tracks.developer = [
   {
-    id: "dev-use", stage: "use", minutes: 35, updated: "2026-10-20",
+    id: "dev-use", stage: "use", updated: "2026-10-20",
     title: "Coding with AI assistants, safely",
     summary: "Get real productivity from coding assistants and agents without shipping bugs, licence problems or leaked secrets.",
     outcomes: [
@@ -59,7 +59,7 @@ ACADEMY.tracks.developer = [
     ]
   },
   {
-    id: "dev-identify", stage: "identify", minutes: 40, updated: "2026-10-20",
+    id: "dev-identify", stage: "identify", updated: "2026-10-20",
     title: "Choosing the architecture: prompt, RAG, fine-tune or agent",
     summary: "Translate a feature request into the simplest AI architecture that will meet quality, cost and latency needs.",
     outcomes: [
@@ -127,7 +127,7 @@ ACADEMY.tracks.developer = [
     ]
   },
   {
-    id: "dev-implement", stage: "implement", minutes: 45, updated: "2026-10-20",
+    id: "dev-implement", stage: "implement", updated: "2026-10-20",
     title: "Shipping LLM features to production",
     summary: "Engineering practices for reliable AI features: structured outputs, evaluation suites, guardrails, observability and graceful failure.",
     outcomes: [
@@ -195,7 +195,7 @@ ACADEMY.tracks.developer = [
     ]
   },
   {
-    id: "dev-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
+    id: "dev-govern", stage: "govern", updated: "2026-10-20",
     title: "Securing and governing AI systems",
     summary: "Threats specific to LLM applications and the engineering controls and evidence governance teams will ask you for.",
     outcomes: [

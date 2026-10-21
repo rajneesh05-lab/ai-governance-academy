@@ -34,7 +34,6 @@ for (const m of modules) {
   ids.add(m.id);
   if (!A.stages[m.stage]) fail(at, `unknown stage ${m.stage}`);
   for (const k of ['title', 'summary', 'exercise']) if (!isText(m[k])) fail(at, `missing ${k}`);
-  if (!(m.minutes > 0)) fail(at, 'minutes must be a positive number');
   if (m.updated && !/^\d{4}-\d{2}-\d{2}$/.test(m.updated)) fail(at, 'updated must be YYYY-MM-DD');
   if (!isTextList(m.outcomes)) fail(at, 'needs outcomes');
   if (!isTextList(m.watchouts)) fail(at, 'needs watchouts');
