@@ -41,7 +41,13 @@ for (const m of modules) {
   (m.sections || []).forEach((s, i) => {
     if (!isText(s.h) || !isText(s.body)) fail(at, `section ${i + 1} needs h and body`);
     if (s.points && !isTextList(s.points)) fail(at, `section ${i + 1} points must be text`);
+    if (s.example && !isText(s.example)) fail(at, `section ${i + 1} example must be text`);
   });
+  // Optional depth: a step-by-step how-to, a decision table, real-world cases and a checklist.
+  if (m.howto && (!isText(m.howto.title) || !Array.isArray(m.howto.steps) || !m.howto.steps.length || m.howto.steps.some(x => !isText(x.h) || !isText(x.body)))) fail(at, 'howto needs title and steps with h and body');
+  if (m.decide && (!isText(m.decide.title) || !Array.isArray(m.decide.rows) || !m.decide.rows.length || m.decide.rows.some(r => !isTextList(r) || r.length !== 2))) fail(at, 'decide needs title and rows of [if, then]');
+  if (m.cases && (!Array.isArray(m.cases) || m.cases.some(c => !isText(c.title) || !isText(c.body) || !isText(c.lesson)))) fail(at, 'cases need title, body and lesson');
+  if (m.checklist && (!isText(m.checklist.title) || !isTextList(m.checklist.items))) fail(at, 'checklist needs title and items');
   if (!m.scenario || !isText(m.scenario.title) || !isText(m.scenario.situation) || !isTextList(m.scenario.approach)) fail(at, 'scenario needs title, situation and approach');
   if (!Array.isArray(m.quiz) || m.quiz.length < 3) fail(at, 'needs at least 3 quiz questions');
   (m.quiz || []).forEach((q, i) => {

@@ -3,9 +3,11 @@
 ACADEMY.changelog = [
   {
     date: "2026-10-21",
-    title: "More accurate time estimates",
+    title: "Deeper lessons",
     items: [
-      "Each module now shows a realistic time (10 to 20 minutes) worked out from its reading, quiz and exercise, and your path shows its total time and the time you have left."
+      "The three Foundations modules and the Product Manager track now go further: worked examples, step-by-step guides, decision tables, real-world cases and checklists, plus new quiz questions.",
+      "Each lesson now lists the glossary terms it uses, so you can open a definition (and what it means for your role) without leaving the lesson.",
+      "Time estimates are gone. Take each module at your own pace."
     ]
   },
   {

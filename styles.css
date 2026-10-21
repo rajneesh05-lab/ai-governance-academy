@@ -1069,3 +1069,89 @@ th {
   flex: 1 1 220px;
   margin: 0;
 }
+
+.terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.term-pop {
+  border: 1px solid var(--line, #e3ddd0);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background: #fff;
+  max-width: 100%;
+}
+
+.term-pop[open] {
+  flex-basis: 100%;
+}
+
+.term-pop summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.term-pop p {
+  margin: 8px 0 2px;
+}
+
+.example {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--gold, #c08f2e);
+  background: var(--gold-soft);
+  border-radius: 8px;
+}
+
+.example p {
+  margin: 6px 0 0;
+}
+
+.steps li {
+  margin-bottom: 12px;
+}
+
+.steps li p {
+  margin: 4px 0 0;
+}
+
+.decide td:first-child {
+  font-weight: 600;
+  width: 40%;
+}
+
+.case + .case {
+  border-top: 1px solid var(--line, #e3ddd0);
+  margin-top: 16px;
+  padding-top: 6px;
+}
+
+.lesson-line {
+  color: var(--green, #2f6b45);
+}
+
+.checks {
+  list-style: none;
+  padding-left: 0;
+}
+
+.checks li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 8px;
+}
+
+.checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #b9ae98;
+  border-radius: 4px;
+}
