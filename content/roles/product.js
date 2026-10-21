@@ -1,6 +1,6 @@
 ACADEMY.tracks.product = [
   {
-    id: "pm-use", stage: "use", minutes: 25,
+    id: "pm-use", stage: "use",
     title: "AI in the product manager's week",
     summary: "Use AI to speed up discovery, research synthesis, specs and communication while keeping judgement and customer truth in your hands.",
     outcomes: [
@@ -48,7 +48,7 @@ ACADEMY.tracks.product = [
     ]
   },
   {
-    id: "pm-identify", stage: "identify", minutes: 30,
+    id: "pm-identify", stage: "identify",
     title: "Finding AI opportunities worth building",
     summary: "Spot problems where AI creates real user value, size them honestly, and decide build, buy or partner.",
     outcomes: [
@@ -99,7 +99,7 @@ ACADEMY.tracks.product = [
     ]
   },
   {
-    id: "pm-implement", stage: "implement", minutes: 35,
+    id: "pm-implement", stage: "implement",
     title: "Specifying, testing and launching AI features",
     summary: "Write AI-ready requirements, define evaluation criteria with your team, and launch in stages with the right metrics.",
     outcomes: [
@@ -152,7 +152,7 @@ ACADEMY.tracks.product = [
     ]
   },
   {
-    id: "pm-govern", stage: "govern", minutes: 40, updated: "2026-10-20",
+    id: "pm-govern", stage: "govern", updated: "2026-10-20",
     title: "Responsible AI product decisions",
     summary: "Own the product side of AI governance: risk tiering, transparency, user controls, regulatory duties and the launch review.",
     outcomes: [

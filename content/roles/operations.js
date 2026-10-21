@@ -1,6 +1,6 @@
 ACADEMY.tracks.operations = [
   {
-    id: "ops-use", stage: "use", minutes: 25,
+    id: "ops-use", stage: "use",
     title: "AI in operational work today",
     summary: "Where AI and automation already help operations teams: triage, knowledge, documents, forecasting and reporting.",
     outcomes: [
@@ -51,7 +51,7 @@ ACADEMY.tracks.operations = [
     ]
   },
   {
-    id: "ops-identify", stage: "identify", minutes: 30,
+    id: "ops-identify", stage: "identify",
     title: "Choosing between process fixes, RPA, ML and agents",
     summary: "Map a process, find the real bottleneck, and pick the right automation approach with a clear business case.",
     outcomes: [
@@ -102,7 +102,7 @@ ACADEMY.tracks.operations = [
     ]
   },
   {
-    id: "ops-implement", stage: "implement", minutes: 30,
+    id: "ops-implement", stage: "implement",
     title: "Rolling out AI in live operations",
     summary: "Pilot and scale AI in a live operation without breaking SLAs: human-in-the-loop design, workforce planning, training and controls.",
     outcomes: [
@@ -152,7 +152,7 @@ ACADEMY.tracks.operations = [
     ]
   },
   {
-    id: "ops-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
+    id: "ops-govern", stage: "govern", updated: "2026-10-20",
     title: "Running AI safely day to day",
     summary: "Operational controls for AI: monitoring, incident response, vendor management, business continuity and audit readiness.",
     outcomes: [

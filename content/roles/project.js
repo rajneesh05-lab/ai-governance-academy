@@ -1,6 +1,6 @@
 ACADEMY.tracks.project = [
   {
-    id: "prj-use", stage: "use", minutes: 25,
+    id: "prj-use", stage: "use",
     title: "AI for planning, tracking and reporting",
     summary: "Use AI assistants to plan, track risks, write status reports and run meetings, while keeping the plan grounded in reality.",
     outcomes: [
@@ -49,7 +49,7 @@ ACADEMY.tracks.project = [
     ]
   },
   {
-    id: "prj-identify", stage: "identify", minutes: 30,
+    id: "prj-identify", stage: "identify",
     title: "Scoping AI projects realistically",
     summary: "Shape AI initiatives with the right phases, team, data dependencies and success criteria so they can actually deliver.",
     outcomes: [
@@ -101,7 +101,7 @@ ACADEMY.tracks.project = [
     ]
   },
   {
-    id: "prj-implement", stage: "implement", minutes: 40, updated: "2026-10-20",
+    id: "prj-implement", stage: "implement", updated: "2026-10-20",
     title: "Delivering AI with evaluation gates",
     summary: "Run AI delivery with iteration loops, quality gates, adoption work and clear handover to operations.",
     outcomes: [
@@ -166,7 +166,7 @@ ACADEMY.tracks.project = [
     ]
   },
   {
-    id: "prj-govern", stage: "govern", minutes: 25,
+    id: "prj-govern", stage: "govern",
     title: "Governance evidence and stakeholder control",
     summary: "Keep AI initiatives auditable: RAID for AI, decision logs, evidence packs and steering committee reporting.",
     outcomes: [

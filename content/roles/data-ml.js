@@ -1,6 +1,6 @@
 ACADEMY.tracks["data-ml"] = [
   {
-    id: "dml-use", stage: "use", minutes: 30,
+    id: "dml-use", stage: "use",
     title: "AI in the data and ML workflow",
     summary: "Use LLMs to speed up exploration, SQL, feature work, labelling and documentation while keeping analysis correct and reproducible.",
     outcomes: [
@@ -50,7 +50,7 @@ ACADEMY.tracks["data-ml"] = [
     ]
   },
   {
-    id: "dml-identify", stage: "identify", minutes: 35,
+    id: "dml-identify", stage: "identify",
     title: "Framing the problem and choosing the approach",
     summary: "Turn a business question into a well-posed ML or GenAI problem, and choose between heuristics, classic ML, foundation models and fine-tuning.",
     outcomes: [
@@ -100,7 +100,7 @@ ACADEMY.tracks["data-ml"] = [
     ]
   },
   {
-    id: "dml-implement", stage: "implement", minutes: 50, updated: "2026-10-20",
+    id: "dml-implement", stage: "implement", updated: "2026-10-20",
     title: "Evaluation, MLOps and LLMOps",
     summary: "Build the evaluation, deployment and monitoring pipeline that turns a model into a dependable production service.",
     outcomes: [
@@ -175,7 +175,7 @@ ACADEMY.tracks["data-ml"] = [
     ]
   },
   {
-    id: "dml-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
+    id: "dml-govern", stage: "govern", updated: "2026-10-20",
     title: "Model risk management and responsible AI",
     summary: "Document, validate and control models so they are fair, explainable, compliant and defensible.",
     outcomes: [

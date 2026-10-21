@@ -1,6 +1,6 @@
 ACADEMY.tracks.leader = [
   {
-    id: "ldr-use", stage: "use", minutes: 20,
+    id: "ldr-use", stage: "use",
     title: "Personal AI fluency for leaders",
     summary: "Use AI yourself for briefing, decision preparation and communication, and role-model the behaviours you want in your organisation.",
     outcomes: [
@@ -49,7 +49,7 @@ ACADEMY.tracks.leader = [
     ]
   },
   {
-    id: "ldr-identify", stage: "identify", minutes: 40, updated: "2026-10-20",
+    id: "ldr-identify", stage: "identify", updated: "2026-10-20",
     title: "Where AI creates value: strategy and portfolio",
     summary: "Set an AI ambition, choose where to play, and run a portfolio of use cases that balances value, feasibility and risk.",
     outcomes: [
@@ -118,7 +118,7 @@ ACADEMY.tracks.leader = [
     ]
   },
   {
-    id: "ldr-implement", stage: "implement", minutes: 35, updated: "2026-10-20",
+    id: "ldr-implement", stage: "implement", updated: "2026-10-20",
     title: "Leading AI adoption and change",
     summary: "Drive real adoption: operating model, workforce impact, communication, incentives and measuring what matters.",
     outcomes: [
@@ -184,7 +184,7 @@ ACADEMY.tracks.leader = [
     ]
   },
   {
-    id: "ldr-govern", stage: "govern", minutes: 45, updated: "2026-10-20",
+    id: "ldr-govern", stage: "govern", updated: "2026-10-20",
     title: "Accountability, risk appetite and oversight",
     summary: "Set the governance structure, risk appetite and board oversight that let AI scale safely.",
     outcomes: [

@@ -1,6 +1,6 @@
 ACADEMY.tracks.business = [
   {
-    id: "biz-use", stage: "use", minutes: 25,
+    id: "biz-use", stage: "use",
     title: "Getting real value from AI assistants",
     summary: "Practical prompting and everyday uses of AI assistants in HR, finance, sales, marketing, service and other business functions.",
     outcomes: [
@@ -52,7 +52,7 @@ ACADEMY.tracks.business = [
     ]
   },
   {
-    id: "biz-identify", stage: "identify", minutes: 25,
+    id: "biz-identify", stage: "identify",
     title: "Spotting good AI use cases in your team",
     summary: "Find the tasks in your team where AI helps most, estimate the benefit, and pick a tool that is already approved.",
     outcomes: [
@@ -99,7 +99,7 @@ ACADEMY.tracks.business = [
     ]
   },
   {
-    id: "biz-implement", stage: "implement", minutes: 25,
+    id: "biz-implement", stage: "implement",
     title: "Rolling out AI in your team",
     summary: "Introduce AI into team workflows: pilot, share prompts, set team norms and measure the effect.",
     outcomes: [
@@ -147,7 +147,7 @@ ACADEMY.tracks.business = [
     ]
   },
   {
-    id: "biz-govern", stage: "govern", minutes: 25, updated: "2026-10-20",
+    id: "biz-govern", stage: "govern", updated: "2026-10-20",
     title: "Using AI responsibly with company data",
     summary: "Your responsibilities: data protection, fairness, transparency, IP and reporting problems.",
     outcomes: [

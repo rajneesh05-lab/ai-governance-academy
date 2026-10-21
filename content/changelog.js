@@ -2,6 +2,13 @@
 // To flag a changed module, also set `updated: "YYYY-MM-DD"` on it; learners see an "Updated" badge for 60 days.
 ACADEMY.changelog = [
   {
+    date: "2026-10-21",
+    title: "More accurate time estimates",
+    items: [
+      "Each module now shows a realistic time (10 to 20 minutes) worked out from its reading, quiz and exercise, and your path shows its total time and the time you have left."
+    ]
+  },
+  {
     date: "2026-10-20",
     title: "Simpler sign-in",
     items: [
