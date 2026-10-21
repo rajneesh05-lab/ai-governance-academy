@@ -9,7 +9,7 @@ ACADEMY.tracks.operations = [
       "Spot the signals that a team process is ready for AI"
     ],
     sections: [
-      { h: "Common operational uses", body: "Operations teams handle high volumes of semi-structured work, which suits AI.", points: [
+      { h: "Common operational uses", body: "Operations teams handle high volumes of semi-structured work, which suits AI.\n\nIn operations, AI usually earns its keep in the unglamorous middle of a process: reading the email, pulling the fields out of the document, suggesting the next step to the agent. These uses are measurable (handling time, backlog, error rate) and easy to pilot on one queue.", example: "A contact centre adds agent assist: as a customer explains a billing issue, the agent sees the relevant policy passage and a suggested reply. Average handling time drops, and new agents reach target performance in weeks rather than months, because the knowledge comes to them.", points: [
         "Triage and routing: classifying tickets, emails and requests to the right queue with priority.",
         "Agent assist: suggested answers and next steps for service staff from the knowledge base.",
         "Document processing: extracting data from invoices, orders, forms and claims (intelligent document processing).",
@@ -40,6 +40,8 @@ ACADEMY.tracks.operations = [
       "Start by measuring today: volume per type, handling time and error rate.",
       "Pilot with one supplier group and compare accuracy and cycle time."
     ] },
+    decide: {"title": "Is this process ready for AI?", "cols": ["If…", "Then…"], "rows": [["High volume, repetitive and mostly digital", "Good candidate: pilot on one queue"], ["Inputs are on paper or in people's heads", "Digitise and document first"], ["Errors would harm vulnerable customers and are hard to detect", "Assist only, with human decisions and extra rules"], ["The process itself is broken or unowned", "Fix the process before automating it"], ["The team is overloaded and sceptical", "Start with agent assist that makes their work easier"]]},
+    checklist: {"title": "Operational AI use", "items": ["Approved tools only for operational and customer data.", "Quality and satisfaction are measured alongside speed.", "There is always a route to a human for complex or sensitive cases.", "Rules protect vulnerable customers.", "AI-drafted SOPs and reports are checked by someone who knows the work."]},
     exercise: "List the five highest-volume tasks in your operation. For each, rate volume, rule clarity, data accessibility and error recoverability from 1 to 5.",
     watchouts: ["Do not paste customer or employee personal data into unapproved tools.", "AI-written SOPs must be validated by the people who do the work."],
     quiz: [
@@ -47,7 +49,9 @@ ACADEMY.tracks.operations = [
       { q: "What is intelligent document processing?", o: ["Printing documents faster", "Using AI to extract and validate data from documents such as invoices and forms", "Scanning to PDF", "Email filters"], a: 1, why: "IDP combines OCR, AI extraction and validation." },
       { q: "Which signal suggests a process is not yet ready for AI?", o: ["High volume", "Knowledge exists only in people's heads and on paper", "Lots of historical examples", "Errors are easy to detect"], a: 1, why: "AI needs digital, accessible information." },
       { q: "When measuring an AI rollout in service, what should you track besides handle time?", o: ["Nothing else", "Quality and customer satisfaction", "Number of AI vendors", "Server temperature"], a: 1, why: "Speed without quality harms customers and creates rework." },
-      { q: "How should vulnerable customers be treated in an AI-assisted service?", o: ["The same as everyone", "With specific rules, routing and access to a human", "Excluded from service", "Only by chatbot"], a: 1, why: "Vulnerable customers need extra protection and human support." }
+      { q: "How should vulnerable customers be treated in an AI-assisted service?", o: ["The same as everyone", "With specific rules, routing and access to a human", "Excluded from service", "Only by chatbot"], a: 1, why: "Vulnerable customers need extra protection and human support." },
+      {"q": "Where does AI usually add most value first in operations?", "o": ["Replacing whole teams", "In the middle of processes: reading inputs, extracting data, suggesting next steps", "Strategic planning", "Hiring decisions"], "a": 1, "why": "These steps are high-volume, measurable and easy to pilot."},
+      {"q": "Why track satisfaction as well as handling time?", "o": ["Regulators require it", "Faster handling that frustrates customers or staff is not a real gain", "It is easier to measure", "To slow down roll-out"], "a": 1, "why": "Efficiency without quality creates rework, complaints and churn."}
     ]
   },
   {
@@ -60,7 +64,7 @@ ACADEMY.tracks.operations = [
       "Build an operational business case with quality and capacity effects"
     ],
     sections: [
-      { h: "Map before you automate", body: "Automating a broken process makes it fail faster.", points: [
+      { h: "Map before you automate", body: "Automating a broken process makes it fail faster.\n\nProcess mining reads the event logs your systems already keep (case created, approved, rejected, reopened) and reconstructs how work really flows. It routinely shows that the official process diagram is a minority path, and that the biggest delays are waiting and rework, not the steps people want to automate.", points: [
         "Map the current process end to end, including exceptions and rework loops.",
         "Use process mining on system logs where available to see what really happens.",
         "Measure volume, cycle time, touch time, error rate and exception rate per step.",
@@ -91,6 +95,9 @@ ACADEMY.tracks.operations = [
       "Then use AI extraction with validation against the current catalogue, routing mismatches to a person.",
       "RPA alone would have automated the errors."
     ] },
+    howto: {"title": "From process map to automation choice", "steps": [{"h": "Pick one process and one measure", "body": "For example invoice-to-pay, measured by cycle time and first-time-right rate."}, {"h": "Map the real process", "body": "Process mining where logs exist, walkthroughs with front-line staff where they do not."}, {"h": "Find the constraint", "body": "Where does work wait, loop back or get reworked? That is where improvement pays."}, {"h": "Fix root causes first", "body": "Missing data at intake, unclear rules, bad handoffs."}, {"h": "Match each remaining step to an approach", "body": "Rules or RPA, AI extraction or classification, prediction, retrieval, or an agent."}, {"h": "Build the case and pilot", "body": "Capacity released and its use, cycle time, quality, full cost and failure plan."}]},
+    decide: {"title": "Matching the step to the tool", "cols": ["Step looks like…", "Use…"], "rows": [["Copying structured data between systems", "Integration or RPA"], ["Reading emails or documents to extract fields", "Intelligent document processing or an LLM with validation"], ["Predicting volume, delay or risk", "Classic ML forecasting or classification"], ["Answering staff or customer questions from policy", "RAG over approved knowledge"], ["Investigating a case across several systems", "An agent with limited permissions and human approval"], ["Deciding something that affects a person's rights", "Human decision, AI assistance at most"]]},
+    checklist: {"title": "Before you automate a process", "items": ["The current process is mapped from real data or walkthroughs.", "The real constraint and causes of rework are known.", "Root-cause fixes come before automation.", "Each step has the simplest approach that works.", "The business case names what released capacity will do.", "There is a plan for when the automation fails."]},
     exercise: "Map one process with its exception paths. Mark each step as remove, simplify, rules/RPA, AI, ML or human. Estimate the effect on cycle time.",
     watchouts: ["RPA bots break when screens change; AI does not fix fragile integrations.", "Exception handling is where the real cost hides."],
     quiz: [
@@ -98,7 +105,9 @@ ACADEMY.tracks.operations = [
       { q: "Which approach best fits extracting data from varied supplier invoices?", o: ["Pure RPA screen scraping", "AI document extraction with validation", "A rules engine only", "Manual typing"], a: 1, why: "Varied layouts need AI extraction; validation catches errors." },
       { q: "What does process mining reveal?", o: ["Employee opinions", "How the process actually runs, based on system event logs", "Server performance", "Customer demographics"], a: 1, why: "Event logs show real paths, delays and rework." },
       { q: "In intelligent automation, what should happen to low-confidence cases?", o: ["Auto-approve", "Route to a human review queue", "Delete them", "Retry until confident"], a: 1, why: "Human review protects quality where the AI is unsure." },
-      { q: "Which item belongs in an operational AI business case?", o: ["The vendor's stock price", "What released capacity will be used for", "The colour of the dashboard", "Social media mentions"], a: 1, why: "Capacity only creates value when redeployed or removed." }
+      { q: "Which item belongs in an operational AI business case?", o: ["The vendor's stock price", "What released capacity will be used for", "The colour of the dashboard", "Social media mentions"], a: 1, why: "Capacity only creates value when redeployed or removed." },
+      {"q": "What does process mining usually reveal?", "o": ["That the documented process is followed exactly", "How work really flows, including rework loops and waiting that the official map hides", "Which staff are slowest", "The best AI vendor"], "a": 1, "why": "Event logs show actual paths, often very different from the official diagram."},
+      {"q": "A step requires reading supplier emails and pulling out invoice numbers. Which approach fits?", "o": ["RPA alone", "Document processing or an LLM with validation of the extracted fields", "A forecasting model", "An autonomous agent with payment rights"], "a": 1, "why": "Unstructured inputs need AI extraction; validation catches errors before they flow on."}
     ]
   },
   {
@@ -111,7 +120,7 @@ ACADEMY.tracks.operations = [
       "Update workforce plans, SOPs and training for the new way of working"
     ],
     sections: [
-      { h: "Designing the human role", body: "Decide exactly where people review, approve or handle exceptions.", points: [
+      { h: "Designing the human role", body: "Decide exactly where people review, approve or handle exceptions.\n\nConfidence thresholds are a business decision, not a technical setting. Set them from the cost of each kind of error and the review capacity you have, then adjust with data. Too high and the review queue swamps the team; too low and errors slip through.", example: "A claims team routes documents automatically when the model's confidence is above 0.95, sends 0.70 to 0.95 to standard review, and below 0.70 to senior handlers. In week one, 40% are automated. After four weeks of sampling shows automated cases are 99.4% correct, the threshold drops to 0.90 and automation reaches 55% with no rise in errors.", points: [
         "Set confidence thresholds: above, process automatically; below, send to review.",
         "Start conservative (more human review) and relax thresholds as evidence grows.",
         "Give reviewers the context and time to disagree with the AI.",
@@ -141,6 +150,9 @@ ACADEMY.tracks.operations = [
       "Release capacity only after stable performance is proven.",
       "Tune thresholds to balance automation rate and exception load."
     ] },
+    howto: {"title": "Piloting AI in a live queue", "steps": [{"h": "Shadow first", "body": "Run the AI on live work for two to four weeks without acting on it. Compare its decisions with people's."}, {"h": "Set thresholds and stop criteria", "body": "Confidence bands, quality floor, SLA limits and complaint triggers that pause the pilot."}, {"h": "Staff for the learning curve", "body": "Review effort is higher at the start. Protect the SLA with extra capacity."}, {"h": "Update SOPs and train", "body": "How to use the tool, when to override it, how to report problems."}, {"h": "Sample daily, review weekly", "body": "Quality samples from automated and reviewed cases, exception volumes, SLA performance."}, {"h": "Scale by queue", "body": "Expand only when the pilot queue is stable on quality and SLA."}]},
+    cases: [{"title": "A model update that changed behaviour overnight (ChatGPT, 2025)", "body": "In April 2025 OpenAI rolled out an update to its main chat model that made it excessively flattering and agreeable. After widespread user reports, the company rolled the update back within days and published an explanation of what went wrong in its testing.", "lesson": "Vendor model changes can shift behaviour in your operation without warning. Monitor quality daily and agree change notification in contracts."}],
+    checklist: {"title": "Live operations roll-out", "items": ["Shadow mode results compared AI and human decisions.", "Confidence thresholds and stop criteria are agreed and written down.", "Pilot staffing protects SLAs during the learning curve.", "SOPs and training cover overrides and reporting.", "Quality sampling covers automated cases, not just exceptions.", "The manual fallback has been practised."]},
     exercise: "Draft the updated SOP for one AI-assisted process: AI step, confidence threshold, human review, escalation and fallback.",
     watchouts: ["Do not cut staff before the new process is stable.", "Automation bias grows over time; keep sampling."],
     quiz: [
@@ -148,7 +160,9 @@ ACADEMY.tracks.operations = [
       { q: "How should thresholds be set at the start of a rollout?", o: ["As aggressive as possible", "Conservatively, with more human review, relaxed as evidence grows", "Randomly", "By the vendor alone"], a: 1, why: "Starting cautious protects service while evidence builds." },
       { q: "What often happens to exceptions after automation?", o: ["They disappear", "They become a larger share of human work and take longer each", "They are easier", "They are handled by the AI"], a: 1, why: "The remaining work is harder, which affects staffing." },
       { q: "Why sample-check automatically processed cases?", o: ["It is not needed", "To catch silent errors and counter automation bias", "To slow down processing", "For marketing"], a: 1, why: "Errors in confident cases are otherwise invisible." },
-      { q: "What should be in place before a live pilot?", o: ["A press release", "Stop criteria and a fallback to the old process", "A bigger budget", "New office space"], a: 1, why: "Predefined stops and fallback protect SLAs." }
+      { q: "What should be in place before a live pilot?", o: ["A press release", "Stop criteria and a fallback to the old process", "A bigger budget", "New office space"], a: 1, why: "Predefined stops and fallback protect SLAs." },
+      {"q": "How should confidence thresholds be set?", "o": ["Left at the vendor default", "From the cost of errors and review capacity, then adjusted using sampling data", "As high as possible", "By the data science team alone"], "a": 1, "why": "Thresholds trade automation against error risk and workload; that is an operational decision based on evidence."},
+      {"q": "Why sample automated cases, not just exceptions?", "o": ["To keep staff busy", "Because errors in automated cases are invisible otherwise", "Regulators forbid automation", "Exceptions are always correct"], "a": 1, "why": "Automated cases flow without review, so sampling is the only way to see their error rate."}
     ]
   },
   {
@@ -175,7 +189,7 @@ ACADEMY.tracks.operations = [
         "Keep the skills for manual processing alive.",
         "Know the vendor's incident and outage commitments."
       ] },
-      { h: "Vendor management", body: "Most operational AI is bought. Manage the vendor relationship with AI-specific terms.", points: [
+      { h: "Vendor management", body: "Most operational AI is bought. Manage the vendor relationship with AI-specific terms.\n\nPut AI-specific terms into contracts before signing, because they are hard to add later: notification before model changes, the right to test new versions first or stay on the old one for a period, data use limits, performance commitments with measurement, and exit support.", points: [
         "Data use: is your data used to train the vendor's models? Where is it stored?",
         "Model changes: will you be notified before the vendor changes models?",
         "Performance commitments and audit rights.",
@@ -228,6 +242,9 @@ ACADEMY.tracks.operations = [
       "Daily quality sampling would have caught the drop the same day.",
       "An alert on reviewer override rate is a cheap early-warning signal."
     ] },
+    howto: {"title": "Responding to an AI incident in operations", "steps": [{"h": "Detect", "body": "Quality samples, override spikes, complaint trends, confidence shifts or a staff report."}, {"h": "Contain", "body": "Lower the automation threshold, route to manual, or switch the AI off. Protect customers first."}, {"h": "Capture evidence", "body": "Affected cases, timeline, model and vendor version, thresholds, logs."}, {"h": "Fix and remediate", "body": "Root cause with the vendor or team, correct affected cases, inform customers where needed."}, {"h": "Learn", "body": "Update monitoring, thresholds, contracts or SOPs, and share the lessons."}]},
+    decide: {"title": "Which response for which signal?", "cols": ["Signal", "Response"], "rows": [["Small dip in sampled accuracy", "Investigate; increase sampling"], ["Sudden drop after a vendor or model change", "Route to manual or roll back; contact vendor"], ["Spike in overrides or complaints on one case type", "Raise threshold or exclude that case type"], ["Harm to customers or a data leak", "Switch off, invoke incident process, notify risk and privacy"], ["Costs rising faster than volume", "Check usage, routing and loops; apply budgets"]]},
+    checklist: {"title": "Day-to-day AI control", "items": ["Service, quality, drift and cost KPIs are on one dashboard with owners.", "Manual fallback is documented, staffed and practised.", "Vendor contracts cover model changes, data use, performance and exit.", "Agents are on the roster with owners, budgets and a stop switch.", "Decision logs, sampling and change records are audit-ready.", "AI costs are reviewed monthly with quality."]},
     exercise: "Define five KPIs for one AI service in your operation, with thresholds and the owner who acts on each.",
     watchouts: ["When everyone forgets the manual process, fallback is impossible.", "Vendor AI features can change behaviour without code changes on your side.", "An escalation queue with no owner or SLA is where agent errors hide."],
     quiz: [
@@ -240,7 +257,9 @@ ACADEMY.tracks.operations = [
       { q: "Two agents keep passing the same case back and forth and costs spike. Which control prevents this?", o: ["A friendlier prompt", "Limits on steps, time and cost per case, with alerts", "Adding a third agent", "Monthly reporting"], a: 1, why: "Step, time and budget limits stop loops and runaway runs." },
       { q: "Why test an agent's kill switch and manual fallback regularly?", o: ["Auditors like drills", "So an agent can be stopped quickly and work continues safely when it misbehaves", "To slow down automation", "It is not needed if the vendor is reliable"], a: 1, why: "An untested kill switch or forgotten manual process fails when you need it." },
       { q: "What is the first step in AI FinOps?", o: ["Cancelling all AI tools", "Making costs visible by tagging AI usage per team, use case and agent", "Using the largest model", "Annual budgeting only"], a: 1, why: "You cannot manage costs you cannot attribute." },
-      { q: "How do you measure the hallucination rate of an AI service?", o: ["Ask the model if it hallucinated", "Regularly sample answers and check claims against sources, with human or automated review", "Count tokens", "Use the vendor's uptime SLA"], a: 1, why: "Sampling and checking against sources gives a real rate to track." }
+      { q: "How do you measure the hallucination rate of an AI service?", o: ["Ask the model if it hallucinated", "Regularly sample answers and check claims against sources, with human or automated review", "Count tokens", "Use the vendor's uptime SLA"], a: 1, why: "Sampling and checking against sources gives a real rate to track." },
+      {"q": "Accuracy drops sharply the day after a vendor update. What is the right first move?", "o": ["Wait a week to confirm", "Contain: route to manual or roll back, then investigate with the vendor", "Retrain staff", "Change vendors immediately"], "a": 1, "why": "Protect customers and SLAs first; diagnosis follows containment."},
+      {"q": "Which contract term most helps with silent model changes?", "o": ["A discount", "Advance notification of model changes and the right to test or delay adoption", "Unlimited usage", "A longer term"], "a": 1, "why": "Notification and testing rights let you catch regressions before they hit live operations."}
     ]
   }
 ];

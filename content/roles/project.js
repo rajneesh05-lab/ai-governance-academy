@@ -16,7 +16,7 @@ ACADEMY.tracks.project = [
         "Risk brainstorming: 'what could go wrong with this plan?' to widen your RAID log.",
         "Drafting change requests, lessons learned and communications."
       ] },
-      { h: "Ground it in your data", body: "Generic plans are easy to generate and dangerous to trust.", points: [
+      { h: "Ground it in your data", body: "Generic plans are easy to generate and dangerous to trust.\n\nThe test of an AI-drafted plan is simple: could each task owner say whether their line is right? If the assistant was not given the real scope, team, constraints and dependencies, the plan is a template with your project's name on it.", example: "A delivery manager exports the backlog, the team calendar with leave, and last quarter's velocity, then asks the tool in Jira to propose a release plan and list the assumptions it made. Three of the assumptions are wrong (a shared tester, a vendor date, a freeze period). Correcting them moves the release by two sprints, before anyone made a promise.", points: [
         "Give the assistant your actual scope, constraints, team capacity and dependencies.",
         "Use AI features inside your project tool (Jira, Azure DevOps, Asana, Smartsheet and others) so outputs reflect live data.",
         "Ask it to flag assumptions and missing information instead of filling gaps silently."
@@ -38,6 +38,9 @@ ACADEMY.tracks.project = [
       "Use AI for the first draft, then run a planning session with the team to challenge every estimate.",
       "Mark AI-drafted plans as drafts until validated."
     ] },
+    howto: {"title": "Turning a meeting into decisions and actions with AI", "steps": [{"h": "Get consent and use an approved tool", "body": "Tell participants at the start. Follow your recording and retention policy."}, {"h": "Ask for structure", "body": "Decisions (who decided), actions (owner, due date), open questions and risks. Not a narrative."}, {"h": "Check attribution", "body": "AI summaries often assign decisions to the wrong person or turn a suggestion into a decision. Fix these before sending."}, {"h": "Send within the hour", "body": "Ask owners to confirm their actions. Silence is not agreement."}, {"h": "Update the plan and RAID log", "body": "Carry actions and risks into the tools of record; the summary is not the record."}]},
+    decide: {"title": "What to hand to AI, what to keep", "cols": ["Task", "Approach"], "rows": [["Status report drafts for different audiences", "AI drafts from your data; you check the facts and the tone"], ["Meeting notes, decisions and actions", "AI drafts; you correct attribution and confirm with owners"], ["Risk brainstorming", "AI suggests; the team rates likelihood and impact"], ["Estimates and dates", "People who do the work estimate; AI can challenge"], ["Stakeholder politics, people and performance", "Human only"]]},
+    checklist: {"title": "AI in your project routine", "items": ["Plans and reports are generated from real project data, not from scratch.", "Assumptions the AI made are listed and checked.", "Participants know when AI note-takers are used.", "Meeting summaries are checked for misattributed decisions before sending.", "Dates and commitments are confirmed by the people doing the work."]},
     exercise: "Take your last status report. Ask an approved assistant to rewrite it for an executive audience in five bullets with clear asks. Compare, then decide what you would keep.",
     watchouts: ["AI summaries can attribute decisions to the wrong person; check before sending.", "Do not paste confidential contract or personnel details into unapproved tools."],
     quiz: [
@@ -45,7 +48,9 @@ ACADEMY.tracks.project = [
       { q: "Which task should stay firmly with the project manager?", o: ["Formatting the status report", "Committing dates and scope to the sponsor", "Summarising meeting notes", "Drafting a risk list"], a: 1, why: "Commitments carry accountability and need human judgement." },
       { q: "Before using an AI note-taker with a supplier, what should you do?", o: ["Nothing", "Inform participants and follow consent and retention rules", "Turn off your camera", "Use a personal account"], a: 1, why: "Recording others requires transparency and compliance with policy." },
       { q: "How can you make AI status reports more accurate?", o: ["Use more adjectives", "Generate them from live project data and ask the AI to flag assumptions", "Write them less often", "Use a larger model"], a: 1, why: "Grounding in real data and surfacing assumptions improves accuracy." },
-      { q: "A good use of AI in risk management is to:", o: ["Accept all risks it proposes", "Widen the risk brainstorm, then assess with the team", "Replace the risk owner", "Close risks automatically"], a: 1, why: "AI helps generate ideas; assessment and ownership stay with people." }
+      { q: "A good use of AI in risk management is to:", o: ["Accept all risks it proposes", "Widen the risk brainstorm, then assess with the team", "Replace the risk owner", "Close risks automatically"], a: 1, why: "AI helps generate ideas; assessment and ownership stay with people." },
+      {"q": "An AI-generated project plan looks complete. What is the best test of it?", "o": ["It has many tasks", "Each task owner can confirm their part, and the assumptions it made are listed and checked", "It uses the company template", "The sponsor likes it"], "a": 1, "why": "A plan is only real when it reflects the actual scope, team and constraints, confirmed by the people involved."},
+      {"q": "What is a common error in AI meeting summaries?", "o": ["They are too short", "They attribute decisions to the wrong person or turn suggestions into decisions", "They use bullet points", "They include the date"], "a": 1, "why": "Check attribution and decisions before you circulate the summary."}
     ]
   },
   {
@@ -64,7 +69,7 @@ ACADEMY.tracks.project = [
         "Success depends on users changing how they work.",
         "Governance approvals sit on the critical path."
       ] },
-      { h: "Phase it: PoC, pilot, scale", body: "Each phase answers a different question and has its own exit criteria.", points: [
+      { h: "Phase it: PoC, pilot, scale", body: "Each phase answers a different question and has its own exit criteria.\n\nWrite the exit criteria for each phase before it starts, including the criteria for stopping. A pilot without a defined 'stop' outcome tends to run forever because nobody wants to call it.", example: "Exit criteria for a contract-review pilot: at least 85% of clauses correctly flagged on the evaluation set, reviewers save at least 30 minutes per contract over 100 contracts, no high-severity misses, and at least 70% of pilot users choose to keep using it. If any criterion is missed after two improvement cycles, stop or re-scope.", points: [
         "Proof of concept (2 to 6 weeks): can the AI do the task well enough on real examples? Exit: quality threshold met on an agreed evaluation set.",
         "Pilot (1 to 3 months): does it deliver value in the real workflow with real users? Exit: adoption and outcome metrics, no unresolved high risks.",
         "Scale: can we run it reliably, securely and economically for everyone? Exit: operational readiness, monitoring, support and cost model."
@@ -90,6 +95,9 @@ ACADEMY.tracks.project = [
       "Book a decision meeting at the end of the pilot with the sponsor.",
       "Stop or pivot when criteria are not met. That is a success of governance, not a failure."
     ] },
+    howto: {"title": "Writing an AI project charter that can be delivered", "steps": [{"h": "State the outcome and measure", "body": "The business result, the baseline today and the target, with who measures it."}, {"h": "Define the phases and exit criteria", "body": "PoC, pilot and scale, each with go, change and stop criteria agreed in advance."}, {"h": "List the hidden work", "body": "Data access, evaluation set, risk and privacy reviews, integration, change management and run costs."}, {"h": "Name the team", "body": "Business owner, domain experts, engineers, reviewers and a change lead, with their time committed."}, {"h": "Put governance on the critical path", "body": "Schedule reviews with lead times, just like any other dependency."}, {"h": "Budget for running, not just building", "body": "Usage costs, monitoring, evaluation and maintenance after go-live."}]},
+    cases: [{"title": "A drive-thru AI pilot that ended (McDonald's, 2024)", "body": "McDonald's tested AI voice ordering with IBM in more than 100 US drive-thrus. After videos of garbled orders spread online, the company ended the test in 2024, saying it would keep exploring voice ordering options.", "lesson": "A pilot's job is to answer a question. Clear exit criteria let you stop or change course without it becoming a failure story."}, {"title": "Most generative AI pilots stall before value (industry surveys, 2024 to 2025)", "body": "Analyst firms and researchers have repeatedly reported that a large share of generative AI projects are abandoned after proof of concept or show no measurable financial impact, citing poor data, unclear value, rising costs and weak risk controls.", "lesson": "Plan the path from pilot to value from day one: data, adoption, cost and governance, not just the model."}],
+    checklist: {"title": "AI project scoping checklist", "items": ["Outcome, baseline and target are defined with a named owner.", "Each phase has go, change and stop criteria agreed in advance.", "Data access, evaluation, reviews, integration and change work are in the plan.", "Governance reviews are scheduled with lead times.", "Domain experts' time is committed, not assumed.", "Running costs after go-live are budgeted."]},
     exercise: "Write go/no-go criteria for the PoC, pilot and scale phases of an AI initiative you know.",
     watchouts: ["'Pilot purgatory' wastes budget and goodwill.", "Approvals booked at the end become the critical path."],
     quiz: [
@@ -97,7 +105,9 @@ ACADEMY.tracks.project = [
       { q: "Which work is most often missing from AI project plans?", o: ["Kick-off meeting", "Evaluation set building, data access and governance approvals", "Status reporting", "Team lunches"], a: 1, why: "These hidden tasks frequently become the critical path." },
       { q: "What prevents 'pilot purgatory'?", o: ["Longer pilots", "Agreed exit criteria and a scheduled go/no-go decision", "More users", "A bigger model"], a: 1, why: "Clear criteria force a decision to scale, pivot or stop." },
       { q: "Who should define what a correct AI output looks like?", o: ["The vendor", "Domain experts with the business owner", "The project manager alone", "The AI itself"], a: 1, why: "Domain experts know what good looks like in the work." },
-      { q: "Why do AI projects need an experiment-first structure?", o: ["To delay delivery", "Because quality is uncertain until tested on real data", "Because of regulation only", "To reduce documentation"], a: 1, why: "Experiments reduce uncertainty before major investment." }
+      { q: "Why do AI projects need an experiment-first structure?", o: ["To delay delivery", "Because quality is uncertain until tested on real data", "Because of regulation only", "To reduce documentation"], a: 1, why: "Experiments reduce uncertainty before major investment." },
+      {"q": "Why should a pilot have stop criteria agreed before it starts?", "o": ["To scare the team", "So the decision to stop or re-scope is made on evidence, not avoided indefinitely", "Because sponsors require paperwork", "To shorten the pilot"], "a": 1, "why": "Without agreed stop criteria, pilots drift on because nobody wants to call them."},
+      {"q": "Which item is most often missing from AI project plans?", "o": ["Kick-off meeting", "Building the evaluation set and the governance reviews", "Status reports", "A project name"], "a": 1, "why": "Evaluation and governance work is real effort on the critical path and is routinely forgotten."}
     ]
   },
   {
@@ -111,7 +121,7 @@ ACADEMY.tracks.project = [
       "Plan AI running costs and SLOs into delivery and handover"
     ],
     sections: [
-      { h: "Iteration loops", body: "AI quality improves through repeated cycles of change and evaluation.", points: [
+      { h: "Iteration loops", body: "AI quality improves through repeated cycles of change and evaluation.\n\nAI delivery does not converge like ordinary software. Scores often improve quickly, then plateau. Plan a fixed number of improvement cycles with a decision point, and report the evaluation trend at every sprint review so the plateau is visible early.", points: [
         "Each sprint: change prompts, data or models; run the evaluation set; review failures with domain experts.",
         "Track evaluation scores over time on the project dashboard alongside burndown.",
         "Time-box improvement: if scores plateau below threshold, escalate for a scope or approach decision."
@@ -153,6 +163,9 @@ ACADEMY.tracks.project = [
       "Monitoring with alerts would have shown the drop within days.",
       "A post-launch review gate at 30 to 90 days catches these gaps."
     ] },
+    decide: {"title": "What to do when quality plateaus", "cols": ["If…", "Then…"], "rows": [["Scores plateau just below threshold on a few segments", "Narrow the scope to the segments that pass, and keep improving the rest"], ["Errors are concentrated in bad or missing data", "Fix the data or the upstream process before more model work"], ["The threshold was set without evidence", "Revisit it with the business owner using real cost of errors"], ["Users fix outputs quickly and still save time", "Consider launching with human review as the control"], ["Scores are far below and not moving", "Stop or re-scope; record the lessons"]]},
+    howto: {"title": "Handing an AI service over to operations", "steps": [{"h": "Name the service owner", "body": "One accountable person with budget and authority to make changes."}, {"h": "Agree SLOs and the error budget", "body": "Availability, latency, quality and cost, and what happens when they are breached."}, {"h": "Hand over monitoring and runbooks", "body": "Dashboards, alerts, kill switch, rollback and incident steps, tested before handover."}, {"h": "Set the change process", "body": "How prompt, model and data changes are proposed, evaluated and approved."}, {"h": "Transfer the evidence", "body": "System card, evaluation history, risk assessment and decisions log."}, {"h": "Book the 90-day review", "body": "Quality, adoption, benefits, cost and incidents, with the sponsor."}]},
+    checklist: {"title": "Go-live readiness", "items": ["Evaluation thresholds are met, with the trend shown to the sponsor.", "Users are trained on how to use it and when not to trust it.", "Service owner, SLOs, monitoring and runbooks are in place.", "Running cost budget and FinOps owner are agreed.", "Change process for prompts, models and data is documented.", "The 90-day post-launch review is booked."]},
     exercise: "Add four AI gates (design, build, release, post-launch) to your project plan with owners and the evidence each needs.",
     watchouts: ["Do not report 'green' on schedule while quality is red.", "Running costs of AI can surprise finance; forecast them early."],
     quiz: [
@@ -162,7 +175,9 @@ ACADEMY.tracks.project = [
       { q: "What must be in place before an AI project closes?", o: ["A celebration", "A service owner, monitoring, support and running budget", "A new project", "Removal of documentation"], a: 1, why: "Without ownership, AI systems degrade unnoticed." },
       { q: "Evaluation scores plateau below the threshold. What should the PM do?", o: ["Lower the threshold quietly", "Escalate for a decision on scope, approach or timeline", "Keep iterating indefinitely", "Launch anyway"], a: 1, why: "Transparent escalation keeps decisions with the accountable owner." },
       { q: "When should AI running costs be estimated in a project?", o: ["After go-live", "Early, at pilot and full-scale volumes, and reported at each stage gate", "Only if finance asks", "Never, they are negligible"], a: 1, why: "Usage costs grow with adoption and must be planned." },
-      { q: "What should be agreed before handing an AI service to the run team?", o: ["Only the go-live date", "SLOs for availability, latency and quality, with monitoring and an error budget", "The model's parameter count", "A press release"], a: 1, why: "Clear SLOs let the run team know when the service is failing." }
+      { q: "What should be agreed before handing an AI service to the run team?", o: ["Only the go-live date", "SLOs for availability, latency and quality, with monitoring and an error budget", "The model's parameter count", "A press release"], a: 1, why: "Clear SLOs let the run team know when the service is failing." },
+      {"q": "Evaluation scores have plateaued below threshold for three sprints. What is the best next step?", "o": ["Keep iterating indefinitely", "Use the planned decision point: narrow scope, fix data, revisit the threshold with evidence, or stop", "Lower the threshold quietly", "Launch anyway"], "a": 1, "why": "Plateaus are normal in AI delivery. Decide explicitly rather than drifting or moving goalposts."},
+      {"q": "What most often goes wrong after an AI go-live without a named owner?", "o": ["Users get bored", "Quality degrades when inputs change and nobody notices or responds", "Costs fall", "The model improves itself"], "a": 1, "why": "Without an owner and monitoring, drift goes unnoticed, as in the invoice-matching scenario."}
     ]
   },
   {
@@ -188,7 +203,7 @@ ACADEMY.tracks.project = [
         "Risk acceptance decisions and their owners.",
         "Scope changes made because of AI performance."
       ] },
-      { h: "Evidence pack", body: "Collect evidence as you go rather than reconstructing it for audit.", points: [
+      { h: "Evidence pack", body: "Collect evidence as you go rather than reconstructing it for audit.\n\nAsk at the start of the project: if an auditor asked in a year why this was approved, what would we show them? Then collect that evidence as each gate is passed. Reconstructing it later is slow and often impossible.", points: [
         "Use case intake and risk assessment.",
         "Data protection impact assessment where required.",
         "Evaluation results per release.",
@@ -208,6 +223,9 @@ ACADEMY.tracks.project = [
       "Without them, it takes weeks of interviews and may result in an adverse finding.",
       "Build evidence capture into the project's definition of done."
     ] },
+    howto: {"title": "Preparing for an AI audit or steering review", "steps": [{"h": "Gather the decision trail", "body": "Intake, risk tier, approvals and the decision log, with dates and names."}, {"h": "Show the testing", "body": "Evaluation results per release against thresholds, and red-team or security findings with fixes."}, {"h": "Show the residual risk", "body": "Open risks, who accepted them and on what basis."}, {"h": "Show operation", "body": "Monitoring results, incidents and how they were handled, changes since launch."}, {"h": "Show the people side", "body": "Training records, user guidance and how users can raise concerns."}]},
+    cases: [{"title": "An AI oncology project that outgrew its governance (MD Anderson, 2017)", "body": "A major US cancer centre's project to build an AI clinical advisor with IBM Watson spent around 62 million dollars before being put on hold. A university audit found procurement and project management problems, including payments and scope changes that bypassed normal controls, and the system had not been used to treat patients.", "lesson": "AI projects need the same decision trail, scope control and gates as any large investment, plus evidence that the AI actually works."}],
+    checklist: {"title": "AI governance evidence for project managers", "items": ["AI-specific risks are in the RAID log with owners.", "Model, vendor, threshold and risk acceptance decisions are logged with evidence.", "The evidence pack is updated at every gate.", "Steering reports show quality trend against threshold.", "Incidents and their handling are recorded."]},
     exercise: "Create an AI section in your RAID log with at least one risk in each of the five categories above, each with an owner.",
     watchouts: ["Risk acceptance must be made by someone with authority, not by the project team by default.", "Evidence stored in personal folders is lost evidence."],
     quiz: [
@@ -215,7 +233,9 @@ ACADEMY.tracks.project = [
       { q: "When should the evidence pack be assembled?", o: ["When auditors ask", "Continuously during the project", "Only at launch", "Never"], a: 1, why: "Capturing evidence as you go is reliable and cheap." },
       { q: "What is the most useful AI metric for a steering committee?", o: ["Lines of code", "Quality trend against the agreed threshold", "Number of meetings", "Model parameter count"], a: 1, why: "Quality against threshold shows whether the AI is fit to launch." },
       { q: "Who should accept a residual AI risk?", o: ["Whoever is available", "A person with the authority defined in the governance model", "The vendor", "The newest team member"], a: 1, why: "Risk acceptance needs appropriate authority and accountability." },
-      { q: "A vendor announces it will retire the model version you use. Where should this go?", o: ["Nowhere", "The RAID log as a vendor risk with an owner and plan", "A personal note", "The marketing plan"], a: 1, why: "Vendor model changes affect quality and need managed response." }
+      { q: "A vendor announces it will retire the model version you use. Where should this go?", o: ["Nowhere", "The RAID log as a vendor risk with an owner and plan", "A personal note", "The marketing plan"], a: 1, why: "Vendor model changes affect quality and need managed response." },
+      {"q": "When should you start building the AI evidence pack?", "o": ["When audit asks", "At project start, adding evidence at each gate", "After go-live", "Only for high-risk projects"], "a": 1, "why": "Evidence collected as you go is complete and cheap; reconstructing it later often fails."},
+      {"q": "What should a steering report show about AI quality?", "o": ["A green RAG status", "The evaluation trend against the agreed threshold", "Number of prompts written", "Model name"], "a": 1, "why": "Steering committees need the quality trend against the bar to make real decisions."}
     ]
   }
 ];
