@@ -3,6 +3,14 @@
 ACADEMY.changelog = [
   {
     date: "2026-10-21",
+    title: "Deeper lessons for every role",
+    items: [
+      "All eight role paths now include step-by-step guides, decision tables, checklists, more worked examples and real-world cases, plus new quiz questions.",
+      "Developer, Data & ML, Project, Leader, Operations, Risk and Business modules have been expanded in the same way as Foundations and Product Manager."
+    ]
+  },
+  {
+    date: "2026-10-21",
     title: "Deeper lessons",
     items: [
       "The three Foundations modules and the Product Manager track now go further: worked examples, step-by-step guides, decision tables, real-world cases and checklists, plus new quiz questions.",
