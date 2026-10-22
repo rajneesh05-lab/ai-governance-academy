@@ -2,6 +2,14 @@
 // To flag a changed module, also set `updated: "YYYY-MM-DD"` on it; learners see an "Updated" badge for 60 days.
 ACADEMY.changelog = [
   {
+    date: "2026-10-22",
+    title: "Full depth across every module",
+    items: [
+      "Every module in every role now has a step-by-step guide, a decision table, real-world cases and a checklist.",
+      "The Business, Project, Operations, Risk, Leader and Data & ML modules gained more worked examples and explanation."
+    ]
+  },
+  {
     date: "2026-10-21",
     title: "Deeper lessons for every role",
     items: [
