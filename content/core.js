@@ -99,6 +99,7 @@ window.ACADEMY = {
         "Nothing confidential or personal is in the output that should not be.",
         "I would be comfortable defending every sentence as my own work."
       ] },
+      decide: {"title": "Which kind of system is this?", "cols": ["If the system…", "It is probably…"], "rows": [["Follows steps a person wrote, the same way every time", "Rules or RPA"], ["Gives a score, forecast or category learned from historical data", "Machine learning"], ["Writes, summarises, translates or creates images", "Generative AI"], ["Decides which steps to take and uses tools to act", "An AI agent"], ["Is a vendor feature labelled 'AI' and you are not sure", "Ask the vendor which of these it is, and what data it uses"]]},
       exercise: "Pick one task you did this week. Write down which of the four kinds of system (rules, ML, GenAI, agent) could help with it, and what could go wrong if it made a mistake. Then run one AI output through the 60-second check and note what you found.",
       watchouts: ["Never treat AI output as verified fact without checking the source.", "Do not paste confidential, personal or client data into tools your organisation has not approved.", "Do not ask an AI to confirm its own answer; check the primary source instead."],
       quiz: [

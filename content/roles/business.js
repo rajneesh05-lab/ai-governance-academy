@@ -74,11 +74,11 @@ ACADEMY.tracks.business = [
         "How bad is an error, and would it be caught?",
         "Does it involve sensitive data?"
       ] },
-      { h: "Good and poor candidates", body: "Patterns that help you decide.", points: [
+      { h: "Good and poor candidates", body: "Patterns that help you decide.\n\nA quick test: if you would be happy for a capable temp to do the first draft, AI is probably a good candidate. If you would not let a temp near it (a redundancy letter, a decision on a complaint, a client's confidential file in the wrong tool), AI should not do it either.", points: [
         "Good: drafting standard documents, summarising long material, answering repetitive internal questions from a knowledge base, reformatting data, first-pass analysis of feedback.",
         "Poor: decisions about individuals, tasks needing exact numbers without checking, relationship-critical conversations, tasks with no clear right answer."
       ] },
-      { h: "Use what you already have", body: "Many tools you already use have AI built in. Start there.", points: [
+      { h: "Use what you already have", body: "Many tools you already use have AI built in. Start there.\n\nApproved tools come with the contract, security review and data protections already done. A new tool, however good, may take weeks to approve, and using it before approval puts data at risk.", example: "A sales team wanted a new AI tool to summarise calls. It turned out their CRM's AI features, already licensed and approved, could summarise calls and draft follow-ups. They switched it on for a pilot team the same week.", points: [
         "Check the AI features in your office suite, CRM, HR or finance system.",
         "Use the organisation's approved general assistant for drafting and analysis.",
         "Request a new tool only if the need is clear and the existing options cannot meet it."
@@ -97,6 +97,7 @@ ACADEMY.tracks.business = [
     howto: {"title": "Running a one-hour task audit with your team", "steps": [{"h": "List tasks (15 minutes)", "body": "Everyone writes down recurring tasks with frequency and time taken."}, {"h": "Score them (20 minutes)", "body": "Reading or writing heavy? Clear standard for good? Errors caught? Sensitive data? Use a 1 to 3 scale."}, {"h": "Rule out the risky ones (10 minutes)", "body": "Remove decisions about people, legally binding outputs and tasks needing data no approved tool may hold."}, {"h": "Pick two (10 minutes)", "body": "The highest scorers with willing volunteers."}, {"h": "Check tools (5 minutes)", "body": "Which approved tool already does this? Plan a short pilot."}]},
     decide: {"title": "Good candidate or not?", "cols": ["If the task…", "Then…"], "rows": [["Is frequent, text-heavy and has a clear 'good' standard", "Strong candidate"], ["Produces something a person reviews before it matters", "Strong candidate"], ["Decides something about an individual (hiring, pay, performance)", "Not a candidate for AI decisions; AI may help with wording only"], ["Needs exact, current facts the AI cannot see", "Only with grounding in the right source, and checks"], ["Involves data no approved tool may hold", "Not until a suitable tool is approved"]]},
     checklist: {"title": "Choosing your team's first AI uses", "items": ["Tasks are listed with frequency and time taken.", "Candidates have a clear standard for a good result.", "Decisions about individuals are excluded.", "Data needs fit an approved tool.", "The benefit estimate includes checking time.", "We know what we will do with time saved."]},
+    cases: [{"title": "A grounded assistant for financial advisers (Morgan Stanley, 2023)", "body": "Morgan Stanley gave its wealth management advisers an AI assistant that answers questions from the firm's own library of research and procedures, so advisers find the right internal information in seconds instead of searching many documents. The firm evaluated answers with its own experts before rolling it out.", "lesson": "Strong use cases often combine a frequent, text-heavy task with a trusted internal source, plus expert evaluation before roll-out."}],
     exercise: "Do a task audit of your team's ten most common tasks. Pick the top two AI candidates and estimate time saved after checking time.",
     watchouts: ["Do not count time saved before subtracting review time.", "Requests for new tools need a clear problem, not just interest."],
     quiz: [
@@ -125,7 +126,7 @@ ACADEMY.tracks.business = [
         "Run for four to six weeks with a weekly check-in.",
         "Compare and decide: adopt, adjust or stop."
       ] },
-      { h: "Shared prompts and examples", body: "Good prompts are team assets.", points: [
+      { h: "Shared prompts and examples", body: "Good prompts are team assets.\n\nA good prompt library entry has four parts: what the prompt is for, the prompt itself with placeholders, an example of good output, and what to check before using the output.", example: "Library entry: 'Webinar to blog post'. Use for: turning a recorded webinar transcript into a 600-word blog post. Prompt: '[transcript] Write a 600-word blog post for [audience] with a headline, three subheadings and a call to action to [link]. Use only claims made in the transcript.' Check: product claims against the approved messaging sheet, speaker names and titles, any statistics.", points: [
         "Keep a shared library of prompts that work, with example outputs.",
         "Include instructions on what to check before using the result.",
         "Update prompts as the team learns."
@@ -136,7 +137,7 @@ ACADEMY.tracks.business = [
         "When to disclose AI use, internally and externally.",
         "How to raise concerns or report problems."
       ] },
-      { h: "Support and skills", body: "Adoption needs ongoing help.", points: [
+      { h: "Support and skills", body: "Adoption needs ongoing help.\n\nExpect a dip. Many people find AI slows them down for the first week or two while they learn what to ask and how to check. Plan for it and keep going; the gains usually come after that.", points: [
         "Pair confident users with newer users.",
         "Short demos in team meetings.",
         "Recognise good practice, including reporting mistakes."
@@ -149,6 +150,8 @@ ACADEMY.tracks.business = [
     ] },
     howto: {"title": "Running a six-week team pilot", "steps": [{"h": "Week 0: set up", "body": "Pick one or two tasks and three to six volunteers. Measure time and quality now. Agree what success looks like."}, {"h": "Week 1: learn together", "body": "Share a starter prompt, show a demo, agree the check before use."}, {"h": "Weeks 2 to 5: use and log", "body": "Volunteers use it on real work and note time taken, edits needed and problems."}, {"h": "Weekly 15-minute check-in", "body": "What worked, what did not, which prompts to update."}, {"h": "Week 6: decide", "body": "Compare with the before. Adopt, adjust or stop, and write down why."}, {"h": "Share", "body": "Put the prompts and norms in the team library and tell other teams what you learned."}]},
     checklist: {"title": "Team AI roll-out", "items": ["Baseline time and quality measured before the pilot.", "Success criteria agreed up front.", "Shared prompt library with checking notes.", "Team norms written: uses, reviews, disclosure, reporting.", "Decision to adopt, adjust or stop based on evidence.", "Lessons shared beyond the team."]},
+    decide: {"title": "Adopt, adjust or stop?", "cols": ["If the pilot shows…", "Then…"], "rows": [["Time saved and quality the same or better", "Adopt; share prompts and norms"], ["Time saved but more errors", "Adjust: better prompts, stronger checks, or narrower scope"], ["Helps on some cases, not others", "Adopt for the cases where it helps"], ["No time saved once checking is included", "Stop for this task; try another"], ["People avoid using it", "Find out why before deciding"]]},
+    cases: [{"title": "AI helps a lot, until the task is outside its strengths (consultant study, 2023)", "body": "In a study with a global consulting firm, consultants using GPT-4 on realistic tasks within the model's strengths completed more tasks, faster and at higher quality than those without it. On a task designed to fall outside those strengths, consultants using AI were noticeably less likely to reach the correct answer than those working without it.", "lesson": "Pilot on your real tasks and check outputs, because AI can make people worse on tasks it is not good at, and they may not notice."}],
     exercise: "Start a shared prompt library for your team with three prompts, each with an example output and a 'what to check' note.",
     watchouts: ["Pilots without a before measurement cannot show benefit.", "Norms that are not written down are not norms."],
     quiz: [
@@ -171,7 +174,7 @@ ACADEMY.tracks.business = [
       "Know how to report AI issues"
     ],
     sections: [
-      { h: "Data protection in practice", body: "Most AI risks in business functions are data risks.", points: [
+      { h: "Data protection in practice", body: "Most AI risks in business functions are data risks.\n\nWhen in doubt, remove it. Most tasks work just as well with names replaced by 'Customer A' and account numbers removed, and the risk drops sharply.", example: "Before: 'Summarise this complaint from Jane Smith, account 4482-1193, about her mortgage arrears.' After: 'Summarise this complaint from a customer about mortgage arrears' with the personal details removed from the text. The summary is just as useful.", points: [
         "Know your data classes and which tools each may go into.",
         "Minimise: share only what the task needs.",
         "Personal data needs a valid purpose; using it with AI must fit that purpose.",
@@ -188,7 +191,7 @@ ACADEMY.tracks.business = [
         "Check rights before using AI-generated images, music or text externally.",
         "Do not upload third-party documents if the terms prohibit it."
       ] },
-      { h: "Speak up", body: "Reporting problems is part of using AI well.", points: [
+      { h: "Speak up", body: "Reporting problems is part of using AI well.\n\nTeams that report near misses (data pasted into the wrong tool, an output that nearly went out wrong) learn fastest. Treat reports as useful information, not as confessions.", points: [
         "Report data mistakes, harmful outputs or suspicious behaviour quickly.",
         "Raise concerns about AI uses you think are unfair or unsafe.",
         "Share lessons with your team."
@@ -208,6 +211,7 @@ ACADEMY.tracks.business = [
     decide: {"title": "Can I use AI for this?", "cols": ["If you want to…", "Then…"], "rows": [["Summarise a public report", "Yes, in an approved tool"], ["Draft an email using internal information", "Yes, in an approved enterprise tool"], ["Analyse a spreadsheet with customer names", "Only in a tool approved for personal data, or remove the names first"], ["Screen, rank or score job applicants or employees", "No, not without a formal, approved high-risk process"], ["Create an image 'in the style of' a living artist", "No; it risks IP and reputational harm"], ["Act on an urgent payment request by voice or video", "Verify through a separate, known channel first"]]},
     cases: [{"title": "A lawsuit over AI screening of job applicants (Mobley v. Workday, ongoing)", "body": "A job seeker who was rejected for many roles sued Workday, alleging its AI screening tools discriminated on age, race and disability. In 2025 a US federal court allowed the age discrimination claim to proceed as a nationwide collective action.", "lesson": "Using AI to screen people carries legal risk for employers and vendors. Do not use AI to rank or reject people outside an approved process."}],
     checklist: {"title": "Responsible AI in your daily work", "items": ["I know which tools are approved for which data.", "I share only what the task needs.", "I do not use AI to decide about individuals.", "I disclose AI use where policy, law or trust requires.", "I check rights before using AI-generated images or third-party material.", "I report problems and near misses."]},
+    howto: {"title": "What to do if you put data in the wrong place", "steps": [{"h": "Stop", "body": "Do not paste anything more. Do not try to fix it by asking the AI to 'forget'."}, {"h": "Record what happened", "body": "Which tool, what data, when, and whether it was shared further."}, {"h": "Delete where you can", "body": "Delete the conversation or file in the tool if possible, and note that you did."}, {"h": "Report it today", "body": "Use your privacy or incident channel. Some notification deadlines are short."}, {"h": "Share the lesson", "body": "Help your team avoid the same mistake, without blame."}]},
     exercise: "Review the last three times you used AI at work. For each, note the data class used, the tool, and whether the use fitted policy.",
     watchouts: ["'Everyone does it' is not a policy.", "Deleting a mistake is not the same as reporting it."],
     quiz: [
